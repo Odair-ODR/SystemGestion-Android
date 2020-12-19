@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <Button
+        android:id="@+id/btnItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="4dp"
+        android:background="@drawable/shadow"
+        android:drawableRight="@drawable/next"
+        android:drawableLeft="@drawable/list"
+        android:drawablePadding="15dp"
+        android:paddingLeft="20dp"
+        android:paddingTop="18dp"
+        android:paddingRight="10dp"
+        android:textStyle="bold"
+        android:paddingBottom="18dp"
+        android:text="name"
+        android:textColor="@color/colorDarkGreen"
+        android:textAlignment="textStart"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.021"
+        android:elevation="8dp"
+        android:gravity="center"
+        android:focusable="false"
+        android:focusableInTouchMode="false"/>
+
+</android.support.constraint.ConstraintLayout>

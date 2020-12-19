@@ -1,0 +1,37 @@
+<resources>
+    <string name="app_name">Consulta</string>
+    <string name="consultar">CONSULTAR</string>
+    <string name="buscar">BUSCAR</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string-array name="consulta_opcion">
+        <item>Alternante</item>
+        <item>CodBar</item>
+        <item>Motores</item>
+    </string-array>
+    <!-- Emision-->
+    <string name="Nueva">Nueva Venta</string>
+    <string name="Consulta">Consultar Venta</string>
+    <string name="Anular">Anular Venta</string>
+    <string name="Modificar">Modificar Venta</string>
+    <string name="title_activity_ventas">Ventas</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <!--*************************-->
+
+    <!---Nventas-->
+    <string name="tipo">TIPO</string>
+    <string name="ruc">R.U.C</string>
+    <string name="tienda">TIENDA</string>
+    <string name="nombre">NOMBRE</string>
+    <string name="direccion">DIRECCION</string>
+    <string name="items">ITEMS DE VENTA</string>
+    <!--***********-->
+</resources>

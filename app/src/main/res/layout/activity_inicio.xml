@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/imagen2"
+    tools:context=".Inicio">
+
+    <Button
+        android:id="@+id/btnconsu"
+        android:layout_width="229dp"
+        android:layout_height="80dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="93dp"
+        android:layout_marginLeft="93dp"
+        android:layout_marginTop="470dp"
+        android:backgroundTint="@android:color/transparent"
+        android:clickable="false"
+        android:cursorVisible="false"
+        android:text="@string/app_name"
+        android:textSize="39dp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnmoto"
+        android:layout_width="229dp"
+        android:layout_height="80dp"
+        android:layout_marginStart="93dp"
+        android:layout_marginLeft="93dp"
+        android:layout_marginTop="560dp"
+        android:backgroundTint="@android:color/transparent"
+        android:text="MOTORES"
+        android:textSize="39sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="125dp"
+        app:srcCompat="@drawable/boo" />
+
+
+
+</RelativeLayout>

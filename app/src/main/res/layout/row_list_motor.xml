@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/txtCpdnew"
+            android:layout_width="38dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.60"
+            android:paddingLeft="5dp"
+            android:text="cpdnew"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/txtAlternante"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.75"
+            android:text="alternante"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/txtCodbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.70"
+            android:paddingLeft="5dp"
+            android:text="codbar"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:layout_marginLeft="7dp"
+            android:paddingBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/txtUnimed"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.30"
+            android:text="20"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:layout_marginLeft="8dp"
+            android:paddingBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/txtCampar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.30"
+            android:paddingLeft="3dp"
+            android:paddingRight="3dp"
+            android:text="100"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:layout_marginLeft="8dp"
+            android:paddingBottom="3dp"/>
+
+        <TextView
+            android:id="@+id/txtTotSaldo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.40"
+            android:text="100"
+            android:textColor="@color/colorBlack"
+            android:textStyle="bold"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:layout_marginLeft="8dp"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>

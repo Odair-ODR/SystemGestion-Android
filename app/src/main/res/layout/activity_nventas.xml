@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context=".Nventas">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="320dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="165dp"
+            android:layout_height="320dp"
+            android:gravity="right|center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="@string/tipo"
+                android:textColor="@color/colorDark"
+                android:layout_marginRight="25dp"
+                android:textSize="25dp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="1dp"
+                android:layout_marginRight="25dp"
+                android:text="@string/tienda"
+                android:textColor="@color/colorDark"
+                android:textSize="25dp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="75dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="25dp"
+                android:layout_marginBottom="20dp"
+                android:text="@string/ruc"
+                android:textColor="@color/colorDark"
+                android:textSize="25dp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/nombre"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="0dp"
+                android:textColor="@color/colorDark"
+                android:textSize="25dp"
+                android:textStyle="normal|bold" />
+
+            <TextView
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="28dp"
+                android:text="@string/direccion"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/colorDark"
+                android:textSize="25dp"
+                android:textStyle="normal|bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="320dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <Spinner
+                android:id="@+id/tipo"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/style_spinner"
+                android:layout_marginBottom="20dp"/>
+
+            <Spinner
+                android:id="@+id/cboTienda"
+                android:layout_width="220dp"
+                android:layout_height="50dp"
+                android:background="@drawable/style_spinner"
+                android:layout_marginBottom="20dp"/>
+
+            <EditText
+                android:id="@+id/ruc"
+                android:layout_width="170dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:paddingBottom="10dp"
+                android:inputType="number"
+                android:background="@drawable/custom_edt"/>
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/custom_edt"/>
+
+
+            <EditText
+                android:id="@+id/direc"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/custom_edt" />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="290dp"
+        android:orientation="vertical">
+        <Button
+            android:id="@+id/btnItem"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="190dp"
+            android:background="@drawable/custom_button"
+            android:textStyle="normal|bold"
+            android:textSize="16dp"
+            android:textColor="@color/colorDark"
+            android:text="@string/items"/>
+        <ScrollView
+            android:id="@+id/salid"
+            android:layout_width="match_parent"
+            android:layout_height="408dp"
+            />
+
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".AlternanteFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <!--android:backgroundTint="@drawable/text_redius"-->
+        <EditText
+            android:id="@+id/txtAlternante"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="20dp"
+            android:focusable="true"
+            android:hint="Alternante"
+            android:padding="10dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="14dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="14dp"
+            android:textSize="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtColumn1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="CPDNEW"
+                android:textColor="@color/colorRed" />
+
+            <TextView
+                android:id="@+id/txtColumn2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="ALTERNANTE"
+                android:textColor="@color/colorRed" />
+
+            <TextView
+                android:id="@+id/txtColumn3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:text="CODBAR"
+                android:textColor="@color/colorRed" />
+
+            <!--<TextView
+                android:id="@+id/txtColumn4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="7dp"
+                android:paddingRight="7dp"
+                android:textColor="@color/colorRed"
+                android:text="UM" />
+            <TextView
+                android:id="@+id/txtColumn5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"
+                android:textColor="@color/colorRed"
+                android:text="CAN" />-->
+            <TextView
+                android:id="@+id/txtColumn6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingRight="15dp"
+                android:text="MOTOR"
+                android:textColor="@color/colorRed" />
+
+            <TextView
+                android:id="@+id/txtColumn7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="10dp"
+                android:text="SAL"
+                android:textColor="@color/colorRed" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/lstAlternante"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:divider="@drawable/divider_list"
+            android:dividerHeight="2px"
+            android:scrollbars="vertical" />
+
+        <Button
+            android:id="@+id/btnConsultarFra"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="18dp"
+            android:background="@drawable/solo_button_radius"
+            android:padding="15dp"
+            android:text="CONSULTAR"
+            android:textSize="30dp" />
+    </LinearLayout>
+</FrameLayout>
