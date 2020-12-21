@@ -11,24 +11,24 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ConsultaItemsVenta"></activity>
-        <activity android:name=".Modificarve" />
-        <activity android:name=".Anularve" />
-        <activity android:name=".Consultarve" />
-        <activity android:name=".Nventas" />
-        <activity android:name=".Emision" />
-        <activity android:name=".ConsultaActivity" />
-        <activity android:name=".MenuActivity" />
-        <activity android:name=".Principal" />
-        <activity android:name=".Inicio" />
-        <activity android:name=".splash">
+        <activity android:name=".View.ConsultaItemsVenta"></activity>
+        <activity android:name=".View.Modificarve" />
+        <activity android:name=".View.Anularve" />
+        <activity android:name=".View.Consultarve" />
+        <activity android:name=".View.Nventas" />
+        <activity android:name=".View.Emision" />
+        <activity android:name=".View.ConsultaActivity" />
+        <activity android:name=".View.MenuActivity" />
+        <activity android:name=".View.Principal" />
+        <activity android:name=".View.Inicio" />
+        <activity android:name=".View.splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Motores" />
+        <activity android:name=".View.Motores" />
     </application>
 
 </manifest>

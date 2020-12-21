@@ -20,4 +20,6 @@
     <color name="colorDark_P">#3C0207</color>
     <color name="colorRojo">#E74C3C</color>
     <color name="colorAmarillo">#F39C12</color>
+    <color name="colorGreenLight">#51B435</color>
+    <color name="colorLight1">#F0F7F7</color>
 </resources>
