@@ -18,6 +18,7 @@ import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
 import java.sql.CallableStatement
 import java.util.*
+import kotlin.collections.ArrayList
 
 class MotorFragment : Fragment() {
     private var mParam1: String? = null
@@ -59,7 +60,7 @@ class MotorFragment : Fragment() {
         callStatment.setString(1, txtCodProd?.getText().toString())
         callStatment.setString(2, txtMotor?.getText().toString())
         val rs = callStatment.executeQuery()
-        val lstArticulo: ArrayList<Articulo?> = ArrayList<Articulo?>()
+        val lstArticulo: ArrayList<Articulo?> = ArrayList()
         while (rs.next()) {
             val articulo = Articulo()
             articulo.codbar = rs.getString("codbar")
@@ -71,7 +72,7 @@ class MotorFragment : Fragment() {
             articulo.totSaldo = rs.getString("totsaldo").toInt()
             lstArticulo.add(articulo)
         }
-        CargarDataListView(lstArticulo, null, 1)
+        CargarDataListView(lstArticulo, ArrayList(), 1)
     }
 
     @Throws(Exception::class)
@@ -94,16 +95,16 @@ class MotorFragment : Fragment() {
             motor.cili1 = rs.getString("cili1")
             lstMotor.add(motor)
         }
-        CargarDataListView(null, lstMotor, 2)
+        CargarDataListView(ArrayList(), lstMotor, 2)
     }
 
-    private fun CargarDataListView(lstArticulo: ArrayList<Articulo?>?, lstMotor: ArrayList<Motor?>?, acces: Int) {
+    private fun CargarDataListView(lstArticulo: ArrayList<Articulo?>, lstMotor: ArrayList<Motor?>, acces: Int) {
         val adapter: MasterAdapter<*>
         if (acces == 1) {
-            adapter = MasterAdapter(context, lstArticulo, 3)
+            adapter = MasterAdapter(context!!, lstArticulo, 3)
             listMotores!!.adapter = adapter
         } else {
-            adapter = MasterAdapter(context, lstMotor, 4)
+            adapter = MasterAdapter(context!!, lstMotor, 4)
             showAlertDialog(adapter)
         }
     }

@@ -95,26 +95,38 @@
                 android:textColor="@color/colorRed" />
         </LinearLayout>
 
-        <ListView
-            android:id="@+id/lstAlternante"
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:divider="@drawable/divider_list"
-            android:dividerHeight="2px"
-            android:scrollbars="vertical" />
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp">
 
-        <Button
-            android:id="@+id/btnConsultarFra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/solo_button_radius"
-            android:padding="15dp"
-            android:text="CONSULTAR"
-            android:textSize="30dp" />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
+
+                <TableLayout
+                    android:id="@+id/tableLayoutArticulos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp"/>
+            </HorizontalScrollView>
+        </ScrollView>
+
+
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnConsultarFra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/solo_button_radius"
+        android:padding="15dp"
+        android:text="CONSULTAR"
+        android:textSize="30dp"
+        android:layout_gravity="bottom"/>
 </FrameLayout>

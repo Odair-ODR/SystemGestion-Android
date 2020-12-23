@@ -50,78 +50,37 @@
                 android:textSize="18dp" />
         </LinearLayout>
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp">
 
-            <TextView
-                android:id="@+id/txtColumn1"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="8dp"
-                android:paddingRight="5dp"
-                android:text="CPDNEW"
-                android:textColor="@color/colorRed" />
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fillViewport="true">
 
-            <TextView
-                android:id="@+id/txtColumn2"
-                android:layout_width="95dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="3dp"
-                android:paddingRight="3dp"
-                android:text="ALTERNANTE"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn4"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:paddingLeft="7dp"
-                android:text="UNIM"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn5"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:text="CAN"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn7"
-                android:layout_width="50dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="SAL"
-                android:textColor="@color/colorRed" />
-        </LinearLayout>
-
-        <ListView
-            android:id="@+id/lstAlternante"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:divider="@drawable/divider_list"
-            android:dividerHeight="2px"
-            android:scrollbars="vertical" />
-
-        <Button
-            android:id="@+id/btnConsultarFra"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="18dp"
-            android:background="@drawable/solo_button_radius"
-            android:padding="15dp"
-            android:text="CONSULTAR"
-            android:textSize="30dp" />
+                <TableLayout
+                    android:id="@+id/tableLayoutArticulos"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp">
+                </TableLayout>
+            </HorizontalScrollView>
+        </ScrollView>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btnConsultarFra"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="18dp"
+        android:background="@drawable/solo_button_radius"
+        android:padding="15dp"
+        android:text="CONSULTAR"
+        android:textSize="30dp" />
 </FrameLayout>
