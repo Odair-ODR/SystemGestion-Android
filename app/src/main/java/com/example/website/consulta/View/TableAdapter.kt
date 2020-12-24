@@ -148,6 +148,30 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     }
 
     fun AddDataArticuloXAlternante(data: List<Articulo>){
+        var viewHolder: ViewHolder
+        var tableRow: TableRow
+        data.forEach { item ->
+            tableRow = NewRow()
+            viewHolder = ViewHolder()
+            viewHolder.item1 = NewCell()
+            viewHolder.item2 = NewCell()
+            viewHolder.item3 = NewCell()
+            viewHolder.item4 = NewCell()
+            viewHolder.item5 = NewCell()
 
+            RowCellStyle(viewHolder)
+            viewHolder.item1?.setText(item.cpdnew)
+            viewHolder.item2?.setText(item.alternante)
+            viewHolder.item3?.setText(item.codbar)
+            viewHolder.item4?.setText(item.motor)
+            viewHolder.item5?.setText(item.totSaldo.toString())
+
+            tableRow.addView(viewHolder.item1, NewTableRowParams())
+            tableRow.addView(viewHolder.item2, NewTableRowParams())
+            tableRow.addView(viewHolder.item3, NewTableRowParams())
+            tableRow.addView(viewHolder.item4, NewTableRowParams())
+            tableRow.addView(viewHolder.item5, NewTableRowParams())
+            tableLayout.addView(tableRow)
+        }
     }
 }

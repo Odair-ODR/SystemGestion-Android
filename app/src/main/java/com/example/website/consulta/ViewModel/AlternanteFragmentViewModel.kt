@@ -9,6 +9,7 @@ import com.example.website.consulta.View.TableAdapter
 class AlternanteFragmentViewModel {
     private val alternanterFragmentObserver = AlternanteFragmentObservable()
     private var tableAdapter: TableAdapter? = null
+
     fun ObtenerArticulosXAlternante(alternante: String): ArrayList<Articulo>{
         return  alternanterFragmentObserver.ObtenerArticulosXAlternante(alternante)
     }

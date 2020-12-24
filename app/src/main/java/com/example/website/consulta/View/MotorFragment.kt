@@ -8,10 +8,7 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ListView
+import android.widget.*
 import com.example.website.consulta.Model.ConnectionDB
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
@@ -26,7 +23,7 @@ class MotorFragment : Fragment() {
     private var txtMotor: EditText? = null
     private var txtCodProd: EditText? = null
     private var btnConsultar: Button? = null
-    private var listMotores: ListView? = null
+    private var tableLaout: TableLayout? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -38,19 +35,20 @@ class MotorFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val view: View = inflater.inflate(R.layout.fragment_motor, container, false)
+        InitializeComponents(view)
+        InitializeEvents()
+        return view
+    }
+
+    private fun InitializeComponents(view: View){
         txtMotor = view.findViewById<EditText>(R.id.txtMotor)
         txtCodProd = view.findViewById<EditText>(R.id.txtCodProd)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
-        listMotores = view.findViewById(R.id.lstMotor)
-        btnConsultar?.setOnClickListener(View.OnClickListener {
-            try {
-                ConsultaMotor()
-                //> ConsultarArticulo();
-            } catch (ex: Exception) {
-                ex.printStackTrace()
-            }
-        })
-        return view
+        tableLaout = view.findViewById(R.id.tableLayoutArticulos)
+    }
+
+    private fun InitializeEvents(){
+        btnConsultar?.setOnClickListener(btnConsultar_OnClickListener)
     }
 
     @Throws(Exception::class)

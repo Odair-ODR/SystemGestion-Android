@@ -19,7 +19,6 @@ import com.example.website.consulta.ViewModel.CodbarFragmentViewModel
 class CodbarFragment : Fragment() {
     private var txtCodba: EditText? = null
     private var txtMotor: EditText? = null
-    private var listAlternante: ListView? = null
     private var btnConsultar: Button? = null
     private lateinit var tableLayout: TableLayout
     private lateinit var codBarFragmentViewModel: CodbarFragmentViewModel
@@ -34,7 +33,7 @@ class CodbarFragment : Fragment() {
 
     private fun InitializeComponents(view: View) {
         txtCodba = view.findViewById(R.id.txtCodBar)
-        listAlternante = view.findViewById(R.id.lstAlternante)
+        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
         txtMotor = view.findViewById(R.id.txtMotor)
         tableLayout = view.findViewById(R.id.tableLayoutArticulos)!!

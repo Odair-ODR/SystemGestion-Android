@@ -17,10 +17,8 @@ class AlternanteFragmentRepositoryImp : IAlternanteFragmentRepository {
             while (rs.next()) {
                 articulo = Articulo()
                 articulo.alternante = rs.getString("alternante")
-                articulo.campar = rs.getString("campar").toInt()
                 articulo.codbar = rs.getString("codbar")
                 articulo.cpdnew = rs.getString("cpdnew")
-                articulo.unimed = rs.getString("unimed")
                 articulo.motor = rs.getString("Motor")
                 articulo.totSaldo = rs.getString("totsaldo").toInt()
                 lstArticulo.add(articulo)

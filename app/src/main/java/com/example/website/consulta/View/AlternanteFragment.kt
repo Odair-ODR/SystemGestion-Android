@@ -12,6 +12,7 @@ import android.widget.TableLayout
 import com.example.website.consulta.Model.ConnectionDB
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
+import com.example.website.consulta.ViewModel.AlternanteFragmentViewModel
 import java.sql.CallableStatement
 import kotlin.collections.ArrayList
 
@@ -22,6 +23,7 @@ class AlternanteFragment : Fragment() {
     private var txtAlternante: EditText? = null
     private var tableLayout: TableLayout? = null
     private var btnConsultar: Button? = null
+    private lateinit var alternanteFragmentViewModel: AlternanteFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,45 +42,24 @@ class AlternanteFragment : Fragment() {
     }
 
     private fun InitializeComponents(view: View){
-        txtAlternante = view.findViewById<EditText>(R.id.txtAlternante)
+        txtAlternante = view.findViewById(R.id.txtAlternante)
         tableLayout = view.findViewById(R.id.tableLayoutArticulos)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
+        alternanteFragmentViewModel = AlternanteFragmentViewModel()
     }
 
     private fun InitializeEvents(){
-        btnConsultar!!.setOnClickListener(View.OnClickListener {
-            try {
-                ConsultarAlternante()
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        })
+        btnConsultar!!.setOnClickListener(btnConsultar_OnClickListener)
     }
 
-    @Throws(Exception::class)
-    private fun ConsultarAlternante() {
-        val procedure = "{call AdroidSelectObtenerArticulosporAlternante (?)}"
-        val callStatment: CallableStatement = ConnectionDB.Conexion().prepareCall(procedure)
-        callStatment.setString(1, txtAlternante?.getText().toString())
-        val rs = callStatment.executeQuery()
-        val lstArtculos: ArrayList<Articulo?> = ArrayList()
-        var art: Articulo
-        while (rs.next()) {
-            art = Articulo()
-            art.alternante = rs.getString("alternante")
-            art.campar = rs.getString("campar").toInt()
-            art.codbar = rs.getString("codbar")
-            art.cpdnew = rs.getString("cpdnew")
-            art.unimed = rs.getString("unimed")
-            art.motor = rs.getString("Motor")
-            art.totSaldo = rs.getString("totsaldo").toInt()
-            lstArtculos?.add(art)
+    private var btnConsultar_OnClickListener = View.OnClickListener {
+        val lstArticulos = alternanteFragmentViewModel.ObtenerArticulosXAlternante(txtAlternante?.text.toString())
+        if(context != null && tableLayout != null){
+            alternanteFragmentViewModel.CargarDataArticulosXAlternante(context!!, tableLayout!!, ObtenerColumnas(), lstArticulos)
         }
-        CargarDataListView(lstArtculos)
     }
 
-    private fun CargarDataListView(articulos: ArrayList<Articulo?>) {
-        val adpater: MasterAdapter<Articulo> = MasterAdapter(context!!, articulos, 1)
-        //> listAlternante!!.adapter = adpater
+    private fun ObtenerColumnas(): Array<String>{
+        return arrayOf("Alternante", "Cpdnew", "CodBar", "Motor", "Saldo")
     }
 }
