@@ -146,4 +146,6 @@
         android:text="CONSULTAR"
         android:textSize="30sp"
         tools:ignore="RtlCompat" />
+
+    <include layout="@layout/motor_alert_dialog"/>
 </FrameLayout>

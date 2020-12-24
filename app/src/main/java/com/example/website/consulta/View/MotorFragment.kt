@@ -3,27 +3,32 @@ package com.example.website.consulta.View
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.fragment.app.Fragment
 import com.example.website.consulta.Model.ConnectionDB
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
+import com.example.website.consulta.ViewModel.MotorFragmentViewModel
 import java.sql.CallableStatement
 import java.util.*
 import kotlin.collections.ArrayList
 
 class MotorFragment : Fragment() {
+
     private var mParam1: String? = null
     private var mParam2: String? = null
     private var txtMotor: EditText? = null
     private var txtCodProd: EditText? = null
     private var btnConsultar: Button? = null
-    private var tableLaout: TableLayout? = null
+    private var tableLayout: TableLayout? = null
+    private var tableLayoutMotor: TableLayout? = null
+    private lateinit var motorFragmentViewModel: MotorFragmentViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -40,67 +45,73 @@ class MotorFragment : Fragment() {
         return view
     }
 
-    private fun InitializeComponents(view: View){
-        txtMotor = view.findViewById<EditText>(R.id.txtMotor)
-        txtCodProd = view.findViewById<EditText>(R.id.txtCodProd)
+    private fun InitializeComponents(view: View) {
+        txtMotor = view.findViewById(R.id.txtMotor)
+        txtCodProd = view.findViewById(R.id.txtCodProd)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
-        tableLaout = view.findViewById(R.id.tableLayoutArticulos)
+        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
+        tableLayoutMotor = view.findViewById(R.id.tableLayoutMotores)
+
+        motorFragmentViewModel = MotorFragmentViewModel()
     }
 
-    private fun InitializeEvents(){
+    private fun InitializeEvents() {
         btnConsultar?.setOnClickListener(btnConsultar_OnClickListener)
     }
 
-    @Throws(Exception::class)
-    private fun ConsultarArticulo() {
-        val procedure = "{call usp_AndroidObtenerArticulosporProdMotor (?,?)}"
-        val callStatment: CallableStatement = ConnectionDB.Conexion().prepareCall(procedure)
-        callStatment.setString(1, txtCodProd?.getText().toString())
-        callStatment.setString(2, txtMotor?.getText().toString())
-        val rs = callStatment.executeQuery()
-        val lstArticulo: ArrayList<Articulo?> = ArrayList()
-        while (rs.next()) {
-            val articulo = Articulo()
-            articulo.codbar = rs.getString("codbar")
-            articulo.campar = rs.getString("campar").toInt()
-            articulo.unimed = rs.getString("unimed")
-            articulo.motor = rs.getString("motor")
-            articulo.alternante = rs.getString("alternante")
-            articulo.cpdnew = rs.getString("cpdnew")
-            articulo.totSaldo = rs.getString("totsaldo").toInt()
-            lstArticulo.add(articulo)
-        }
-        CargarDataListView(lstArticulo, ArrayList(), 1)
+    private var btnConsultar_OnClickListener = View.OnClickListener {
+        val lstMotor = motorFragmentViewModel.ObtenerMotores(txtCodProd?.text.toString(), txtMotor?.text.toString())
+        motorFragmentViewModel.CargarDataShowAlert(context!!, tableLayoutMotor!!, ObtenerColumnasMotor(), lstMotor)
+
+        val alert = AlertDialog.Builder(context)
+        val your_view: View = LayoutInflater.from(context).inflate(R.layout.motor_alert_dialog, null)
+        alert.setView(your_view)
     }
 
-    @Throws(Exception::class)
+    private fun ObtenerColumnasMotor(): Array<String> {
+        return arrayOf("Marca", "Motor", "Cili1")
+    }
+
+    private fun ConsultarArticulo() {
+        val lstArticulo = motorFragmentViewModel.ObtenerArticulosXMotorCodProd(txtCodProd?.text.toString(), txtMotor?.text.toString())
+        motorFragmentViewModel.CargarDataLayaoutArticulos(context!!, tableLayout!!, ObtenerColumnasArticulos(), lstArticulo)
+    }
+
+    private fun ObtenerColumnasArticulos(): Array<String> {
+        return arrayOf("CpdNew", "Alternante", "CodBar", "UM", "CAN", "Sal")
+    }
+
     private fun ConsultaMotor() {
-        val procedure = "{call usp_AndroidSelectObtenerMotoresporMantMotores(?,?)}"
-        val callStatment: CallableStatement = ConnectionDB.Conexion().prepareCall(procedure)
-        callStatment.setString(1, txtCodProd?.getText().toString())
-        callStatment.setString(2, txtMotor?.getText().toString())
-        val rs = callStatment.executeQuery()
-        val lstMotor: ArrayList<Motor?> = ArrayList<Motor?>()
-        var motor = Motor()
-        motor.marca = "Marca"
-        motor.motor = "Motor"
-        motor.cili1 = "Cili1"
-        lstMotor.add(motor)
-        while (rs.next()) {
-            motor = Motor()
-            motor.marca = rs.getString("marcavehi")
-            motor.motor = rs.getString("motor")
-            motor.cili1 = rs.getString("cili1")
+        try {
+            val procedure = "{call usp_AndroidSelectObtenerMotoresporMantMotores(?,?)}"
+            val callStatment: CallableStatement = ConnectionDB.Conexion().prepareCall(procedure)
+            callStatment.setString(1, txtCodProd?.getText().toString())
+            callStatment.setString(2, txtMotor?.getText().toString())
+            val rs = callStatment.executeQuery()
+            val lstMotor: ArrayList<Motor?> = ArrayList<Motor?>()
+            var motor = Motor()
+            motor.marca = "Marca"
+            motor.motor = "Motor"
+            motor.cili1 = "Cili1"
             lstMotor.add(motor)
+            while (rs.next()) {
+                motor = Motor()
+                motor.marca = rs.getString("marcavehi")
+                motor.motor = rs.getString("motor")
+                motor.cili1 = rs.getString("cili1")
+                lstMotor.add(motor)
+            }
+            CargarDataListView(ArrayList(), lstMotor, 2)
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
-        CargarDataListView(ArrayList(), lstMotor, 2)
     }
 
     private fun CargarDataListView(lstArticulo: ArrayList<Articulo?>, lstMotor: ArrayList<Motor?>, acces: Int) {
         val adapter: MasterAdapter<*>
         if (acces == 1) {
             adapter = MasterAdapter(context!!, lstArticulo, 3)
-            listMotores!!.adapter = adapter
+            //> listMotores!!.adapter = adapter
         } else {
             adapter = MasterAdapter(context!!, lstMotor, 4)
             showAlertDialog(adapter)

@@ -52,7 +52,7 @@ class AlternanteFragment : Fragment() {
         btnConsultar!!.setOnClickListener(btnConsultar_OnClickListener)
     }
 
-    private var btnConsultar_OnClickListener = View.OnClickListener {
+     private var btnConsultar_OnClickListener = View.OnClickListener {
         val lstArticulos = alternanteFragmentViewModel.ObtenerArticulosXAlternante(txtAlternante?.text.toString())
         if(context != null && tableLayout != null){
             alternanteFragmentViewModel.CargarDataArticulosXAlternante(context!!, tableLayout!!, ObtenerColumnas(), lstArticulos)

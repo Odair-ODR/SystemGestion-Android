@@ -17,6 +17,5 @@ class Inicio : AppCompatActivity() {
         btnconsu = findViewById(R.id.btnconsu)
         btnmoto = findViewById(R.id.btnmoto)
         btnconsu?.setOnClickListener(View.OnClickListener { startActivity(Intent(this@Inicio, Principal::class.java)) })
-        btnmoto?.setOnClickListener(View.OnClickListener { startActivity(Intent(this@Inicio, Motores::class.java)) })
     }
 }
