@@ -1,151 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".View.MotorFragment">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <EditText
-                android:id="@+id/txtCodProd"
-                android:layout_width="140dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="20dp"
-                android:focusable="true"
-                android:hint="codprod"
-                android:inputType="number"
-                android:padding="10dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="14dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="14dp"
-                android:textSize="18dp" />
-
-            <EditText
-                android:id="@+id/txtMotor"
-                android:layout_width="225dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginRight="0dp"
-                android:layout_marginBottom="20dp"
-                android:focusable="true"
-                android:hint="Motor"
-                android:padding="10dp"
-                android:paddingLeft="12dp"
-                android:paddingTop="14dp"
-                android:paddingRight="12dp"
-                android:paddingBottom="14dp"
-                android:textSize="18dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/txtColumn1"
-                android:layout_width="110dp"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="5dp"
-                android:text="CPDNEW"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="1dp"
-                android:paddingRight="3dp"
-                android:text="ALTERNANTE"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:paddingLeft="8dp"
-                android:paddingRight="7dp"
-                android:text="CODBAR"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
-                android:paddingLeft="7dp"
-                android:paddingRight="7dp"
-                android:text="UM"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="2dp"
-                android:paddingRight="2dp"
-                android:text="CAN"
-                android:textColor="@color/colorRed" />
-
-            <TextView
-                android:id="@+id/txtColumn7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:text="SAL"
-                android:textColor="@color/colorRed" />
-        </LinearLayout>
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true">
-
-                <TableLayout
-                    android:id="@+id/tableLayoutArticulos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="0dp" />
-            </HorizontalScrollView>
-        </ScrollView>
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/btnConsultarFra"
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/solo_button_radius"
-        android:padding="15dp"
-        android:text="CONSULTAR"
-        android:textSize="30sp"
-        tools:ignore="RtlCompat" />
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <include layout="@layout/motor_alert_dialog"/>
-</FrameLayout>
+        <EditText
+            android:id="@+id/txtCodProd"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="20dp"
+            android:focusable="true"
+            android:hint="@string/hint_codprod"
+            android:inputType="number"
+            android:padding="10dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="14dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="14dp"
+            android:textSize="18sp" />
+
+        <EditText
+            android:id="@+id/txtMotor"
+            android:layout_width="225dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginRight="0dp"
+            android:layout_marginBottom="20dp"
+            android:focusable="true"
+            android:hint="@string/hint_motor"
+            android:padding="10dp"
+            android:paddingLeft="12dp"
+            android:paddingTop="14dp"
+            android:paddingRight="12dp"
+            android:paddingBottom="14dp"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnConsultarFra"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/tableLayoutArticulos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp" />
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <include
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/merge_button_consultar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

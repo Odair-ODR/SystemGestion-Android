@@ -11,8 +11,8 @@ class AlternanteFragmentRepositoryImp : IAlternanteFragmentRepository {
             val procedure = "{call AdroidSelectObtenerArticulosporAlternante (?)}"
             val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
+            pc.setString(1, alternante)
             val rs = pc.executeQuery()
-
             var articulo: Articulo
             while (rs.next()) {
                 articulo = Articulo()

@@ -33,5 +33,10 @@
     <string name="nombre">NOMBRE</string>
     <string name="direccion">DIRECCION</string>
     <string name="items">ITEMS DE VENTA</string>
+    <string name="hint_motor">Motor</string>
+    <string name="hint_codbar">CodBar</string>
+    <string name="text_consultar">CONSULTAR</string>
+    <string name="hint_alternante">Alternante</string>
+    <string name="hint_codprod">codprod</string>
     <!--***********-->
 </resources>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,10 +8,15 @@
     tools:context=".View.AlternanteFragment">
 
     <LinearLayout
+        android:id="@+id/linLay1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <!--android:backgroundTint="@drawable/text_redius"-->
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <EditText
             android:id="@+id/txtAlternante"
             android:layout_width="match_parent"
@@ -20,44 +26,40 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             android:focusable="true"
-            android:hint="Alternante"
+            android:hint="@string/hint_alternante"
             android:padding="10dp"
             android:paddingLeft="12dp"
             android:paddingTop="14dp"
             android:paddingRight="12dp"
             android:paddingBottom="14dp"
-            android:textSize="18dp" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="0dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fillViewport="true">
-
-                <TableLayout
-                    android:id="@+id/tableLayoutArticulos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="0dp"/>
-            </HorizontalScrollView>
-        </ScrollView>
+            android:textSize="18sp" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnConsultarFra"
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="0dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnConsultarFra"
+        app:layout_constraintTop_toBottomOf="@+id/linLay1">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/tableLayoutArticulos"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp" />
+        </HorizontalScrollView>
+    </ScrollView>
+
+    <include
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="18dp"
-        android:background="@drawable/solo_button_radius"
-        android:padding="15dp"
-        android:text="CONSULTAR"
-        android:textSize="30sp"
-        android:layout_gravity="bottom"/>
-</FrameLayout>
+        layout="@layout/merge_button_consultar" />
+</androidx.constraintlayout.widget.ConstraintLayout>

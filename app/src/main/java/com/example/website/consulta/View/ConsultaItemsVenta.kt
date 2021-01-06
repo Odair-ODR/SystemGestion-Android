@@ -56,16 +56,13 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
     }
 
     private fun CargarArticulosFactura() {
-        articuloViewModel = ViewModelProviders.of(this).get(ArticuloViewModel::class.java)
+        /*articuloViewModel = ViewModelProviders.of(this).get(ArticuloViewModel::class.java)
         articuloViewModel.ObtenerArticulosFactura(txtCodbar.text.toString(), txtAlternante.text.toString())
                 .observe(this, Observer { lstArticulo: List<Articulo> ->
                     Log.w("Codbar : ", lstArticulo.get(0).codbar)
                     articuloViewModel.AsignarDataArticulosEnTableAdapter(this@ConsultaItemsVenta, tlArticulos, ObtenerColumnas(), lstArticulo)
-                })
-    }
-
-    private fun ObtenerColumnas(): Array<String>{
-        val columnas = arrayOf("Codbar", "Alternante", "Descripción", "Saldo")
-        return columnas
+                })*/
+        articuloViewModel = ArticuloViewModel(this@ConsultaItemsVenta)
+        articuloViewModel.execute(txtCodbar.text.toString(), txtAlternante.text.toString(), tlArticulos)
     }
 }

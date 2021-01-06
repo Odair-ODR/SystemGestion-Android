@@ -7,16 +7,14 @@ import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.TableLayout
 import androidx.fragment.app.Fragment
-import com.example.website.consulta.Model.ConnectionDB
-import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.MotorFragmentViewModel
-import java.sql.CallableStatement
-import java.util.*
-import kotlin.collections.ArrayList
 
 class MotorFragment : Fragment() {
 
@@ -26,7 +24,6 @@ class MotorFragment : Fragment() {
     private var txtCodProd: EditText? = null
     private var btnConsultar: Button? = null
     private var tableLayout: TableLayout? = null
-    private var tableLayoutMotor: TableLayout? = null
     private lateinit var motorFragmentViewModel: MotorFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,9 +47,6 @@ class MotorFragment : Fragment() {
         txtCodProd = view.findViewById(R.id.txtCodProd)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
         tableLayout = view.findViewById(R.id.tableLayoutArticulos)
-        tableLayoutMotor = view.findViewById(R.id.tableLayoutMotores)
-
-        motorFragmentViewModel = MotorFragmentViewModel()
     }
 
     private fun InitializeEvents() {
@@ -60,62 +54,10 @@ class MotorFragment : Fragment() {
     }
 
     private var btnConsultar_OnClickListener = View.OnClickListener {
-        val lstMotor = motorFragmentViewModel.ObtenerMotores(txtCodProd?.text.toString(), txtMotor?.text.toString())
-        motorFragmentViewModel.CargarDataShowAlert(context!!, tableLayoutMotor!!, ObtenerColumnasMotor(), lstMotor)
-
-        val alert = AlertDialog.Builder(context)
-        val your_view: View = LayoutInflater.from(context).inflate(R.layout.motor_alert_dialog, null)
-        alert.setView(your_view)
-    }
-
-    private fun ObtenerColumnasMotor(): Array<String> {
-        return arrayOf("Marca", "Motor", "Cili1")
-    }
-
-    private fun ConsultarArticulo() {
-        val lstArticulo = motorFragmentViewModel.ObtenerArticulosXMotorCodProd(txtCodProd?.text.toString(), txtMotor?.text.toString())
-        motorFragmentViewModel.CargarDataLayaoutArticulos(context!!, tableLayout!!, ObtenerColumnasArticulos(), lstArticulo)
-    }
-
-    private fun ObtenerColumnasArticulos(): Array<String> {
-        return arrayOf("CpdNew", "Alternante", "CodBar", "UM", "CAN", "Sal")
-    }
-
-    private fun ConsultaMotor() {
-        try {
-            val procedure = "{call usp_AndroidSelectObtenerMotoresporMantMotores(?,?)}"
-            val callStatment: CallableStatement = ConnectionDB.Conexion().prepareCall(procedure)
-            callStatment.setString(1, txtCodProd?.getText().toString())
-            callStatment.setString(2, txtMotor?.getText().toString())
-            val rs = callStatment.executeQuery()
-            val lstMotor: ArrayList<Motor?> = ArrayList<Motor?>()
-            var motor = Motor()
-            motor.marca = "Marca"
-            motor.motor = "Motor"
-            motor.cili1 = "Cili1"
-            lstMotor.add(motor)
-            while (rs.next()) {
-                motor = Motor()
-                motor.marca = rs.getString("marcavehi")
-                motor.motor = rs.getString("motor")
-                motor.cili1 = rs.getString("cili1")
-                lstMotor.add(motor)
-            }
-            CargarDataListView(ArrayList(), lstMotor, 2)
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }
-
-    private fun CargarDataListView(lstArticulo: ArrayList<Articulo?>, lstMotor: ArrayList<Motor?>, acces: Int) {
-        val adapter: MasterAdapter<*>
-        if (acces == 1) {
-            adapter = MasterAdapter(context!!, lstArticulo, 3)
-            //> listMotores!!.adapter = adapter
-        } else {
-            adapter = MasterAdapter(context!!, lstMotor, 4)
-            showAlertDialog(adapter)
-        }
+        motorFragmentViewModel = MotorFragmentViewModel(context!!)
+        motorFragmentViewModel.tableLayoutArticulo = tableLayout
+        motorFragmentViewModel.txtMotor = txtMotor
+        motorFragmentViewModel.execute(txtCodProd?.text.toString(), txtMotor?.text.toString())
     }
 
     fun showAlertDialog(adapter: ArrayAdapter<*>) {
@@ -132,7 +74,7 @@ class MotorFragment : Fragment() {
                 try {
                     dialog.dismiss()
                     txtMotor?.setText(motor.motor)
-                    ConsultarArticulo()
+                    //> ConsultarArticulo()
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

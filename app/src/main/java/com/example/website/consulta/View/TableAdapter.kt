@@ -1,20 +1,23 @@
 package com.example.website.consulta.View
 
+import android.app.AlertDialog
 import android.content.Context
-import android.graphics.Color
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
-import kotlin.collections.List
+
 
 class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     private var header: Array<String>? = null
     private var data: List<Articulo>? = null
+    private lateinit var row: TableRow
     private var indexC: Int = 0
 
     internal class ViewHolder {
@@ -41,23 +44,25 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         return TableRow(context)
     }
 
-    private fun NewCell(): TextView? {
+    private fun NewCell(): TextView {
         val textCell = TextView(context)
-        textCell?.gravity = Gravity.CENTER
-        textCell?.textSize = 13F
+        textCell.gravity = Gravity.CENTER
+        textCell.textSize = 13F
         return textCell
     }
 
     private fun CreateHeader() {
-        val tableRow = NewRow()
-        var textCell: TextView?
-        while (indexC < header?.size ?: 0) {
-            textCell = NewCell()
-            textCell?.setText(header?.get(indexC++))
-            HeaderCellStyle(textCell)
-            tableRow?.addView(textCell, NewTableRowParams())
+        if (tableLayout.childCount == 0) {
+            val tableRow = NewRow()
+            var textCell: TextView?
+            while (indexC < header?.size ?: 0) {
+                textCell = NewCell()
+                textCell.setText(header?.get(indexC++))
+                HeaderCellStyle(textCell)
+                tableRow.addView(textCell, NewTableRowParams())
+            }
+            tableLayout.addView(tableRow)
         }
-        tableLayout.addView(tableRow)
     }
 
     private fun HeaderCellStyle(textCell: TextView?) {
@@ -74,20 +79,20 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         viewHolder.item3?.setBackgroundResource(R.color.colorLight1)
         viewHolder.item4?.setPadding(0, 8, 0, 8)
         viewHolder.item4?.setBackgroundResource(R.color.colorLight1)
-        viewHolder.item5?.setPadding(0,8, 0, 8)
+        viewHolder.item5?.setPadding(0, 8, 0, 8)
         viewHolder.item5?.setBackgroundResource(R.color.colorLight1)
-        viewHolder.item6?.setPadding(0,8,0,8)
+        viewHolder.item6?.setPadding(0, 8, 0, 8)
         viewHolder.item6?.setBackgroundResource(R.color.colorLight1)
-        viewHolder.item7?.setPadding(0,8,0, 8)
+        viewHolder.item7?.setPadding(0, 8, 0, 8)
         viewHolder.item7?.setBackgroundResource(R.color.colorLight1)
     }
 
     private fun LoadDataTableArticulo() {
+        BorrarFilas()
         var viewHolder: ViewHolder? = null
         var tableRow: TableRow
         for (row in data!!) {
             tableRow = NewRow()
-
             viewHolder = ViewHolder()
             viewHolder.item1 = NewCell()
             viewHolder.item2 = NewCell()
@@ -111,13 +116,14 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     }
 
     private fun NewTableRowParams(): TableRow.LayoutParams {
-        var params = TableRow.LayoutParams()
-        params.setMargins(1, 1, 1, 1)
+        val params = TableRow.LayoutParams()
+        params.setMargins(1, 2, 1, 2)
         params.weight = 1F
         return params
     }
 
     fun AddDataArticuloXCodbar(data: List<Articulo>) {
+        BorrarFilas()
         var viewHolder: ViewHolder
         var tableRow: TableRow
         data.forEach { item ->
@@ -148,7 +154,8 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         }
     }
 
-    fun AddDataArticuloXAlternante(data: List<Articulo>){
+    fun AddDataArticuloXAlternante(data: List<Articulo>) {
+        BorrarFilas()
         var viewHolder: ViewHolder
         var tableRow: TableRow
         data.forEach { item ->
@@ -161,8 +168,8 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item5 = NewCell()
 
             RowCellStyle(viewHolder)
-            viewHolder.item1?.setText(item.cpdnew)
-            viewHolder.item2?.setText(item.alternante)
+            viewHolder.item1?.setText(item.alternante)
+            viewHolder.item2?.setText(item.cpdnew)
             viewHolder.item3?.setText(item.codbar)
             viewHolder.item4?.setText(item.motor)
             viewHolder.item5?.setText(item.totSaldo.toString())
@@ -176,11 +183,13 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         }
     }
 
-    fun AddDataMotor(data: ArrayList<Motor>){
+    fun AddDataMotor(data: ArrayList<Motor>, alertDialog: AlertDialog, txtMotor: EditText) {
+        BorrarFilas()
         var viewHolder: ViewHolder
         var tableRow: TableRow
         data.forEach { item ->
             tableRow = NewRow()
+            Row_OnClickListenerMotor(tableRow, alertDialog, txtMotor)
             viewHolder = ViewHolder()
             viewHolder.item1 = NewCell()
             viewHolder.item2 = NewCell()
@@ -198,7 +207,21 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         }
     }
 
+    private fun Row_OnClickListenerMotor(tableRow: TableRow, alertDialog: AlertDialog, txtMotor: EditText) {
+        tableRow.isClickable = true
+        tableRow.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(view: View) {
+                val tablerow = view as TableRow
+                val sample = tablerow.getChildAt(1) as TextView
+                val motor = sample.text.toString()
+                txtMotor.setText(motor)
+                alertDialog.dismiss()
+            }
+        })
+    }
+
     fun AddDataArticuloXMotorCodProd(data: List<Articulo>) {
+        BorrarFilas()
         var viewHolder: ViewHolder
         var tableRow: TableRow
         data.forEach { item ->
@@ -212,9 +235,9 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item6 = NewCell()
 
             RowCellStyle(viewHolder)
-            viewHolder.item3?.setText(item.cpdnew)
-            viewHolder.item1?.setText(item.alternante)
-            viewHolder.item2?.setText(item.codbar)
+            viewHolder.item1?.setText(item.cpdnew)
+            viewHolder.item2?.setText(item.alternante)
+            viewHolder.item3?.setText(item.codbar)
             viewHolder.item4?.setText(item.unimed)
             viewHolder.item5?.setText(item.campar.toString())
             viewHolder.item6?.setText(item.totSaldo.toString())
@@ -226,6 +249,14 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item5, NewTableRowParams())
             tableRow.addView(viewHolder.item6, NewTableRowParams())
             tableLayout.addView(tableRow)
+        }
+    }
+
+    private fun BorrarFilas() {
+        val count: Int = tableLayout.getChildCount()
+        for (i in 1 until count) {
+            val child: View = tableLayout.getChildAt(i)
+            if (child is TableRow) (child as ViewGroup).removeAllViews()
         }
     }
 }

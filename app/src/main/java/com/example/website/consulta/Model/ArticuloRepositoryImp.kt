@@ -31,4 +31,28 @@ class ArticuloRepositoryImp : IArticuloRepository {
         }
         return articuloLiveData
     }
+
+    override fun ObtenerArticulosFactura(codbar: String, alternante: String): ArrayList<Articulo> {
+        //> val procedure = ""
+        //> val dbConnection = ConnectionDB.Conexion()
+        //> val prepareCall = dbConnection.prepareCall(procedure)
+        //> prepareCall.setString(1, codbar)
+        //> prepareCall.setString(2, alternante)
+        //> val resulSet = prepareCall.executeQuery()
+        var lstArticulo: ArrayList<Articulo> = ArrayList()
+        try {
+            var articulo: Articulo? = null
+            if (1>0) {
+                articulo = Articulo()
+                articulo.codbar = "02.30"
+                articulo.alternante = "092-01"
+                articulo.descriArti = "motores de viela"
+                articulo.totSaldo = 90
+                lstArticulo.add(articulo)
+            }
+        } catch (ex: Exception) {
+            ex.stackTrace
+        }
+        return lstArticulo
+    }
 }

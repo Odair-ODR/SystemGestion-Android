@@ -6,16 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TableLayout
 import androidx.fragment.app.Fragment
-import com.example.website.consulta.Helpers.InitEventsControls
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.CodbarFragmentViewModel
 
-/**
- * A simple [Fragment] subclass.
- */
 class CodbarFragment : Fragment() {
     private var txtCodba: EditText? = null
     private var txtMotor: EditText? = null
@@ -23,9 +18,8 @@ class CodbarFragment : Fragment() {
     private lateinit var tableLayout: TableLayout
     private lateinit var codBarFragmentViewModel: CodbarFragmentViewModel
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+                              savedInstanceState: Bundle?): View {
         val view: View = inflater.inflate(R.layout.fragment_codbar, container, false)
-        codBarFragmentViewModel = CodbarFragmentViewModel()
         InitializeComponents(view)
         InitializeEvents()
         return view
@@ -36,7 +30,7 @@ class CodbarFragment : Fragment() {
         tableLayout = view.findViewById(R.id.tableLayoutArticulos)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
         txtMotor = view.findViewById(R.id.txtMotor)
-        tableLayout = view.findViewById(R.id.tableLayoutArticulos)!!
+        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
     }
 
     private fun InitializeEvents() {
@@ -44,11 +38,9 @@ class CodbarFragment : Fragment() {
     }
 
     private var btnConsular_OnClickListerner = View.OnClickListener {
-        val lstArticulo = codBarFragmentViewModel.ObtenerArticulosXCodbar(txtCodba?.text.toString())
-        context?.let { it1 -> codBarFragmentViewModel.CargarAticulosXCobar(it1, tableLayout, ObtenerColumns(), lstArticulo) }
-    }
-
-    private fun ObtenerColumns(): Array<String> {
-        return arrayOf("Alternante", "Campar", "Cpdnew", "Unimed", "Motor", "Saldo")
+        /*val lstArticulo = codBarFragmentViewModel.ObtenerArticulosXCodbar(txtCodba?.text.toString())
+        context?.let { it1 -> codBarFragmentViewModel.CargarAticulosXCobar(it1, tableLayout, ObtenerColumns(), lstArticulo) }*/
+        codBarFragmentViewModel = CodbarFragmentViewModel(context!!)
+        codBarFragmentViewModel.execute(txtCodba?.text.toString(), tableLayout)
     }
 }

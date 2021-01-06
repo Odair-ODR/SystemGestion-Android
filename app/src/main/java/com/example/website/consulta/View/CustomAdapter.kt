@@ -8,8 +8,8 @@ import android.widget.TextView
 import java.util.*
 
 class CustomAdapter(private val mActivity: Activity, d: ArrayList<*>) : BaseAdapter() {
-    private val mList: ArrayList<List>? = null
-    private var tempValues: List? = null
+    private val mList: ArrayList<Any>? = null
+    private var tempValues: Any? = null
     private val i = 0
     override fun getCount(): Int {
         if (mList != null) {
@@ -46,10 +46,10 @@ class CustomAdapter(private val mActivity: Activity, d: ArrayList<*>) : BaseAdap
             } else {
                 tempValues = null
                 tempValues = mList?.get(position)
-                holder.txtcodbar?.setText(tempValues!!.codbar)
+                /*holder.txtcodbar?.setText(tempValues!!.codbar)
                 holder.txtalternante?.setText(tempValues!!.alternante)
                 holder.txtdescripcion?.setText(tempValues!!.descripcion)
-                holder.txtsaldo?.setText(tempValues!!.saldo)
+                holder.txtsaldo?.setText(tempValues!!.saldo)*/
             }
         } catch (ex: Exception) {
             ex.printStackTrace()

@@ -13,4 +13,8 @@ class ArticuloObservable: BaseObservable() {
     fun obtenerArticulosFactura(codbar: String, alternante: String): MutableLiveData<List<Articulo>>{
         return articuloRespository.ObtenerArticulosFactuera(codbar, alternante)
     }
+
+    fun ObtenerArticulosFactura(codbar: String, alternante: String): ArrayList<Articulo>{
+        return articuloRespository.ObtenerArticulosFactura(codbar, alternante)
+    }
 }

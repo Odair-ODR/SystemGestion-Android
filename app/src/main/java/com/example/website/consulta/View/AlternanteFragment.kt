@@ -21,7 +21,7 @@ class AlternanteFragment : Fragment() {
     private var mParam1: String? = null
     private var mParam2: String? = null
     private var txtAlternante: EditText? = null
-    private var tableLayout: TableLayout? = null
+    private var tableLayoutArticulo: TableLayout? = null
     private var btnConsultar: Button? = null
     private lateinit var alternanteFragmentViewModel: AlternanteFragmentViewModel
 
@@ -43,9 +43,8 @@ class AlternanteFragment : Fragment() {
 
     private fun InitializeComponents(view: View){
         txtAlternante = view.findViewById(R.id.txtAlternante)
-        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
+        tableLayoutArticulo = view.findViewById(R.id.tableLayoutArticulos)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
-        alternanteFragmentViewModel = AlternanteFragmentViewModel()
     }
 
     private fun InitializeEvents(){
@@ -53,13 +52,11 @@ class AlternanteFragment : Fragment() {
     }
 
      private var btnConsultar_OnClickListener = View.OnClickListener {
-        val lstArticulos = alternanteFragmentViewModel.ObtenerArticulosXAlternante(txtAlternante?.text.toString())
+        /*val lstArticulos = alternanteFragmentViewModel.ObtenerArticulosXAlternante(txtAlternante?.text.toString())
         if(context != null && tableLayout != null){
             alternanteFragmentViewModel.CargarDataArticulosXAlternante(context!!, tableLayout!!, ObtenerColumnas(), lstArticulos)
-        }
-    }
-
-    private fun ObtenerColumnas(): Array<String>{
-        return arrayOf("Alternante", "Cpdnew", "CodBar", "Motor", "Saldo")
+        }*/
+         alternanteFragmentViewModel = AlternanteFragmentViewModel(context!!)
+         alternanteFragmentViewModel.execute(txtAlternante?.text.toString(), tableLayoutArticulo)
     }
 }
