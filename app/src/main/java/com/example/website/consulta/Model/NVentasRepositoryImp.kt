@@ -8,14 +8,14 @@ class NVentasRepositoryImp : INVentasRepository {
 
     override fun ObtenerTiendas(): ArrayList<String> {
         try {
-            val procedure = ""
+            val procedure = "call ObtenerTiendasHabilitadas"
             val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             val st: ResultSet = pc.executeQuery()
             val tiendas: ArrayList<String> = ArrayList()
             while (st.next()) {
                 tiendas.add(
-                    st.getInt("").toString()
+                        st.getString("nomTienda")
                 )
             }
             return tiendas
@@ -24,7 +24,21 @@ class NVentasRepositoryImp : INVentasRepository {
         }
     }
 
-    override fun ObtenerTipoDocumento(): Array<String> {
-        return arrayOf("")
+    override fun ObtenerTipoDocumento(): ArrayList<String> {
+        try {
+            val procedure = "call ObtenerTiendasHabilitadas()"
+            val connection = ConnectionDB.Conexion()
+            val pc = connection.prepareCall(procedure)
+            val st: ResultSet = pc.executeQuery()
+            val tiendas: ArrayList<String> = ArrayList()
+            while (st.next()) {
+                tiendas.add(
+                        st.getInt("nomTienda").toString()
+                )
+            }
+            return tiendas
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 }

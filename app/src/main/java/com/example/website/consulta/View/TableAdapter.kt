@@ -35,6 +35,11 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         CreateHeader()
     }
 
+    fun AddHeaderArticulo(header: Array<String>) {
+        this.header = header
+        CreateHeaderArticulo()
+    }
+
     fun AddDataArticuloVenta(data: List<Articulo>?) {
         this.data = data
         LoadDataTableArticulo()
@@ -47,6 +52,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     private fun NewCell(): TextView {
         val textCell = TextView(context)
         textCell.gravity = Gravity.CENTER
+        textCell.setPadding(2,0,2,0)
         textCell.textSize = 13F
         return textCell
     }
@@ -57,6 +63,21 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             var textCell: TextView?
             while (indexC < header?.size ?: 0) {
                 textCell = NewCell()
+                textCell.setText(header?.get(indexC++))
+                HeaderCellStyle(textCell)
+                tableRow.addView(textCell, NewTableRowParams())
+            }
+            tableLayout.addView(tableRow)
+        }
+    }
+
+    private fun CreateHeaderArticulo() {
+        if (tableLayout.childCount == 0) {
+            val tableRow = NewRow()
+            var textCell: TextView?
+            while (indexC < header?.size ?: 0) {
+                textCell = NewCell()
+                textCell.visibility = if(indexC == 0) View.GONE else View.VISIBLE
                 textCell.setText(header?.get(indexC++))
                 HeaderCellStyle(textCell)
                 tableRow.addView(textCell, NewTableRowParams())
@@ -95,14 +116,21 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow = NewRow()
             viewHolder = ViewHolder()
             viewHolder.item1 = NewCell()
+            viewHolder.item1?.visibility = View.GONE
             viewHolder.item2 = NewCell()
             viewHolder.item3 = NewCell()
             viewHolder.item4 = NewCell()
+            viewHolder.item5 = NewCell()
+            viewHolder.item6 = NewCell()
+            viewHolder.item7 = NewCell()
 
-            viewHolder.item1?.setText(row.codbar)
-            viewHolder.item2?.setText(row.alternante)
-            viewHolder.item3?.setText(row.descriArti)
-            viewHolder.item4?.setText(row.totSaldo.toString())
+            viewHolder.item1?.setText(row.idArticulo.toString())
+            viewHolder.item2?.setText(row.cpdold)
+            viewHolder.item3?.setText(row.superarti)
+            viewHolder.item4?.setText(row.marproarti)
+            viewHolder.item5?.setText(row.alternante)
+            viewHolder.item6?.setText(row.descriArti)
+            viewHolder.item7?.setText(row.precioVenta.toString())
 
             RowCellStyle(viewHolder)
 
@@ -110,6 +138,9 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item2, NewTableRowParams())
             tableRow.addView(viewHolder.item3, NewTableRowParams())
             tableRow.addView(viewHolder.item4, NewTableRowParams())
+            tableRow.addView(viewHolder.item5, NewTableRowParams())
+            tableRow.addView(viewHolder.item6, NewTableRowParams())
+            tableRow.addView(viewHolder.item7, NewTableRowParams())
 
             tableLayout.addView(tableRow)
         }
@@ -136,6 +167,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item4 = NewCell()
             viewHolder.item5 = NewCell()
             viewHolder.item6 = NewCell()
+            viewHolder.item7 = NewCell()
 
             RowCellStyle(viewHolder)
             viewHolder.item1?.setText(item.alternante)
@@ -144,6 +176,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item4?.setText(item.unimed)
             viewHolder.item5?.setText(item.motor)
             viewHolder.item6?.setText(item.totSaldo.toString())
+            viewHolder.item7?.setText(item.precioVenta.toString())
 
             tableRow.addView(viewHolder.item1, NewTableRowParams())
             tableRow.addView(viewHolder.item2, NewTableRowParams())
@@ -151,6 +184,8 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item4, NewTableRowParams())
             tableRow.addView(viewHolder.item5, NewTableRowParams())
             tableRow.addView(viewHolder.item6, NewTableRowParams())
+            tableRow.addView(viewHolder.item7, NewTableRowParams())
+
             tableLayout.addView(tableRow)
         }
     }
@@ -167,6 +202,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item3 = NewCell()
             viewHolder.item4 = NewCell()
             viewHolder.item5 = NewCell()
+            viewHolder.item6 = NewCell()
 
             RowCellStyle(viewHolder)
             viewHolder.item1?.setText(item.alternante)
@@ -174,12 +210,14 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item3?.setText(item.codbar)
             viewHolder.item4?.setText(item.motor)
             viewHolder.item5?.setText(item.totSaldo.toString())
+            viewHolder.item6?.setText(item.precioVenta.toString())
 
             tableRow.addView(viewHolder.item1, NewTableRowParams())
             tableRow.addView(viewHolder.item2, NewTableRowParams())
             tableRow.addView(viewHolder.item3, NewTableRowParams())
             tableRow.addView(viewHolder.item4, NewTableRowParams())
             tableRow.addView(viewHolder.item5, NewTableRowParams())
+            tableRow.addView(viewHolder.item6, NewTableRowParams())
             tableLayout.addView(tableRow)
         }
     }
@@ -234,6 +272,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item4 = NewCell()
             viewHolder.item5 = NewCell()
             viewHolder.item6 = NewCell()
+            viewHolder.item7 = NewCell()
 
             RowCellStyle(viewHolder)
             viewHolder.item1?.setText(item.cpdnew)
@@ -242,6 +281,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item4?.setText(item.unimed)
             viewHolder.item5?.setText(item.campar.toString())
             viewHolder.item6?.setText(item.totSaldo.toString())
+            viewHolder.item7?.setText(item.precioVenta.toString())
 
             tableRow.addView(viewHolder.item1, NewTableRowParams())
             tableRow.addView(viewHolder.item2, NewTableRowParams())
@@ -249,6 +289,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item4, NewTableRowParams())
             tableRow.addView(viewHolder.item5, NewTableRowParams())
             tableRow.addView(viewHolder.item6, NewTableRowParams())
+            tableRow.addView(viewHolder.item7, NewTableRowParams())
             tableLayout.addView(tableRow)
         }
     }

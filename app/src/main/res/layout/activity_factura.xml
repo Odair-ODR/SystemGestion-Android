@@ -12,13 +12,13 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:text="Tipo"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/cboTipo"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
+        app:layout_constraintVertical_bias="0.01999998" />
 
     <Spinner
         android:id="@+id/cboTipo"
@@ -30,7 +30,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.045" />
+        app:layout_constraintVertical_bias="0.017777" />
 
     <Spinner
         android:id="@+id/cboTienda"
@@ -55,7 +55,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginBottom="11dp"
         android:text="Tenda"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/cboTienda"
         app:layout_constraintEnd_toStartOf="@+id/cboTienda"
@@ -69,7 +69,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:textSize="18dp"
+        android:textSize="16sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,7 +85,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Dirección"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtDireccion"
         app:layout_constraintEnd_toStartOf="@+id/txtDireccion"
@@ -100,6 +100,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cboTienda"
@@ -114,7 +115,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
         android:text="Nombre"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtNombre"
         app:layout_constraintEnd_toStartOf="@+id/txtNombre"
@@ -131,7 +132,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginBottom="8dp"
         android:text="R.U.C"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:textStyle="normal|bold"
         app:layout_constraintBottom_toBottomOf="@+id/txtRuc"
         app:layout_constraintEnd_toStartOf="@+id/txtRuc"
@@ -145,6 +146,7 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtRuc"
@@ -161,13 +163,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtDireccion"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintVertical_bias="0.039999999" />
 
     <Button
         android:id="@+id/btnGrabar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:background="@drawable/custom_button"
         android:text="Guardar"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -177,13 +179,25 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10"
         app:layout_constraintVertical_bias="0.053" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="429dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGrabar" />
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/btnItem"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true">
+
+            <TableLayout
+                android:id="@+id/tableLayoutArticulosFactura"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="0dp" />
+        </HorizontalScrollView>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

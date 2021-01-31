@@ -20,6 +20,7 @@ class CodbarFragmentRepositoryImp : ICodbarFragmentRepository {
                 it.unimed = rs.getString("unimed")
                 it.motor = rs.getString("motor")
                 it.totSaldo = rs.getInt("totSaldo")
+                it.precioVenta = rs.getDouble("precioVenta")
             })
         }
         return lstArticulo

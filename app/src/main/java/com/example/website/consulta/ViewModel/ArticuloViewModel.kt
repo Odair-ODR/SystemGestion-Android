@@ -25,11 +25,11 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
     private var articuloTableAdapter: TableAdapter? = null
     private lateinit var progresDialog: ProgressDialog
     private lateinit var tableLayoutArticulo: TableLayout
-    private val columnas = arrayOf("Codbar", "Alternante", "Descripción", "Saldo")
+    private val columnas = arrayOf("idArticulo", "Cpdold", "SuperArti", "Marca", "Alternante", "Descripción", "P.Venta")
 
     private fun AsignarDataArticulosEnTableAdapter(context: Context, tableLayout: TableLayout, columnas: Array<String>, lstArticulo: List<Articulo>) {
         ObtenerTableAdapter(context, tableLayout)
-        articuloTableAdapter?.AddHeader(columnas)
+        articuloTableAdapter?.AddHeaderArticulo(columnas)
         articuloTableAdapter?.AddDataArticuloVenta(lstArticulo)
     }
 
@@ -53,11 +53,22 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         progresDialog.setContentView(R.layout.loading_dialog)
     }
 
-    override fun doInBackground(vararg parameter: Any?): ArrayList<Articulo> {
+    override fun doInBackground(vararg parameter: Any?): ArrayList<Articulo>? {
         val codbar = parameter[0].toString()
         val alternante = parameter[1].toString()
         tableLayoutArticulo = parameter[2] as TableLayout
-        return articuloObservable.ObtenerArticulosFactura(codbar, alternante)
+        if(codbar.trim() != ""){
+            val cad: Array<String> = codbar.split('.' ).toTypedArray()
+            val marvehi: Int = cad[0].toInt()
+            val num: Int = cad[1].toInt();
+            val ini: Int = num - 30;
+            val fin: Int = num + 30;
+            return articuloObservable.ObtenerArticulosXCobar(marvehi, ini, fin)
+        }
+        else if (alternante.trim() != ""){
+            return articuloObservable.ObtenerArticulosXAlternante( alternante)
+        }
+        return null
     }
 
     override fun onPostExecute(lstArticulo: ArrayList<Articulo>) {
@@ -66,7 +77,8 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         progresDialog.dismiss()
     }
 
-    fun RowArticuloFactura_OnClickListener() {
+
+    private fun RowArticuloFactura_OnClickListener() {
         var tableRow: TableRow
         for (oi in 1 until tableLayoutArticulo.childCount) {
             tableRow = tableLayoutArticulo.getChildAt(oi) as TableRow
@@ -90,14 +102,5 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
             it.putExtra("articulo", bundle)
         }
         consultaItemsVenta.setResult(1, intent)
-    }
-
-
-    fun ObtenerArticulosXIdArticulos() {
-        tableLayoutArticulo.callOnClick()
-    }
-
-    fun CargarActivityAnterior() {
-        consultaItemsVenta.onBackPressed()
     }
 }

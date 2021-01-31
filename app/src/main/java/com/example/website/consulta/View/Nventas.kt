@@ -2,16 +2,14 @@ package com.example.website.consulta.View
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
 import com.example.website.consulta.Model.ConnectionDB
+import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
-import com.example.website.consulta.View.Nventas
 import com.example.website.consulta.ViewModel.NVentasViewModel
-import com.example.website.consulta.dummy.Tienda
 import java.sql.Connection
-import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Types
 import java.util.*
@@ -26,6 +24,7 @@ class Nventas : AppCompatActivity() {
     private var btnGrabar: Button? = null
     private var btnItem: Button? = null
     private lateinit var nVentasViewModel: NVentasViewModel
+    private lateinit var tableLayoutArticuloFactura: TableLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +43,9 @@ class Nventas : AppCompatActivity() {
         btnGrabar = findViewById(R.id.btnGrabar)
         btnItem = findViewById(R.id.btnItem)
         cboTienda = findViewById(R.id.cboTienda)
+        tableLayoutArticuloFactura = findViewById(R.id.tableLayoutArticulosFactura)
+
+        nVentasViewModel = NVentasViewModel(baseContext)
     }
 
     private fun InitializeEvents() {
@@ -93,8 +95,16 @@ class Nventas : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1) {
             val bundle = data?.extras!!.getBundle("articulo")
-            val param = bundle?.getInt("idArticulo")
-            Toast.makeText(baseContext, "Mensaje recibido : " + param.toString(), Toast.LENGTH_SHORT).show()
+            val idArticulo = bundle?.getInt("idArticulo")
+            val articulo: Articulo? = nVentasViewModel.ObtenerArticuloXIdArticulo(idArticulo!!)
+            nVentasViewModel.CargarDataTableLayout(tableLayoutArticuloFactura, ArticulosFactura(articulo!!))
+            Toast.makeText(baseContext, "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun ArticulosFactura(articulo: Articulo): ArrayList<Articulo>{
+        return ArrayList<Articulo>().also {
+            it.add(articulo)
         }
     }
 

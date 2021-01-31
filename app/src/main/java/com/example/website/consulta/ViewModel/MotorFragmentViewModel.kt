@@ -22,7 +22,7 @@ class MotorFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayLi
     private var alertDialog: AlertDialog? = null
     private var tableLayoutMotor: TableLayout? = null
     private val headersMotor = arrayOf("Marca", "Motor", "Cili1")
-    private val headersArticulo = arrayOf("CpdNew", "Alternante", "CodBar", "UM", "Can", "Sal")
+    private val headersArticulo = arrayOf("CpdNew", "Alternante", "CodBar", "UM", "Can", "Sal", "P.Venta")
     private var codProd: String = ""
 
     var tableLayoutArticulo: TableLayout? = null

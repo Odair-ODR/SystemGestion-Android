@@ -4,5 +4,5 @@ import com.example.website.consulta.dummy.Tienda
 
 interface INVentasRepository {
     fun ObtenerTiendas(): ArrayList<String>
-    fun ObtenerTipoDocumento(): Array<String>
+    fun ObtenerTipoDocumento(): ArrayList<String>
 }
