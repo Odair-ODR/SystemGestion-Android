@@ -52,7 +52,7 @@ class splash : AppCompatActivity() {
                 Toast.makeText(applicationContext, "usuario  y/o contraseña incorrecta", Toast.LENGTH_SHORT).show()
             }
         } catch (ex: Exception) {
-            Toast.makeText(applicationContext, "Cierre la aplicación y vuelva a ingresar", Toast.LENGTH_SHORT).show()
+            Toast.makeText(applicationContext, "error de conexión, vuelva a intentarlo", Toast.LENGTH_SHORT).show()
         }
     }
 }

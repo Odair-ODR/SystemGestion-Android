@@ -21,6 +21,7 @@ class AlternanteFragmentRepositoryImp : IAlternanteFragmentRepository {
                 articulo.cpdnew = rs.getString("cpdnew")
                 articulo.motor = rs.getString("Motor")
                 articulo.totSaldo = rs.getString("totsaldo").toInt()
+                articulo.precioVenta = rs.getDouble("precioVenta")
                 lstArticulo.add(articulo)
             }
         } catch (ex: Exception) {

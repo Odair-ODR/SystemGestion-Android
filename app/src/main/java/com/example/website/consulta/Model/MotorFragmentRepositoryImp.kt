@@ -47,6 +47,7 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
                 articulo.alternante = rs.getString("alternante")
                 articulo.cpdnew = rs.getString("cpdnew")
                 articulo.totSaldo = rs.getInt("totSaldo")
+                articulo.precioVenta = rs.getDouble("precioVenta")
                 lstArticulo.add(articulo)
             }
         }

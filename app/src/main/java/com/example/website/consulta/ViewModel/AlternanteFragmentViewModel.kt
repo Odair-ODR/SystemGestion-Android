@@ -14,7 +14,7 @@ class AlternanteFragmentViewModel(val context: Context): AsyncTask<Any, Any, Arr
     private var tableAdapter: TableAdapter? = null
     private var tableLayoutArticulo: TableLayout? = null
     private var progresDialog: ProgressDialog? = null
-    private val columns: Array<String> = arrayOf("Alternante", "Cpdnew", "CodBar", "Motor", "Saldo")
+    private val columns: Array<String> = arrayOf("Alternante", "Cpdnew", "CodBar", "Motor", "Saldo", "P.Venta")
 
     private fun ObtenerArticulosXAlternante(alternante: String): ArrayList<Articulo>{
         return  alternanterFragmentObserver.ObtenerArticulosXAlternante(alternante)

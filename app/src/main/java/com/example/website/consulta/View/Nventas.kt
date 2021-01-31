@@ -6,13 +6,18 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
 import com.example.website.consulta.Model.ConnectionDB
+import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
 import com.example.website.consulta.View.Nventas
+import com.example.website.consulta.ViewModel.ArticuloViewModel
+import com.example.website.consulta.ViewModel.NVentasViewModel
+import com.example.website.consulta.dummy.Tienda
 import java.sql.Connection
 import java.sql.PreparedStatement
 import java.sql.SQLException
 import java.sql.Types
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Nventas : AppCompatActivity() {
     private var cboTipo: Spinner? = null
@@ -22,6 +27,9 @@ class Nventas : AppCompatActivity() {
     private var txtDireccion: EditText? = null
     private var btnGrabar: Button? = null
     private var btnItem: Button? = null
+    private lateinit var nVentasViewModel: NVentasViewModel
+    private lateinit var tableLayoutArticuloFactura: TableLayout
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_factura)
@@ -39,6 +47,9 @@ class Nventas : AppCompatActivity() {
         btnGrabar = findViewById(R.id.btnGrabar)
         btnItem = findViewById(R.id.btnItem)
         cboTienda = findViewById(R.id.cboTienda)
+        tableLayoutArticuloFactura = findViewById(R.id.tableLayoutArticulosFactura)
+
+        nVentasViewModel = NVentasViewModel(baseContext)
     }
 
     private fun InitializeEvents() {
@@ -54,16 +65,8 @@ class Nventas : AppCompatActivity() {
 
     private fun CargarTienda() {
         try {
-            val procedure = "call ups_AndroidObtenerTiendasHabilitadas()"
-            val ps: PreparedStatement = ConnectionDB.Conexion().prepareCall(procedure)
-            val rs = ps.executeQuery()
-            val tienda = arrayOfNulls<String>(rs.row)
-            var index = 0
-            while (rs.next()) {
-                tienda[index] = rs.getString("idTienda")
-                index += 1
-            }
-            val adapter = ArrayAdapter(this, R.layout.spinner_item_editor, tienda)
+            val tiendas = nVentasViewModel.ObtenerTiendas()
+            val adapter = ArrayAdapter(this, R.layout.spinner_item_editor, tiendas)
             cboTienda!!.adapter = adapter
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -86,9 +89,27 @@ class Nventas : AppCompatActivity() {
             e.printStackTrace()
         }
     }
+
     private val btnItem_OnClickListener = View.OnClickListener {
         val inten = Intent(this@Nventas, ConsultaItemsVenta::class.java)
-        startActivity(inten, null)
+        startActivityForResult(inten, 1)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1) {
+            val bundle = data?.extras!!.getBundle("articulo")
+            val idArticulo = bundle?.getInt("idArticulo")
+            val articulo: Articulo? = nVentasViewModel.ObtenerArticuloXIdArticulo(idArticulo!!)
+            nVentasViewModel.CargarDataTableLayout(tableLayoutArticuloFactura, ArticulosFactura(articulo!!))
+            Toast.makeText(baseContext, "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun ArticulosFactura(articulo: Articulo): ArrayList<Articulo>{
+        return ArrayList<Articulo>().also {
+            it.add(articulo)
+        }
     }
 
     @Throws(Exception::class)

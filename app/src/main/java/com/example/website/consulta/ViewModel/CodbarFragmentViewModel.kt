@@ -14,7 +14,7 @@ class CodbarFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayL
     private var tableAdapter: TableAdapter? = null
     private var progresDialog: ProgressDialog? = null
     private var tableLayoutArticulo: TableLayout? = null
-    private val columns: Array<String> = arrayOf("Alternante", "Campar", "Cpdnew", "Unimed", "Motor", "Saldo")
+    private val columns: Array<String> = arrayOf("Alternante", "Campar", "Cpdnew", "Unimed", "Motor", "Saldo", "P.Venta")
 
     private fun ObtenerArticulosXCodbar(codbar: String): ArrayList<Articulo> {
         return codbarFragmentObservable.ObtenerArticuloXCodbar(codbar)

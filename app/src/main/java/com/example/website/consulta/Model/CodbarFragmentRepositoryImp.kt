@@ -12,16 +12,16 @@ class CodbarFragmentRepositoryImp : ICodbarFragmentRepository {
         }
         val rs = callStatement.executeQuery()
         val lstArticulo: ArrayList<Articulo> = ArrayList()
-        var articulo: Articulo
-        while (rs.next()){
-            articulo = Articulo()
-            articulo.alternante = rs.getString("alternante")
-            articulo.campar = rs.getInt("campar")
-            articulo.cpdnew = rs.getString("cpdnew")
-            articulo.unimed = rs.getString("unimed")
-            articulo.motor = rs.getString("motor")
-            articulo.totSaldo = rs.getInt("totSaldo")
-            lstArticulo.add(articulo)
+        while (rs.next()) {
+            lstArticulo.add(Articulo().also {
+                it.alternante = rs.getString("alternante")
+                it.campar = rs.getInt("campar")
+                it.cpdnew = rs.getString("cpdnew")
+                it.unimed = rs.getString("unimed")
+                it.motor = rs.getString("motor")
+                it.totSaldo = rs.getInt("totSaldo")
+                it.precioVenta = rs.getDouble("precioVenta")
+            })
         }
         return lstArticulo
     }

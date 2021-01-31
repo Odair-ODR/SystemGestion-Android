@@ -14,7 +14,11 @@ class ArticuloObservable: BaseObservable() {
         return articuloRespository.ObtenerArticulosFactuera(codbar, alternante)
     }
 
-    fun ObtenerArticulosFactura(codbar: String, alternante: String): ArrayList<Articulo>{
-        return articuloRespository.ObtenerArticulosFactura(codbar, alternante)
+    fun ObtenerArticulosXCobar(marvehi: Int, ini: Int, fin: Int): ArrayList<Articulo>{
+        return articuloRespository.ObtenerArticulosXCobar(marvehi, ini, fin)
+    }
+
+    fun ObtenerArticulosXAlternante(alternante: String): ArrayList<Articulo>{
+        return articuloRespository.ObtenerArticulosXAlternante(alternante)
     }
 }
