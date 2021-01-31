@@ -13,17 +13,16 @@ class ArticuloRepositoryImp : IArticuloRepository {
         //> prepareCall.setString(1, codbar)
         //> prepareCall.setString(2, alternante)
         //> val resulSet = prepareCall.executeQuery()
-        var articuloLiveData = MutableLiveData<List<Articulo>>()
-        var lstArticulo: ArrayList<Articulo> = ArrayList()
+        val articuloLiveData = MutableLiveData<List<Articulo>>()
+        val lstArticulo: ArrayList<Articulo> = ArrayList()
         try {
-            var articulo: Articulo? = null
-            if (1>0) {
-                articulo = Articulo()
-                articulo.codbar = "02.30"
-                articulo.alternante = "092-01"
-                articulo.descriArti = "motores de viela"
-                articulo.totSaldo = 90
-                lstArticulo.add(articulo)
+            if (1 > 0) {
+                lstArticulo.add(Articulo().also {
+                    it.codbar = "02.30"
+                    it.alternante = "092-01"
+                    it.descriArti = "motores de viela"
+                    it.totSaldo = 90
+                })
             }
             articuloLiveData.value = lstArticulo
         } catch (ex: Exception) {
@@ -39,16 +38,15 @@ class ArticuloRepositoryImp : IArticuloRepository {
         //> prepareCall.setString(1, codbar)
         //> prepareCall.setString(2, alternante)
         //> val resulSet = prepareCall.executeQuery()
-        var lstArticulo: ArrayList<Articulo> = ArrayList()
+        val lstArticulo: ArrayList<Articulo> = ArrayList()
         try {
-            var articulo: Articulo? = null
-            if (1>0) {
-                articulo = Articulo()
-                articulo.codbar = "02.30"
-                articulo.alternante = "092-01"
-                articulo.descriArti = "motores de viela"
-                articulo.totSaldo = 90
-                lstArticulo.add(articulo)
+            if (1 > 0) {
+                lstArticulo.add(Articulo().also {
+                    it.codbar = "02.30"
+                    it.alternante = "092-01"
+                    it.descriArti = "motores de viela"
+                    it.totSaldo = 90
+                })
             }
         } catch (ex: Exception) {
             ex.stackTrace

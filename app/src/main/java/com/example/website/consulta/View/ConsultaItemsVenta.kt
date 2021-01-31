@@ -62,7 +62,7 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
                     Log.w("Codbar : ", lstArticulo.get(0).codbar)
                     articuloViewModel.AsignarDataArticulosEnTableAdapter(this@ConsultaItemsVenta, tlArticulos, ObtenerColumnas(), lstArticulo)
                 })*/
-        articuloViewModel = ArticuloViewModel(this@ConsultaItemsVenta)
+        articuloViewModel = ArticuloViewModel(this@ConsultaItemsVenta, this)
         articuloViewModel.execute(txtCodbar.text.toString(), txtAlternante.text.toString(), tlArticulos)
     }
 }

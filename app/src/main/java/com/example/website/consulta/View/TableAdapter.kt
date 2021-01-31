@@ -115,6 +115,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         }
     }
 
+
     private fun NewTableRowParams(): TableRow.LayoutParams {
         val params = TableRow.LayoutParams()
         params.setMargins(1, 2, 1, 2)
@@ -212,8 +213,8 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         tableRow.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {
                 val tablerow = view as TableRow
-                val sample = tablerow.getChildAt(1) as TextView
-                val motor = sample.text.toString()
+                val textCell = tablerow.getChildAt(1) as TextView
+                val motor = textCell.text.toString()
                 txtMotor.setText(motor)
                 alertDialog.dismiss()
             }

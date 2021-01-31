@@ -2,8 +2,14 @@ package com.example.website.consulta.ViewModel
 
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.Intent
 import android.os.AsyncTask
+import android.os.Bundle
+import android.view.View
 import android.widget.TableLayout
+import android.widget.TableRow
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
@@ -11,18 +17,15 @@ import com.example.website.consulta.Model.ArticuloObservable
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
 import com.example.website.consulta.View.ConsultaItemsVenta
+import com.example.website.consulta.View.Nventas
 import com.example.website.consulta.View.TableAdapter
 
-class ArticuloViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Articulo>>() {
+class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaItemsVenta) : AsyncTask<Any, Any, ArrayList<Articulo>>() {
     private var articuloObservable: ArticuloObservable = ArticuloObservable()
     private var articuloTableAdapter: TableAdapter? = null
     private lateinit var progresDialog: ProgressDialog
     private lateinit var tableLayoutArticulo: TableLayout
-    val columnas = arrayOf("Codbar", "Alternante", "Descripción", "Saldo")
-
-    fun ObtenerArticulosFactura(codbar: String, alternante: String): MutableLiveData<List<Articulo>> {
-        return articuloObservable.obtenerArticulosFactura(codbar, alternante)
-    }
+    private val columnas = arrayOf("Codbar", "Alternante", "Descripción", "Saldo")
 
     private fun AsignarDataArticulosEnTableAdapter(context: Context, tableLayout: TableLayout, columnas: Array<String>, lstArticulo: List<Articulo>) {
         ObtenerTableAdapter(context, tableLayout)
@@ -30,7 +33,7 @@ class ArticuloViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Ar
         articuloTableAdapter?.AddDataArticuloVenta(lstArticulo)
     }
 
-    fun ObtenerTableAdapter(context: Context, tableLayout: TableLayout) {
+    private fun ObtenerTableAdapter(context: Context, tableLayout: TableLayout) {
         articuloTableAdapter = TableAdapter(context, tableLayout)
     }
 
@@ -59,6 +62,42 @@ class ArticuloViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Ar
 
     override fun onPostExecute(lstArticulo: ArrayList<Articulo>) {
         AsignarDataArticulosEnTableAdapter(context, tableLayoutArticulo, columnas, lstArticulo)
+        RowArticuloFactura_OnClickListener()
         progresDialog.dismiss()
+    }
+
+    fun RowArticuloFactura_OnClickListener() {
+        var tableRow: TableRow
+        for (oi in 1 until tableLayoutArticulo.childCount) {
+            tableRow = tableLayoutArticulo.getChildAt(oi) as TableRow
+            tableRow.isClickable = true
+            tableRow.setOnClickListener(object : View.OnClickListener {
+                override fun onClick(view: View) {
+                    PasarDatosIntent(tableRow)
+                    consultaItemsVenta.finish()
+                    //> consultaItemsVenta.onBackPressed()
+                }
+            })
+        }
+    }
+
+    private fun PasarDatosIntent(tableRow: TableRow) {
+        val textCell = tableRow.getChildAt(0) as TextView
+        val bundle: Bundle = Bundle().also {
+            it.putInt("idArticulo", textCell.text.toString().toInt())
+        }
+        val intent: Intent = Intent().also {
+            it.putExtra("articulo", bundle)
+        }
+        consultaItemsVenta.setResult(1, intent)
+    }
+
+
+    fun ObtenerArticulosXIdArticulos() {
+        tableLayoutArticulo.callOnClick()
+    }
+
+    fun CargarActivityAnterior() {
+        consultaItemsVenta.onBackPressed()
     }
 }
