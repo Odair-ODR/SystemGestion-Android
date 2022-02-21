@@ -14,7 +14,7 @@ import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
 
 
-class TableAdapter(var context: Context, var tableLayout: TableLayout) {
+class TableAdapter(var context: Context, var tableLayout: TableLayout, val iTableAdapterListener: ITableAdapterListener) {
     private var header: Array<String>? = null
     private var data: List<Articulo>? = null
     private lateinit var row: TableRow
@@ -109,7 +109,6 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     }
 
     private fun LoadDataTableArticulo() {
-        BorrarFilas()
         var viewHolder: ViewHolder? = null
         var tableRow: TableRow
         for (row in data!!) {
@@ -185,6 +184,8 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item5, NewTableRowParams())
             tableRow.addView(viewHolder.item6, NewTableRowParams())
             tableRow.addView(viewHolder.item7, NewTableRowParams())
+
+            iTableAdapterListener.onClickArticulo(tableRow)
 
             tableLayout.addView(tableRow)
         }
