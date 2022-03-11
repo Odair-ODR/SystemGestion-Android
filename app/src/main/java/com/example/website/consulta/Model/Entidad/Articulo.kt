@@ -12,8 +12,8 @@ class Articulo {
     var unimed: String? = null
     var motor: String? = null
     var alternante: String? = null
-    var codbar: String? = null
-    var cpdnew: String? = null
+    var codbar: String = ""
+    var cpdnew: String = ""
     var totSaldo = 0
     var cpdold = ""
     var superarti = ""

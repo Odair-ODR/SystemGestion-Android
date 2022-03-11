@@ -21,4 +21,8 @@ class ArticuloObservable: BaseObservable() {
     fun ObtenerArticulosXAlternante(alternante: String): ArrayList<Articulo>{
         return articuloRespository.ObtenerArticulosXAlternante(alternante)
     }
+
+    fun obtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
+        return articuloRespository.obtenerArticuloXIdArticulo(idArticulo)
+    }
 }

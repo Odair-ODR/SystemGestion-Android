@@ -1,20 +1,14 @@
 package com.example.website.consulta.View
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TableLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.example.website.consulta.Helpers.InitEventsControls
-import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.ArticuloViewModel
-import kotlin.collections.List
 
 class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
 

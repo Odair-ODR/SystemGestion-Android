@@ -1,12 +1,12 @@
 package com.example.website.consulta.Model
 
 import com.example.website.consulta.Model.Entidad.Articulo
-import com.example.website.consulta.Model.Entidad.Motor
+import com.example.website.consulta.Model.Entidad.Motor as MotorTo
 
 class MotorFragmentRepositoryImp: IMotorFragmentRepository {
 
-    override fun ObtenerMotores(codProd: String, motor: String): ArrayList<Motor> {
-        val lstMotor: ArrayList<Motor> = ArrayList()
+    override fun ObtenerMotores(codProd: String, motor: String): ArrayList<MotorTo> {
+        val lstMotor: ArrayList<MotorTo> = ArrayList()
         try {
             val procedure = "{call usp_AndroidSelectObtenerMotoresporMantMotores(?,?)}"
             val connection = ConnectionDB.Conexion()
@@ -14,9 +14,9 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
             pc.setString(1, codProd)
             pc.setString(2, motor)
             val rs = pc.executeQuery()
-            var motor: Motor
+            var motor: MotorTo
             while (rs.next()){
-                motor = Motor()
+                motor = MotorTo()
                 motor.marca = rs.getString("marcavehi")
                 motor.motor = rs.getString("motor")
                 motor.cili1 = rs.getString("cili1")

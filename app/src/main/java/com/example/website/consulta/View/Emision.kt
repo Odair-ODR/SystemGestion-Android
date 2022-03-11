@@ -5,8 +5,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.*
+import com.example.website.consulta.Model.Entidad.TIPO_DOCUMENTO
 import com.example.website.consulta.R
-import com.example.website.consulta.View.Emision
 
 class Emision : AppCompatActivity() {
     var nuevo: Button? = null
@@ -22,18 +22,22 @@ class Emision : AppCompatActivity() {
         modificar = findViewById(R.id.Modificar_v)
         nuevo?.setOnClickListener(View.OnClickListener {
             val n = Intent(this@Emision, Nventas::class.java)
+            n.putExtra("TipoDocumento", TIPO_DOCUMENTO.FACTURA)
             startActivity(n)
         })
         consulta?.setOnClickListener(View.OnClickListener {
-            val c = Intent(this@Emision, Consultarve::class.java)
+            val c = Intent(this@Emision, Nventas::class.java)
+            c.putExtra("TipoDocumento", TIPO_DOCUMENTO.BOLETA)
             startActivity(c)
         })
         anular?.setOnClickListener(View.OnClickListener {
-            val a = Intent(this@Emision, Anularve::class.java)
+            val a = Intent(this@Emision, Nventas::class.java)
+            a.putExtra("TipoDocumento", TIPO_DOCUMENTO.NOTA_CREDITO)
             startActivity(a)
         })
         modificar?.setOnClickListener(View.OnClickListener {
-            val m = Intent(this@Emision, Modificarve::class.java)
+            val m = Intent(this@Emision, Nventas::class.java)
+            m.putExtra("TipoDocumento", TIPO_DOCUMENTO.NOTA_VENTA)
             startActivity(m)
         })
     }

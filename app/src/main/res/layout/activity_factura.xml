@@ -5,187 +5,263 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="100dp"
+    <EditText
+        android:id="@+id/txtTipoDoc"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:text="Tipo"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/cboTipo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.01999998" />
-
-    <Spinner
-        android:id="@+id/cboTipo"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/style_spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.017777" />
-
-    <Spinner
-        android:id="@+id/cboTienda"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/style_spinner"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:background="@drawable/editext_radious_corner"
+        android:cursorVisible="false"
+        android:focusable="false"
+        android:inputType="none"
+        android:textSize="@dimen/textSize"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtTienda"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cboTipo"
-        app:layout_constraintVertical_bias="0.00999999" />
-
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="11dp"
-        android:text="Tenda"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/cboTienda"
-        app:layout_constraintEnd_toStartOf="@+id/cboTienda"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/txtTienda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:background="@drawable/editext_radious_corner"
+        android:cursorVisible="false"
+        android:drawableRight="@drawable/down"
+        android:focusable="false"
+        android:hint="Tienda"
+        android:inputType="none"
+        android:textSize="@dimen/textSize"
+        app:layout_constraintBottom_toTopOf="@+id/txtNroDocIdenti"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTipoDoc" />
 
     <EditText
         android:id="@+id/txtDireccion"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="16sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:background="@drawable/editext_radious_corner"
+        android:hint="Dirección"
+        android:inputType="text|textAutoComplete"
+        android:textSize="@dimen/textSize"
+        android:textStyle="normal"
+        app:layout_constraintBottom_toTopOf="@+id/txtMoneda"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtNombre"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView10"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Dirección"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txtDireccion"
-        app:layout_constraintEnd_toStartOf="@+id/txtDireccion"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView9"
-        app:layout_constraintVertical_bias="0.95" />
-
     <EditText
-        android:id="@+id/txtRuc"
-        android:layout_width="250dp"
+        android:id="@+id/txtNroDocIdenti"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cboTienda"
+        android:background="@drawable/editext_radious_corner"
+        android:hint="DNI O RUC"
+        android:inputType="number|textAutoComplete"
+        android:textSize="@dimen/textSize"
+        android:maxLength="11"
+        app:layout_constraintBottom_toTopOf="@+id/txtNombre"
+        app:layout_constraintEnd_toStartOf="@+id/btnBuscarRucDni"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtTienda"
         app:layout_constraintVertical_bias="0.0" />
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
-        android:text="Nombre"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txtNombre"
-        app:layout_constraintEnd_toStartOf="@+id/txtNombre"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginBottom="8dp"
-        android:text="R.U.C"
-        android:textSize="18sp"
-        android:textStyle="normal|bold"
-        app:layout_constraintBottom_toBottomOf="@+id/txtRuc"
-        app:layout_constraintEnd_toStartOf="@+id/txtRuc"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+    <Button
+        android:id="@+id/btnBuscarRucDni"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:background="@drawable/la_search_icon"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:layout_marginLeft="1dp"
+        android:layout_marginStart="1dp"
+        app:layout_constraintStart_toEndOf="@+id/txtNroDocIdenti"
+        app:layout_constraintTop_toBottomOf="@+id/txtTienda"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/txtNombre" />
 
     <EditText
         android:id="@+id/txtNombre"
-        android:layout_width="250dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:autofillHints=""
+        android:background="@drawable/editext_radious_corner"
+        android:hint="Nombre cliente"
+        android:inputType="text|textAutoComplete"
+        android:textSize="@dimen/textSize"
+        app:layout_constraintBottom_toTopOf="@+id/txtDireccion"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtRuc"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNroDocIdenti"
         app:layout_constraintVertical_bias="0.0" />
+
+    <EditText
+        android:id="@+id/txtMoneda"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_editControls"
+        android:layout_marginLeft="@dimen/margin_editControls"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="@dimen/margin_editControls"
+        android:layout_marginRight="@dimen/margin_editControls"
+        android:background="@drawable/editext_radious_corner"
+        android:cursorVisible="false"
+        android:drawableRight="@drawable/down"
+        android:focusable="false"
+        android:hint="Moneda"
+        android:textSize="@dimen/textSize"
+        app:layout_constraintBottom_toTopOf="@+id/lygrupBox"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtDireccion" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/lygrupBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/btnGrabar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtMoneda">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clGroupBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_editControls"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="@dimen/margin_editControls"
+            android:background="@drawable/group_box_1"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioGroup
+                android:id="@+id/rdgFormaPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <RadioButton
+                    android:id="@+id/rdbContado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:text="Contado"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <RadioButton
+                    android:id="@+id/rdbCredito"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginBottom="8dp"
+                    android:text="Crédito"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/rdbContado" />
+            </RadioGroup>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tvTitleGruoupBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginLeft="@dimen/margin_editControls"
+            android:background="@color/colorWhite"
+            android:padding="5dp"
+            android:text="Forma de Pago"
+            android:textStyle="bold"
+            app:layout_anchor="@id/clGroupBox"
+            app:layout_anchorGravity="top|start"
+            app:layout_constraintStart_toStartOf="@id/lygrupBox"
+            app:layout_constraintTop_toTopOf="@+id/lygrupBox" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnItem"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_button"
         android:text="Items de Ventas"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@drawable/button_white_text"
+        android:textSize="@dimen/textSizeUpperButton"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDireccion"
-        app:layout_constraintVertical_bias="0.039999999" />
+        app:layout_constraintTop_toBottomOf="@+id/lygrupBox" />
 
     <Button
         android:id="@+id/btnGrabar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/custom_button"
         android:text="Guardar"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@drawable/button_white_text"
+        android:textSize="@dimen/textSizeUpperButton"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
         app:layout_constraintEnd_toStartOf="@+id/btnItem"
-        app:layout_constraintHorizontal_bias="0.19"
+        app:layout_constraintHorizontal_bias="0.15"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView10"
-        app:layout_constraintVertical_bias="0.053" />
+        app:layout_constraintTop_toBottomOf="@+id/lygrupBox" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@drawable/separator"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnGrabar" />
 
     <ScrollView
         android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
-        app:layout_constraintTop_toBottomOf="@+id/btnItem"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnItem">
 
         <HorizontalScrollView
             android:layout_width="match_parent"
@@ -196,7 +272,8 @@
                 android:id="@+id/tableLayoutArticulosFactura"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginTop="0dp" />
+                android:layout_marginTop="0dp"
+                android:shrinkColumns="1,2,3" />
         </HorizontalScrollView>
     </ScrollView>
 

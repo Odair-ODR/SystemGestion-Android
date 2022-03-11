@@ -14,8 +14,8 @@ class Inicio : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_inicio)
-        btnconsu = findViewById(R.id.btnconsu)
-        btnmoto = findViewById(R.id.btnmoto)
+        //> btnconsu = findViewById(R.id.btnconsu)
+        //> btnmoto = findViewById(R.id.btnmoto)
         btnconsu?.setOnClickListener(View.OnClickListener { startActivity(Intent(this@Inicio, Principal::class.java)) })
     }
 }

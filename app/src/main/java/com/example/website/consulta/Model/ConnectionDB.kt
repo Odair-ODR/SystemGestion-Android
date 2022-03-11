@@ -11,10 +11,8 @@ object ConnectionDB {
             val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
             StrictMode.setThreadPolicy(policy)
             Class.forName("net.sourceforge.jtds.jdbc.Driver").newInstance()
-            //> return DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.1.17;databaseName=BDANDROID;user=WOODY;password=123456789;");
-            //> DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.1.17;databaseName=BDANDROID;user=WOODY;password=123456789;")
-            return DriverManager.getConnection("jdbc:jtds:sqlserver://148.102.23.8;databaseName=AOSHIMA;user=WOODY;password=123456789;")
-            //> return DriverManager.getConnection("jdbc:jtds:sqlserver://148.102.20.124;databaseName=BDEFRAIN;user=WOODY;password=123456789;")
+            //> DriverManager.getConnection("jdbc:jtds:sqlserver://148.102.23.8;databaseName=AOSHIMA;user=WOODY;password=123456789;")
+            DriverManager.getConnection("jdbc:jtds:sqlserver://192.168.0.102;databaseName=BDANDROID;user=sa;password=odr;")
         } catch (ex: Exception) {
             throw Exception()
         }

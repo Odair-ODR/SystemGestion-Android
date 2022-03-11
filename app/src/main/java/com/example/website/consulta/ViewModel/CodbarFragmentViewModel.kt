@@ -1,18 +1,18 @@
 package com.example.website.consulta.ViewModel
 
-import android.app.ProgressDialog
+import android.app.Dialog
 import android.content.Context
 import android.os.AsyncTask
 import android.widget.TableLayout
+import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Model.CodbarFragmentObservable
 import com.example.website.consulta.Model.Entidad.Articulo
-import com.example.website.consulta.R
 import com.example.website.consulta.View.TableAdapter
 
 class CodbarFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Articulo>>() {
     private val codbarFragmentObservable = CodbarFragmentObservable()
     private var tableAdapter: TableAdapter? = null
-    private var progresDialog: ProgressDialog? = null
+    private var progresDialog: Dialog? = null
     private var tableLayoutArticulo: TableLayout? = null
     private val columns: Array<String> = arrayOf("Alternante", "Campar", "Cpdnew", "Unimed", "Motor", "Saldo", "P.Venta")
 
@@ -31,10 +31,7 @@ class CodbarFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayL
     }
 
     private fun StartLoadingDialog() {
-        progresDialog = ProgressDialog(context)
-        progresDialog?.setCancelable(false)
-        progresDialog?.show()
-        progresDialog?.setContentView(R.layout.loading_dialog)
+        progresDialog = UtilsInterface.progressDialog(context)
     }
 
     override fun doInBackground(vararg params: Any?): ArrayList<Articulo> {

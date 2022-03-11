@@ -7,14 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ListView
 import android.widget.TableLayout
-import com.example.website.consulta.Model.ConnectionDB
-import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.AlternanteFragmentViewModel
-import java.sql.CallableStatement
-import kotlin.collections.ArrayList
 
 class AlternanteFragment : Fragment() {
 

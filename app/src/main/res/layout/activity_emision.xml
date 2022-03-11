@@ -6,12 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    tools:context=".View.Emision">
+    tools:context=".View.Emision"
+    android:background="@color/colorWhite">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="750dp"
         android:orientation="vertical"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="@color/colorWhite">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -27,8 +29,7 @@
                 android:textAllCaps="true"
                 android:textStyle="bold"
                 android:textSize="@dimen/text_margin"
-                android:background="@drawable/sale"
-                />
+                android:background="@drawable/factura"/>
 
 
             <Button
@@ -39,7 +40,8 @@
                 android:textSize="@dimen/text_margin"
                 android:textAllCaps="true"
                 android:textStyle="normal|bold"
-                android:background="@drawable/consult" />
+                android:background="@drawable/boleta"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +53,7 @@
                 android:id="@+id/Anular_V"
                 android:layout_width="160dp"
                 android:layout_height="150dp"
-                android:background="@drawable/anular"
+                android:background="@drawable/nota_credio"
                 android:textAllCaps="true"
                 android:textSize="@dimen/text_margin"
                 android:textStyle="normal|bold" />
@@ -62,7 +64,7 @@
                 android:layout_width="160dp"
                 android:layout_height="150dp"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/editar"
+                android:background="@drawable/nota_venta"
                 android:textAllCaps="true"
                 android:textSize="@dimen/text_margin"
                 android:textStyle="normal|bold" />

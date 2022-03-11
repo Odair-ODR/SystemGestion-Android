@@ -1,7 +1,7 @@
 package com.example.website.consulta.ViewModel
 
 import android.app.AlertDialog
-import android.app.ProgressDialog
+import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.AsyncTask
@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
 import android.widget.TableLayout
+import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.Model.MotorFragmentObservable
@@ -18,7 +19,7 @@ import com.example.website.consulta.View.TableAdapter
 class MotorFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Motor>>() {
     private val motorFragmentObservable: MotorFragmentObservable = MotorFragmentObservable()
     private var tableAdapter: TableAdapter? = null
-    private var progresDialog: ProgressDialog? = null
+    private var progresDialog: Dialog? = null
     private var alertDialog: AlertDialog? = null
     private var tableLayoutMotor: TableLayout? = null
     private val headersMotor = arrayOf("Marca", "Motor", "Cili1")
@@ -54,10 +55,7 @@ class MotorFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayLi
     }
 
     private fun StartLoadingDialog() {
-        progresDialog = ProgressDialog(context)
-        progresDialog?.setCancelable(false)
-        progresDialog?.show()
-        progresDialog?.setContentView(R.layout.loading_dialog)
+        progresDialog = UtilsInterface.progressDialog(context)
     }
 
     private fun StartAlerDialog() {

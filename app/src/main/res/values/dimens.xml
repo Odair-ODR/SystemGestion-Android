@@ -3,4 +3,7 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="dp12">3dp</dimen>
+    <dimen name="margin_editControls">10dp</dimen>
+    <dimen name="textSize">16sp</dimen>
+    <dimen name="textSizeUpperButton">14sp</dimen>
 </resources>

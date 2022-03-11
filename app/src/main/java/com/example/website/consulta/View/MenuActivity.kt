@@ -9,11 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import com.example.website.consulta.R
-import com.example.website.consulta.View.MenuActivity
 
 class MenuActivity : AppCompatActivity() {
     var listView: ListView? = null
-    var mTitle = arrayOf("VENTAS", "CONSULTA", "REPORTE", "PROFORMA", "Item4")
+    var mTitle = arrayOf("VENTAS", "CONSULTA", "REPORTE", "PROFORMA")
     var mDescription = arrayOf("Facebook Description", "Whatsapp Description", "Twitter Description", "Instagram Description", "Youtube Description")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

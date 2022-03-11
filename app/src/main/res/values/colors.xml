@@ -13,7 +13,9 @@
     <color name="colorSkyBlue">#85C1E9</color>
     <color name="colorOregeLight">#EB984E</color>
     <color name="colorGreenWhite">#E8F6F3</color>
-    <color name="colorTransparent">#cccccc</color>
+    <color name="colorTransparent"></color>
+    <!--<color name="colorTransparent">#rrggbb</color>-->
+    <color name="colorGray">#cccccc</color>
     <color name="colorDark">#0E0E0E</color>
     <color name="colorc">#039AFF</color>
     <color name="colora">#7B241C</color>

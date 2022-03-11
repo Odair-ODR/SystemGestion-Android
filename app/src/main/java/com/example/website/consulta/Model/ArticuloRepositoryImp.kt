@@ -83,7 +83,7 @@ class ArticuloRepositoryImp : IArticuloRepository {
         }
     }
 
-    override fun ObtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
+    override fun obtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
         val procedure = "call AndroidObtenerArticuloporidArticulo(?)"
         val dbConnection = ConnectionDB.Conexion()
         val prepareCall = dbConnection.prepareCall(procedure)
