@@ -1,17 +1,20 @@
 package com.example.website.consulta.View
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Rect
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
+import android.widget.*
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 
 class TableAdapter(var context: Context, var tableLayout: TableLayout) {
@@ -20,6 +23,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     private var data: List<Articulo>? = null
     private lateinit var row: TableRow
     private var indexC: Int = 0
+    protected var cells: MutableMap<View, Rect> = HashMap<View, Rect>()
 
     internal class ViewHolder {
         var item1: TextView? = null
@@ -53,7 +57,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
     private fun NewCell(): TextView {
         val textCell = TextView(context)
         textCell.gravity = Gravity.CENTER
-        textCell.setPadding(2,0,2,0)
+        textCell.setPadding(2, 0, 2, 0)
         textCell.textSize = 13F
         return textCell
     }
@@ -78,7 +82,7 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             var textCell: TextView?
             while (indexC < header?.size ?: 0) {
                 textCell = NewCell()
-                textCell.visibility = if(indexC == 0) View.GONE else View.VISIBLE
+                textCell.visibility = if (indexC == 0 || indexC == 5) View.GONE else View.VISIBLE
                 textCell.setText(header?.get(indexC++))
                 HeaderCellStyle(textCell)
                 tableRow.addView(textCell, NewTableRowParams())
@@ -121,12 +125,18 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             viewHolder.item5 = NewCell()
             viewHolder.item6 = NewCell()
             viewHolder.item7 = NewCell()
+            viewHolder.item3 = NewCell()
+            viewHolder.item3?.visibility = View.GONE
 
             viewHolder.item1?.setText(row.idArticulo.toString())
             viewHolder.item2?.setText(row.cpdold)
             viewHolder.item5?.setText(row.alternante)
             viewHolder.item6?.setText(row.descriArti)
             viewHolder.item7?.setText(row.precioVenta.toString())
+            viewHolder.item3?.setText(row.totCan.toString())
+            val view: View = viewHolder.item7 as View
+            val rect: Rect = getRawCoordinatesRect(view)
+            cells.put(view, rect)
 
             RowCellStyle(viewHolder)
 
@@ -135,11 +145,21 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
             tableRow.addView(viewHolder.item5, NewTableRowParams())
             tableRow.addView(viewHolder.item6, NewTableRowParams())
             tableRow.addView(viewHolder.item7, NewTableRowParams())
-
+            tableRow.addView(viewHolder.item3, NewTableRowParams())
             tableLayout.addView(tableRow)
         }
     }
 
+    private fun getRawCoordinatesRect(view: View): Rect {
+        val coords = IntArray(2)
+        view.getLocationOnScreen(coords)
+        val rect = Rect()
+        rect.left = coords[0]
+        rect.top = coords[1]
+        rect.right = rect.left + view.width
+        rect.bottom = rect.top + view.height
+        return rect
+    }
 
     private fun NewTableRowParams(): TableRow.LayoutParams {
         val params = TableRow.LayoutParams()
@@ -242,7 +262,11 @@ class TableAdapter(var context: Context, var tableLayout: TableLayout) {
         }
     }
 
-    private fun Row_OnClickListenerMotor(tableRow: TableRow, alertDialog: AlertDialog, txtMotor: EditText) {
+    private fun Row_OnClickListenerMotor(
+        tableRow: TableRow,
+        alertDialog: AlertDialog,
+        txtMotor: EditText
+    ) {
         tableRow.isClickable = true
         tableRow.setOnClickListener(object : View.OnClickListener {
             override fun onClick(view: View) {

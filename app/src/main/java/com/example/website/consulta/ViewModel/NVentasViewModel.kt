@@ -1,6 +1,8 @@
 package com.example.website.consulta.ViewModel
 
 import android.content.Context
+import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -8,18 +10,19 @@ import androidx.lifecycle.viewModelScope
 import com.example.website.consulta.Model.ArticuloObservable
 import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.Model.NVentasObservable
+import com.example.website.consulta.View.SwipeDismissTableLayoutTouchListener
 import com.example.website.consulta.View.TableAdapter
 import com.example.website.consulta.dummy.Tienda
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NVentasViewModel(val context: Context) : ViewModel() {
+class NVentasViewModel(val context: Context) : ViewModel(){
 
     private val nVentasObservable: NVentasObservable = NVentasObservable()
     private val articuloObservable: ArticuloObservable = ArticuloObservable()
     private var articuloTableAdapter: TableAdapter? = null
-    private val columnas = arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta")
+    private val columnas = arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
 
     fun ObtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
         return articuloObservable.obtenerArticuloXIdArticulo(idArticulo)
@@ -69,5 +72,21 @@ class NVentasViewModel(val context: Context) : ViewModel() {
 
     fun obtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
         return articuloObservable.obtenerArticuloXIdArticulo(idArticulo)
+    }
+
+    fun swipeDismissTouchTableAdapter(tableLayout: TableLayout){
+        val touchListener = SwipeDismissTableLayoutTouchListener(tableLayout, swipeDismissTableLayoutTouchListenerOnDismissCallback)
+        tableLayout.setOnTouchListener(touchListener)
+    }
+
+    private val swipeDismissTableLayoutTouchListenerOnDismissCallback = object : SwipeDismissTableLayoutTouchListener.OnDismissCallback{
+        override fun onDismiss(tableLayout: TableLayout?, reverseSortedPositions: IntArray?) {
+            if (reverseSortedPositions != null && tableLayout != null) {
+                for (position in reverseSortedPositions) {
+                    val child: View = tableLayout.getChildAt(position)
+                    if (child is TableRow) (child as ViewGroup).removeAllViews()
+                }
+            }
+        }
     }
 }

@@ -1,280 +1,305 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <EditText
-        android:id="@+id/txtTipoDoc"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:background="@drawable/editext_radious_corner"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:inputType="none"
-        android:textSize="@dimen/textSize"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/txtTienda"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/txtTienda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:background="@drawable/editext_radious_corner"
-        android:cursorVisible="false"
-        android:drawableRight="@drawable/down"
-        android:focusable="false"
-        android:hint="Tienda"
-        android:inputType="none"
-        android:textSize="@dimen/textSize"
-        app:layout_constraintBottom_toTopOf="@+id/txtNroDocIdenti"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTipoDoc" />
-
-    <EditText
-        android:id="@+id/txtDireccion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:background="@drawable/editext_radious_corner"
-        android:hint="Dirección"
-        android:inputType="text|textAutoComplete"
-        android:textSize="@dimen/textSize"
-        android:textStyle="normal"
-        app:layout_constraintBottom_toTopOf="@+id/txtMoneda"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNombre"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/txtNroDocIdenti"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/editext_radious_corner"
-        android:hint="DNI O RUC"
-        android:inputType="number|textAutoComplete"
-        android:textSize="@dimen/textSize"
-        android:maxLength="11"
-        app:layout_constraintBottom_toTopOf="@+id/txtNombre"
-        app:layout_constraintEnd_toStartOf="@+id/btnBuscarRucDni"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtTienda"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/btnBuscarRucDni"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:background="@drawable/la_search_icon"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:layout_marginLeft="1dp"
-        android:layout_marginStart="1dp"
-        app:layout_constraintStart_toEndOf="@+id/txtNroDocIdenti"
-        app:layout_constraintTop_toBottomOf="@+id/txtTienda"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/txtNombre" />
-
-    <EditText
-        android:id="@+id/txtNombre"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:autofillHints=""
-        android:background="@drawable/editext_radious_corner"
-        android:hint="Nombre cliente"
-        android:inputType="text|textAutoComplete"
-        android:textSize="@dimen/textSize"
-        app:layout_constraintBottom_toTopOf="@+id/txtDireccion"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNroDocIdenti"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/txtMoneda"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_editControls"
-        android:layout_marginLeft="@dimen/margin_editControls"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="@dimen/margin_editControls"
-        android:layout_marginRight="@dimen/margin_editControls"
-        android:background="@drawable/editext_radious_corner"
-        android:cursorVisible="false"
-        android:drawableRight="@drawable/down"
-        android:focusable="false"
-        android:hint="Moneda"
-        android:textSize="@dimen/textSize"
-        app:layout_constraintBottom_toTopOf="@+id/lygrupBox"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtDireccion" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/lygrupBox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnGrabar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtMoneda">
+    <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:fillViewport="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clGroupBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin_editControls"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="@dimen/margin_editControls"
-            android:background="@drawable/group_box_1"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <RadioGroup
-                android:id="@+id/rdgFormaPago"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                android:layout_height="wrap_content">
 
-                <RadioButton
-                    android:id="@+id/rdbContado"
+            <EditText
+                    android:id="@+id/txtTipoDoc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_editControls"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="@dimen/margin_editControls"
-                    android:text="Contado"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:background="@drawable/editext_radious_corner"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:inputType="none"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toTopOf="@+id/txtTienda"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <RadioButton
-                    android:id="@+id/rdbCredito"
+            <EditText
+                    android:id="@+id/txtTienda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_editControls"
-                    android:layout_marginTop="0dp"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="@dimen/margin_editControls"
-                    android:layout_marginBottom="8dp"
-                    android:text="Crédito"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:background="@drawable/editext_radious_corner"
+                    android:cursorVisible="false"
+                    android:drawableRight="@drawable/down"
+                    android:focusable="false"
+                    android:hint="Tienda"
+                    android:inputType="none"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintBottom_toTopOf="@+id/txtNroDocIdenti"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/rdbContado" />
-            </RadioGroup>
+                    app:layout_constraintTop_toBottomOf="@+id/txtTipoDoc" />
 
+            <EditText
+                    android:id="@+id/txtDireccion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:background="@drawable/editext_radious_corner"
+                    android:hint="Dirección"
+                    android:inputType="text|textAutoComplete"
+                    android:textSize="@dimen/textSize"
+                    android:textStyle="normal"
+                    app:layout_constraintBottom_toTopOf="@+id/txtMoneda"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNombre"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                    android:id="@+id/txtNroDocIdenti"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/editext_radious_corner"
+                    android:hint="DNI O RUC"
+                    android:inputType="number|textAutoComplete"
+                    android:textSize="@dimen/textSize"
+                    android:maxLength="11"
+                    app:layout_constraintBottom_toTopOf="@+id/txtNombre"
+                    app:layout_constraintEnd_toStartOf="@+id/btnBuscarRucDni"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTienda"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                    android:id="@+id/btnBuscarRucDni"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@drawable/la_search_icon"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:layout_marginLeft="1dp"
+                    android:layout_marginStart="1dp"
+                    app:layout_constraintStart_toEndOf="@+id/txtNroDocIdenti"
+                    app:layout_constraintTop_toBottomOf="@+id/txtTienda"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/txtNombre" />
+
+            <EditText
+                    android:id="@+id/txtNombre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:autofillHints=""
+                    android:background="@drawable/editext_radious_corner"
+                    android:hint="Nombre cliente"
+                    android:inputType="text|textAutoComplete"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintBottom_toTopOf="@+id/txtDireccion"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtNroDocIdenti"
+                    app:layout_constraintVertical_bias="0.0" />
+
+            <EditText
+                    android:id="@+id/txtMoneda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:background="@drawable/editext_radious_corner"
+                    android:cursorVisible="false"
+                    android:drawableRight="@drawable/down"
+                    android:focusable="false"
+                    android:hint="Moneda"
+                    android:textSize="@dimen/textSize"
+                    app:layout_constraintBottom_toTopOf="@+id/lygrupBox"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtDireccion" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/lygrupBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp"
+                    app:layout_constraintBottom_toTopOf="@+id/_linearLayout"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtMoneda">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/clGroupBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/margin_editControls"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="@dimen/margin_editControls"
+                        android:background="@drawable/group_box_1"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                    <RadioGroup
+                            android:id="@+id/rdgFormaPago"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent">
+
+                        <RadioButton
+                                android:id="@+id/rdbContado"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_editControls"
+                                android:layout_marginTop="10dp"
+                                android:layout_marginEnd="@dimen/margin_editControls"
+                                android:text="Contado"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        <RadioButton
+                                android:id="@+id/rdbCredito"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/margin_editControls"
+                                android:layout_marginTop="0dp"
+                                android:layout_marginEnd="@dimen/margin_editControls"
+                                android:layout_marginBottom="8dp"
+                                android:text="Crédito"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/rdbContado" />
+                    </RadioGroup>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                        android:id="@+id/tvTitleGruoupBox"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginLeft="@dimen/margin_editControls"
+                        android:background="@color/colorWhite"
+                        android:padding="5dp"
+                        android:text="Forma de Pago"
+                        android:textStyle="bold"
+                        app:layout_anchor="@id/clGroupBox"
+                        app:layout_anchorGravity="top|start"
+                        app:layout_constraintStart_toStartOf="@id/lygrupBox"
+                        app:layout_constraintTop_toTopOf="@+id/lygrupBox" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <RelativeLayout
+                    android:id="@+id/_linearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lygrupBox"
+                    app:layout_constraintBottom_toTopOf="@+id/_view"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                <Button
+                        android:id="@+id/btnGrabar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/margin_editControls"
+                        android:layout_marginStart="@dimen/margin_editControls"
+                        android:background="@drawable/custom_button"
+                        android:text="Guardar"
+                        android:textColor="@drawable/button_white_text"
+                        android:textSize="@dimen/textSizeUpperButton"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true" />
+
+                <Button
+                        android:id="@+id/btnItem"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/margin_editControls"
+                        android:layout_marginEnd="@dimen/margin_editControls"
+                        android:background="@drawable/custom_button"
+                        android:text="Items de Ventas"
+                        android:textColor="@drawable/button_white_text"
+                        android:textSize="@dimen/textSizeUpperButton"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentEnd="true" />
+            </RelativeLayout>
+
+            <View
+                    android:id="@+id/_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@drawable/separator"
+                    app:layout_constraintBottom_toTopOf="@+id/scrollView1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_linearLayout" />
+
+            <ScrollView
+                    android:id="@+id/scrollView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_marginTop="12dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/_view"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:fillViewport="true">
+
+                <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fillViewport="true">
+
+                    <TableLayout
+                            android:id="@+id/tableLayoutArticulosFactura"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_marginTop="0dp"
+                            android:shrinkColumns="1,2,3" />
+                </HorizontalScrollView>
+            </ScrollView>
         </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <TextView
-            android:id="@+id/tvTitleGruoupBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="@dimen/margin_editControls"
-            android:background="@color/colorWhite"
-            android:padding="5dp"
-            android:text="Forma de Pago"
-            android:textStyle="bold"
-            app:layout_anchor="@id/clGroupBox"
-            app:layout_anchorGravity="top|start"
-            app:layout_constraintStart_toStartOf="@id/lygrupBox"
-            app:layout_constraintTop_toTopOf="@+id/lygrupBox" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <Button
-        android:id="@+id/btnItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/custom_button"
-        android:text="Items de Ventas"
-        android:textColor="@drawable/button_white_text"
-        android:textSize="@dimen/textSizeUpperButton"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lygrupBox" />
-
-    <Button
-        android:id="@+id/btnGrabar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:background="@drawable/custom_button"
-        android:text="Guardar"
-        android:textColor="@drawable/button_white_text"
-        android:textSize="@dimen/textSizeUpperButton"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
-        app:layout_constraintEnd_toStartOf="@+id/btnItem"
-        app:layout_constraintHorizontal_bias="0.15"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lygrupBox" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/separator"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnGrabar" />
-
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="12dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnItem">
-
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fillViewport="true">
-
-            <TableLayout
-                android:id="@+id/tableLayoutArticulosFactura"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="0dp"
-                android:shrinkColumns="1,2,3" />
-        </HorizontalScrollView>
     </ScrollView>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -25,6 +25,7 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
 
         InitializeComponents()
         InitializeEvents()
+        startOptions()
     }
 
     override fun InitializeComponents() {
@@ -38,8 +39,17 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
         btnBuscar.setOnClickListener(btnBuscar_OnClickListener)
     }
 
+    private  fun startOptions(){
+
+    }
+
     private var btnBuscar_OnClickListener = View.OnClickListener {
-        CargarArticulosFactura()
+        try {
+            CargarArticulosFactura()
+        }
+        catch (ex: Exception){
+            ex.printStackTrace()
+        }
     }
 
     fun setUpBindingListarArticuloFactura() {
@@ -58,5 +68,10 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
                 })*/
         articuloViewModel = ArticuloViewModel(this@ConsultaItemsVenta, this)
         articuloViewModel.execute(txtCodbar.text.toString(), txtAlternante.text.toString(), tlArticulos)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        setResult(0, null)
     }
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.website.consulta.Helpers.UtilsInterface
@@ -53,6 +54,8 @@ class Nventas : AppCompatActivity() {
     private fun startOptions() {
         tipoDocumento = intent.getSerializableExtra("TipoDocumento") as TIPO_DOCUMENTO
         txtTipoDoc?.setText(tipoDocumento.descripcion)
+
+        nVentasViewModel.swipeDismissTouchTableAdapter(tableLayoutArticuloFactura)
     }
 
     private fun initializeComponents() {
@@ -114,12 +117,12 @@ class Nventas : AppCompatActivity() {
             radioButton = RadioButton(view.context)
             radioButton.text = item.nomTienda
             radioButton.tag = item.idTienda
-            radioButton.setOnClickListener(radioButtonTieda_OnClickListener)
+            radioButton.setOnClickListener(radioButtonTienda_OnClickListener)
             radioGroup?.addView(radioButton)
         }
     }
 
-    private var radioButtonTieda_OnClickListener = View.OnClickListener {
+    private var radioButtonTienda_OnClickListener = View.OnClickListener {
         rdbTienda = it as RadioButton
         txtTienda!!.setText(rdbTienda.text)
         alertDialog.dismiss()
@@ -241,24 +244,30 @@ class Nventas : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1) {
-            val bundle = data?.extras!!.getBundle("articulo")
-            val idArticulo = bundle?.getInt("idArticulo")
-            val articulo: Articulo? = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo!!)
-            nVentasViewModel.CargarDataTableLayout(
-                tableLayoutArticuloFactura,
-                ArticulosFactura(articulo!!)
-            )
-            Toast.makeText(
-                baseContext,
-                "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
+        try {
+            if (requestCode == 1 && resultCode == 1) {
+                val bundle = data?.extras!!.getBundle("articulo")
+                val idArticulo = bundle?.getInt("idArticulo")
+                val cantidad = bundle?.getInt("cantidad")
+                val articulo: Articulo? = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo!!)
+                nVentasViewModel.CargarDataTableLayout(
+                    tableLayoutArticuloFactura,
+                    ArticulosFactura(articulo!!, cantidad!!)
+                )
+                Toast.makeText(
+                    baseContext,
+                    "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        } catch (ex: Exception) {
+            ex.printStackTrace()
         }
     }
 
-    private fun ArticulosFactura(articulo: Articulo): ArrayList<Articulo> {
+    private fun ArticulosFactura(articulo: Articulo, cantidad: Int): ArrayList<Articulo> {
         return ArrayList<Articulo>().also {
+            articulo.totCan = cantidad
             it.add(articulo)
         }
     }
@@ -278,6 +287,7 @@ class Nventas : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Error al registrar", Toast.LENGTH_SHORT)
                         .show()
                 }
+                limpiarGuardar()
             }
         } catch (ex: Exception) {
             Toast.makeText(applicationContext, "Error al registrar", Toast.LENGTH_SHORT).show()
@@ -296,7 +306,7 @@ class Nventas : AppCompatActivity() {
         facturaTo.serDoc = ""
         facturaTo.numDoc = 0
         facturaTo.nroFactura = 1
-        facturaTo.fectra = Date().date
+        facturaTo.fectra = UtilsMethod.getSqlDateShort()
         facturaTo.nroDocIdenti = txtNroDocIdenti!!.text.toString()
         facturaTo.nombres = txtNombre!!.text.toString()
         facturaTo.direccion = txtDireccion!!.text.toString()
@@ -335,11 +345,13 @@ class Nventas : AppCompatActivity() {
         val lista = ArrayList<FacturaDetTo>()
         var facturaDet: FacturaDetTo
         var articulo: Articulo?
-        
-        for (index in 0..tableLayoutArticuloFactura.childCount) {
+        for (index in 1 until tableLayoutArticuloFactura.childCount) {
             val row = tableLayoutArticuloFactura.getChildAt(index) as TableRow
-            val idArticulo = row.getChildAt(0) as TextView
-            articulo = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo.toString().toInt())
+            val cell = row.getChildAt(0) as TextView
+            val idArticulo = cell.text.toString().toInt()
+            val cellCantidad = row.getChildAt(5) as TextView
+            val cantidad = cellCantidad.text.toString().toInt()
+            articulo = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo)
             if (articulo == null) {
                 Toast.makeText(baseContext, "Error al registrar", Toast.LENGTH_LONG).show()
                 break
@@ -365,7 +377,7 @@ class Nventas : AppCompatActivity() {
             facturaDet.al32Cpdnew = articulo.cpdnew
             facturaDet.al32Cpdold = articulo.cpdold
 
-            facturaDet.al32Totcan = 1
+            facturaDet.al32Totcan = cantidad
             facturaDet.al32Preuni = 0.0
             facturaDet.al32peruan = 0.0
             facturaDet.al32pretot = 0.0
@@ -416,6 +428,24 @@ class Nventas : AppCompatActivity() {
             Toast.makeText(this, "Seleccione la forma de pago", Toast.LENGTH_SHORT).show()
             return false
         }
+        if (tableLayoutArticuloFactura.childCount <= 1){
+            Toast.makeText(this, "Agregue al menos un artículo", Toast.LENGTH_SHORT).show()
+            return false
+        }
         return true
+    }
+
+    private fun limpiarGuardar() {
+        txtNroDocIdenti?.setText("")
+        txtNombre?.setText("")
+        txtDireccion?.setText("")
+        txtTienda?.setText("")
+        rdbTienda.tag = ""
+        txtMoneda.setText("")
+        rdbMoneda.tag = ""
+        for (index in 1 until tableLayoutArticuloFactura.childCount){
+            val child: View = tableLayoutArticuloFactura.getChildAt(index)
+            if (child is TableRow) (child as ViewGroup).removeAllViews()
+        }
     }
 }

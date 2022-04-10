@@ -8,11 +8,10 @@ import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Exception
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.Types
-import java.util.*
+import kotlin.Exception
 import kotlin.collections.ArrayList
 
 class NVentasRepositoryImp : INVentasRepository {
@@ -115,7 +114,10 @@ class NVentasRepositoryImp : INVentasRepository {
         return entidadToLive
     }
 
-    override fun registrarPreFacturaCabDet(facturaTo: FacturaCabTo, lstFacturaDetTo: ArrayList<FacturaDetTo>): Boolean {
+    override fun registrarPreFacturaCabDet(
+        facturaTo: FacturaCabTo,
+        lstFacturaDetTo: ArrayList<FacturaDetTo>
+    ): Boolean {
         val con = ConnectionDB.Conexion()
         try {
             con.autoCommit = false
@@ -127,95 +129,153 @@ class NVentasRepositoryImp : INVentasRepository {
                 con.rollback()
                 return false
             }
+            if(!actualizarNroDocumentoCaja(con, facturaTo)){
+                con.rollback()
+                return false
+            }
             con.commit()
-            con.autoCommit = true
             return true
         } catch (ex: Exception) {
             con.rollback()
             throw ex
+        } finally {
+            con.autoCommit = true
         }
     }
 
     private fun registrarPreFacturaCab(con: Connection, facturaTo: FacturaCabTo): Boolean {
-        val procedure = "call usp_AndroidInsertAdicionaPreFactura (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-                "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
-        val correlativo = obtenerCorrelativo(con)
+        val procedure =
+            "call usp_AndroidInsertAdicionaPreFactura (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
+                    "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+        val correlativo = obtenerCorrelativo(facturaTo, con) ?: return false
         val igv = obtenerIGV()
         val st = con.prepareCall(procedure)
-        st.registerOutParameter(1, Types.INTEGER) //> output id
+        facturaTo.valigv = igv
+        facturaTo.serDoc = correlativo.serie
+        facturaTo.numDoc = correlativo.numero
+        st.registerOutParameter("@idfactucab", Types.INTEGER)
+        st.setObject("@al31codalm", facturaTo.idTienda)
+        st.setObject("@al31numcaj", facturaTo.nroCaja)
+        st.setObject("@al31tipdoc", facturaTo.tipoDoc)
+        st.setObject("@al31serdoc", facturaTo.serDoc)
+        st.setObject("@al31numdoc", facturaTo.numDoc)
+        st.setObject("@al31numfac", facturaTo.numFac)
+        st.setObject("@al31fectra", facturaTo.fectra)
+        st.setObject("@al31numruc", facturaTo.nroDocIdenti)
+        st.setObject("@al31nomcli", facturaTo.nombres)
+        st.setObject("@al31dircli", facturaTo.direccion)
+        st.setObject("@al31placa", facturaTo.placa)
+        st.setObject("@al31codven", facturaTo.idUs)
+        st.setObject("@al31tipgui1", facturaTo.tipgui)
+        st.setObject("@al31sergui1", facturaTo.sergui)
+        st.setObject("@al31numgui1", facturaTo.numgui)
+        st.setObject("@al31fecgui1", facturaTo.fecgui)
+        st.setObject("@al31tipgui2", facturaTo.tipgui2)
+        st.setObject("@al31sergui2", facturaTo.sergui2)
+        st.setObject("@al31numgui2", facturaTo.numgui2)
+        st.setObject("@al31fecgui2", facturaTo.fecgui2)
+        st.setObject("@al31conpag", facturaTo.conpag)
+        st.setObject("@al31valven", facturaTo.valven)
+        st.setObject("@al31valigv", facturaTo.valigv)
+        st.setObject("@al31valbru", facturaTo.valbru)
+        st.setObject("@al31numlet", facturaTo.numlet)
+        st.setObject("@al31moneda", facturaTo.idMoneda)
+        st.setObject("@al31serper", facturaTo.serper)
+        st.setObject("@al31numper", facturaTo.numper)
+        st.setObject("@al31fecper", facturaTo.fecper)
+        st.setObject("@al31totper", facturaTo.totper)
+        st.setObject("@al31tipcam", facturaTo.tipCam)
+        st.setObject("@taller", facturaTo.taller)
+        st.setObject("@idUs", facturaTo.idUs)
+        st.setObject("@tipoOperacion", facturaTo.idTipOperacion)
+        st.setObject("@tipoDocIdentidad", facturaTo.idTipoDocIdenti)
+        st.setObject("@opergratuita", facturaTo.operaGratuita)
+        st.setObject("@o_fechaInicio", facturaTo.oFechaInicio)
+        st.setObject("@o_fechaFin", facturaTo.oFechaFin)
+        st.setObject("@op_descuento", facturaTo.oDescuento)
         val result = st.executeUpdate()
         facturaTo.idPreFactura = st.getInt(1)
         return result > 0
     }
 
-    private fun registrarPreFacturaDet(con: Connection, facturaDetTo: ArrayList<FacturaDetTo>, facturaTo: FacturaCabTo): Boolean {
+    private fun registrarPreFacturaDet(
+        con: Connection,
+        facturaDetTo: ArrayList<FacturaDetTo>,
+        facturaTo: FacturaCabTo
+    ): Boolean {
         val procedure = "call usp_AndroidInsertPreFacturaDetalle " +
                 "(?,?,?,?,?,?,?,?,?,?" +
                 ",?,?,?,?,?,?,?,?,?,?" +
                 ",?,?,?,?,?,?,?,?,?,?" +
                 ",?,?,?,?,?,?,?,?,?)"
-
+        if (facturaDetTo.count() == 0)
+            return false
         val st = con.prepareCall(procedure)
-        val dt = Date()
-        st.setObject(1, facturaTo.idPreFactura) //> id
-        st.setObject(2, facturaTo.idTienda) //> almacen
-        st.setObject(3, facturaTo.nroCaja) //> numumero caja
-        st.setObject(4, facturaTo.tipoDoc) //> tipdoc
-        st.setObject(5, facturaTo.serDoc) //> serdoc
-        st.setObject(6, facturaTo.numDoc) //> numdoc
-        st.setObject(7, 1) //> numfac
-        st.setObject(8, 1)
-        st.setObject(9, dt.date) //> fectra
-        st.setObject(10, "") //> flag
-        st.setObject(11, 30976) //> idArticulo
-        st.setObject(12, "NI") //> vehimarc
-        st.setObject(13, 1) //> marvehi
-        st.setObject(14, 300) //> codprod
-        st.setObject(15, 262) //> patronarti
-        st.setObject(16, "S") //> superarti
-        st.setObject(17, "PK") //> marproarti
-        st.setObject(18, "FS80262-S-NPK") //> alternante
-        st.setObject(19, "JG") //> unimed
-        st.setObject(20, 1) //> campar
-        st.setObject(21, "JGO. EMP. MOTOR") //> descriarti
-        st.setObject(22, "01.9333") //> codbar
-        st.setObject(23, "01300.262.SPK") //> cpdnew
-        st.setObject(24, "NI300.262.SPK") //> cpdold
-        st.setObject(25, 1) //> totcan
-        st.setObject(26, 1.00) //> preini
-        st.setObject(27, 0.00) //> peruan
-        st.setObject(28, 1.00) //> pretot
-        st.setObject(29, 0) //> tipdcm
-        st.setObject(30, "") //> serdcm
-        st.setObject(31, 0) //> numdcm
-        st.setObject(32, 0) //> secdcm
-        st.setObject(33, null) //> fecdcm
-        st.setObject(34, "") //> serabo
-        st.setObject(35, 0) //> notabo,
-        st.setObject(36, 0) //> secabo
-        st.setObject(37, null) //> fecabo
-        st.setObject(38, 105) //> idus
-        st.setObject(39, null) //> glosa
-        return st.executeUpdate() > 0
+        facturaDetTo.forEach { it ->
+            st.setObject("@idfactdet", facturaTo.idPreFactura)
+            st.setObject("@al32codAlm", facturaTo.idTienda)
+            st.setObject("@al32numCaj", facturaTo.nroCaja)
+            st.setObject("@al32tipDoc", facturaTo.tipoDoc)
+            st.setObject("@al32serDoc", facturaTo.serDoc)
+            st.setObject("@al32numDoc", facturaTo.numDoc)
+            st.setObject("@al32numfac", it.al32numfac)
+            st.setObject("@al33numSec", it.al33numSec)
+            st.setObject("@al32fecTra", facturaTo.fectra)
+            st.setObject("@AL32flag", it.al32flag)
+            st.setObject("@al32idarticulo", it.al32idarticulo)
+            st.setObject("@al32Vehimarc", it.al32Vehimarc)
+            st.setObject("@al32Marvehi", it.al32Marvehi)
+            st.setObject("@al32Codprod", it.al32Codprod)
+            st.setObject("@al32Patronarti", it.al32Patronarti)
+            st.setObject("@al32Superarti", it.al32Superarti)
+            st.setObject("@al32Marproarti", it.al32Marproarti)
+            st.setObject("@al32Alternante", it.al32Alternante)
+            st.setObject("@al32Unimed", it.al32Unimed)
+            st.setObject("@al32Campar", it.al32Campar)
+            st.setObject("@al32DescriArti", it.al32DescriArti)
+            st.setObject("@al32Codbar", it.al32Codbar)
+            st.setObject("@al32Cpdnew", it.al32Cpdnew)
+            st.setObject("@al32Cpdold", it.al32Cpdold)
+            st.setObject("@al32Totcan", it.al32Totcan)
+            st.setObject("@al32Preuni", it.al32Preuni)
+            st.setObject("@al32peruan", it.al32peruan)
+            st.setObject("@al32pretot", it.al32pretot)
+            st.setObject("@al32tipdcm", it.al32tipdcm)
+            st.setObject("@al32serdcm", it.al32serdcm)
+            st.setObject("@al32numdcm", it.al32numdcm)
+            st.setObject("@al32secdcm", it.al32secdcm)
+            st.setObject("@al32fecdcm", it.al32fecdcm)
+            st.setObject("@al32serabo", it.al32serabo)
+            st.setObject("@al32notabo", it.al32notabo)
+            st.setObject("@al32secabo", it.al32secabo)
+            st.setObject("@al32fecabo", it.al32fecabo)
+            st.setObject("@idUs", it.idUs)
+            st.setObject("@al32glosa", it.al32glosa)
+            if (st.executeUpdate() <= 0)
+                return false
+        }
+        return true
     }
 
-    private fun obtenerCorrelativo(con: Connection): Array<Any> {
-        val procedure = "call usp_AndroidSelectObtenerControlDocumentos (?,?,?)"
-        val idTipoDocumento = 24
-        val st = con.prepareCall(procedure)
-        st.setInt(1, 3) //> idTienda
-        st.setInt(2, idTipoDocumento) //> idDocumento
-        st.setInt(3, 1) //> caja
-        val rs = st.executeQuery()
-        var serie = ""
-        var nro = 0
-        var nroReg = 0
-        if (rs.next()) {
-            serie = rs.getString("serie")
-            nro = rs.getString("nro").toInt()
-            nroReg = rs.getString("nroreg").toInt()
+    private fun obtenerCorrelativo(facturaTo: FacturaCabTo, con: Connection): CorrelativoTo? {
+        try {
+            val procedure = "call usp_AndroidSelectObtenerControlDocumentos (?,?,?)"
+            val st = con.prepareCall(procedure)
+            st.setInt(1, facturaTo.idTienda) //> idTienda
+            st.setInt(2, facturaTo.tipoDoc) //> idDocumento
+            st.setInt(3, facturaTo.nroCaja) //> caja
+            val rs = st.executeQuery()
+            if (rs.next()) {
+                return CorrelativoTo().also {
+                    it.serie = rs.getString("serie")
+                    it.numero = rs.getInt("nro")
+                    it.nro_reg = rs.getInt("nroreg")
+                }
+            }
+            return null
+        } catch (ex: Exception) {
+            throw ex
         }
-        return arrayOf(serie, nro, nroReg)
     }
 
     private fun obtenerIGV(): Double {
@@ -226,5 +286,24 @@ class NVentasRepositoryImp : INVentasRepository {
         return if (rs.next()) {
             rs.getDouble("descuento")
         } else return 0.0
+    }
+
+    private fun actualizarNroDocumentoCaja(
+        con: Connection,
+        facturaTo: FacturaCabTo
+    ): Boolean {
+        try {
+            val procedure = "call AndroidUpdateActualizaNroControlDocumentosCaja (?,?,?,?,?,?)"
+            val st = con.prepareCall(procedure)
+            st.setInt("@idtienda", facturaTo.idTienda)
+            st.setInt("@caja", facturaTo.nroCaja)
+            st.setInt("@iddocumento", facturaTo.tipoDoc)
+            st.setString("@serie", facturaTo.serDoc)
+            st.setInt("@idUs", facturaTo.idUs)
+            st.registerOutParameter("@nro", Types.INTEGER)
+            return st.executeUpdate() > 0
+        } catch (ex: Exception) {
+            throw ex
+        }
     }
 }
