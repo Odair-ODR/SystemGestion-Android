@@ -3,9 +3,18 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+<<<<<<< HEAD
         <entry key="..\:/PROYECTOS/PROYECTO_ANDROID/SystemGestion-Android/app/src/main/res/layout/activity_factura.xml" value="0.27291666666666664" />
         <entry key="..\:/PROYECTOS/PROYECTO_ANDROID/SystemGestion-Android/app/src/main/res/layout/activity_splash.xml" value="0.27291666666666664" />
         <entry key="..\:/PROYECTOS/PROYECTO_ANDROID5/SystemGestion-Android/app/src/main/res/layout/activity_factura.xml" value="0.25" />
+=======
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta_items_venta.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_factura.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/alert_dialog_cantidad_item.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/motor_alert_dialog.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/tiendas_alert_dialog.xml" value="0.30526315789473685" />
+>>>>>>> e12dee5be80cae4cfc9676769b5b816b62dd04ea
       </map>
     </option>
   </component>

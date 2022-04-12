@@ -14,6 +14,7 @@ class Articulo {
     var alternante: String? = null
     var codbar: String = ""
     var cpdnew: String = ""
+    var totCan: Int = 0
     var totSaldo = 0
     var cpdold = ""
     var superarti = ""

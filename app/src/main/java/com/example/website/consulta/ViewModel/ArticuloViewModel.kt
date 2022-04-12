@@ -2,32 +2,36 @@ package com.example.website.consulta.ViewModel
 
 import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
-import android.widget.TableLayout
-import android.widget.TableRow
-import android.widget.TextView
 import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Model.ArticuloObservable
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.View.ConsultaItemsVenta
 import com.example.website.consulta.View.TableAdapter
+import android.view.LayoutInflater
+import android.widget.*
+import com.example.website.consulta.R
 
-class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaItemsVenta) : AsyncTask<Any, Any, ArrayList<Articulo>>() {
+class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaItemsVenta) :
+    AsyncTask<Any, Any, ArrayList<Articulo>>() {
     private var articuloObservable: ArticuloObservable = ArticuloObservable()
     private var articuloTableAdapter: TableAdapter? = null
     private lateinit var progresDialog: Dialog
     private lateinit var tableLayoutArticulo: TableLayout
-    private val columnas = arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta")
+    private val columnas =
+        arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
 
     private fun ObtenerTableAdapter(context: Context, tableLayout: TableLayout) {
         articuloTableAdapter = TableAdapter(context, tableLayout)
     }
 
     fun GetArtitculoAt(position: Int, codbar: String, alternante: String): Articulo? {
-        val lstArticulo: List<Articulo>? = articuloObservable.obtenerArticulosFactura(codbar, alternante).value
+        val lstArticulo: List<Articulo>? =
+            articuloObservable.obtenerArticulosFactura(codbar, alternante).value
         return lstArticulo?.get(position)
     }
 
@@ -56,13 +60,20 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         return null
     }
 
-    override fun onPostExecute(lstArticulo: ArrayList<Articulo>) {
-        AsignarDataArticulosEnTableAdapter(context, tableLayoutArticulo, columnas, lstArticulo)
-        RowArticuloFactura_OnClickListener()
+    override fun onPostExecute(lstArticulo: ArrayList<Articulo>?) {
+        if (lstArticulo != null) {
+            AsignarDataArticulosEnTableAdapter(context, tableLayoutArticulo, columnas, lstArticulo)
+            RowArticuloFactura_OnClickListener()
+        }
         progresDialog.dismiss()
     }
 
-    private fun AsignarDataArticulosEnTableAdapter(context: Context, tableLayout: TableLayout, columnas: Array<String>, lstArticulo: List<Articulo>) {
+    private fun AsignarDataArticulosEnTableAdapter(
+        context: Context,
+        tableLayout: TableLayout,
+        columnas: Array<String>,
+        lstArticulo: List<Articulo>
+    ) {
         ObtenerTableAdapter(context, tableLayout)
         articuloTableAdapter?.AddHeaderArticulo(columnas)
         articuloTableAdapter?.AddDataArticuloVenta(lstArticulo)
@@ -74,22 +85,67 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
             tableRow.isClickable = true
             tableRow.setOnClickListener(object : View.OnClickListener {
                 override fun onClick(view: View) {
-                    PasarDatosIntent(tableRow)
-                    consultaItemsVenta.finish()
-                    //> consultaItemsVenta.onBackPressed()
+                    mostrarDialogCantidad(tableRow)
                 }
             })
         }
     }
 
-    private fun PasarDatosIntent(tableRow: TableRow) {
+    private fun PasarDatosIntent(tableRow: TableRow, txtCantidad: EditText) {
         val textCell = tableRow.getChildAt(0) as TextView
         val bundle: Bundle = Bundle().also {
             it.putInt("idArticulo", textCell.text.toString().toInt())
+            it.putInt("cantidad", txtCantidad.text.toString().toInt())
         }
         val intent: Intent = Intent().also {
             it.putExtra("articulo", bundle)
         }
         consultaItemsVenta.setResult(1, intent)
+    }
+
+    private fun mostrarDialogCantidad(tableRow: TableRow) {
+        val view: View =
+            LayoutInflater.from(context).inflate(R.layout.alert_dialog_cantidad_item, null)
+        val txtCantidad = view.findViewById<EditText>(R.id._txtCantidad)
+        val alertDialog =
+            UtilsInterface.alertDialog3(
+                context,
+                view,
+                consultaItemsVenta.window,
+                "Cantidad item",
+                onClickCallBack(tableRow, txtCantidad)
+            )
+        alertDialog.setOnDismissListener(alertDialog_OnDismissListener)
+    }
+
+    private fun onClickCallBack(
+        tableRow: TableRow,
+        txtCantidad: EditText
+    ): UtilsInterface.OnClickCallBack {
+        val onClickCallBack = object : UtilsInterface.OnClickCallBack {
+            override fun onClick() {
+                PasarDatosIntent(tableRow, txtCantidad)
+                consultaItemsVenta.finish()
+            }
+        }
+        return onClickCallBack
+    }
+
+    //> tabmién funcona con UtilsInterface.alertDialog2
+    private fun alertDialog_OnClick(
+        tableRow: TableRow,
+        txtCantidad: EditText
+    ): DialogInterface.OnClickListener {
+        val dialogInterface = object : DialogInterface.OnClickListener {
+            override fun onClick(p0: DialogInterface?, p1: Int) {
+                PasarDatosIntent(tableRow, txtCantidad)
+                consultaItemsVenta.finish()
+            }
+        }
+        return dialogInterface
+    }
+
+    private val alertDialog_OnDismissListener = DialogInterface.OnDismissListener {
+        Toast.makeText(context, "Cancelado", Toast.LENGTH_LONG).show()
     }
 }

@@ -1,6 +1,7 @@
 package com.example.website.consulta.Model.Entidad
 
 class FacturaCabTo {
+    var numFac: Int = 0
     var idPreFactura: Int = 0
     var oDescuento: Int = 0
     var oFechaFin: Any? = null
@@ -33,7 +34,7 @@ class FacturaCabTo {
     var direccion: String = ""
     var nombres: String = ""
     var nroDocIdenti: String = ""
-    var fectra: Int = 0
+    var fectra: String = ""
     var nroFactura: Int = 0
     var numDoc: Int = 0
     var serDoc: String = ""
