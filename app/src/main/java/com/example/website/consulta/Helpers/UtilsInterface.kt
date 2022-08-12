@@ -43,7 +43,7 @@ class UtilsInterface() {
             view.findViewById<TextView>(R.id._titulo)?.setText(title)
             val alertBuilder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
             //> alertBuilder.setTitle("Vista de Motores")
-            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListener)
+            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListenerCancel)
             alertBuilder.setView(view)
             val alertDialog = alertBuilder.create()
             alertDialog.show()
@@ -58,7 +58,7 @@ class UtilsInterface() {
             return alertDialog
         }
 
-        private var AlertDialog_OnClickListener = object : DialogInterface.OnClickListener {
+        private var AlertDialog_OnClickListenerCancel = object : DialogInterface.OnClickListener {
             override fun onClick(dialog: DialogInterface, which: Int) {
                 dialog.dismiss()
             }
@@ -75,7 +75,7 @@ class UtilsInterface() {
             val alertBuilder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
             //> alertBuilder.setTitle("Vista de Motores")
             alertBuilder.setNeutralButton("Aceptar", clickListener)
-            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListener)
+            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListenerCancel)
             alertBuilder.setView(view)
             val alertDialog = alertBuilder.create()
             alertDialog.show()
@@ -103,7 +103,7 @@ class UtilsInterface() {
             val alertBuilder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
             //> alertBuilder.setTitle("Vista de Motores")
             alertBuilder.setNeutralButton("Aceptar", click)
-            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListener)
+            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListenerCancel)
             alertBuilder.setView(view)
             val alertDialog = alertBuilder.create()
             alertDialog.show()
@@ -122,6 +122,20 @@ class UtilsInterface() {
             override fun onClick(p0: DialogInterface?, p1: Int) {
                 callBack.onClick()
             }
+        }
+
+        fun alertDialog4(
+            context: Context,
+            view: View,
+            windowMain: Window,
+            title: String
+        ): AlertDialog {
+            val alertBuilder = AlertDialog.Builder(context)
+            alertBuilder.setTitle(title)
+            alertBuilder.setNegativeButton("Cancelar", AlertDialog_OnClickListenerCancel)
+            alertBuilder.setView(view)
+            val alertDialog = alertBuilder.create()
+            return alertDialog
         }
     }
 }

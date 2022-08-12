@@ -35,24 +35,42 @@
                 android:textSize="18sp" />
     </LinearLayout>
 
+    <HorizontalScrollView
+            android:id="@+id/horizontalScrollViewHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linLay1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/scrollView1">
+
+        <TableLayout
+                android:id="@+id/tblArticuloHead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" />
+    </HorizontalScrollView>
+
     <ScrollView
             android:id="@+id/scrollView1"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="0dp"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewHead"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/btnConsultarFra"
-            app:layout_constraintTop_toBottomOf="@+id/linLay1"
             android:fillViewport="true">
 
         <HorizontalScrollView
+                android:id="@+id/horizontalScrollViewDetail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fillViewport="true">
 
             <TableLayout
-                    android:id="@+id/tableLayoutArticulos"
+                    android:id="@+id/tblArticuloDetail"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginTop="0dp" />

@@ -8,39 +8,61 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TableLayout
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.CodbarFragmentViewModel
+import kotlinx.android.synthetic.main.activity_principal.*
+import kotlinx.android.synthetic.main.fragment_codbar.horizontalScrollViewDetail
+import kotlinx.android.synthetic.main.fragment_codbar.horizontalScrollViewHead
+import kotlinx.android.synthetic.main.fragment_codbar.tblArticuloDetail
+import kotlinx.android.synthetic.main.fragment_codbar.tblArticuloHead
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class CodbarFragment : Fragment() {
     private var txtCodba: EditText? = null
     private var txtMotor: EditText? = null
     private var btnConsultar: Button? = null
-    private lateinit var tableLayout: TableLayout
     private lateinit var codBarFragmentViewModel: CodbarFragmentViewModel
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
         val view: View = inflater.inflate(R.layout.fragment_codbar, container, false)
-        InitializeComponents(view)
-        InitializeEvents()
+        initializeComponents(view)
+        initializeEvents()
         return view
     }
 
-    private fun InitializeComponents(view: View) {
+    private fun initializeComponents(view: View) {
         txtCodba = view.findViewById(R.id.txtCodBar)
-        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
         txtMotor = view.findViewById(R.id.txtMotor)
-        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
+        initializeComponentsCodbarFragmentViewModel(view)
     }
 
-    private fun InitializeEvents() {
+    private fun initializeEvents() {
         btnConsultar!!.setOnClickListener(btnConsular_OnClickListerner)
     }
 
-    private var btnConsular_OnClickListerner = View.OnClickListener {
-        /*val lstArticulo = codBarFragmentViewModel.ObtenerArticulosXCodbar(txtCodba?.text.toString())
-        context?.let { it1 -> codBarFragmentViewModel.CargarAticulosXCobar(it1, tableLayout, ObtenerColumns(), lstArticulo) }*/
+    private fun initializeComponentsCodbarFragmentViewModel(view: View) {
         codBarFragmentViewModel = CodbarFragmentViewModel(context!!)
-        codBarFragmentViewModel.execute(txtCodba?.text.toString(), tableLayout)
+        codBarFragmentViewModel.horizontalScrollViewHead = view.findViewById(R.id.horizontalScrollViewHead)
+        codBarFragmentViewModel.tblArticuloHead = view.findViewById(R.id.tblArticuloHead)
+        codBarFragmentViewModel.horizontalScrollViewDetail = view.findViewById(R.id.horizontalScrollViewDetail)
+        codBarFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
+        codBarFragmentViewModel.initializeEvents()
+    }
+
+    private var btnConsular_OnClickListerner = View.OnClickListener {
+        lifecycleScope.launch(Dispatchers.Main){
+            codBarFragmentViewModel.startLoadingDialog()
+            val lstArticulos = withContext(Dispatchers.IO){
+                codBarFragmentViewModel.obtenerArticulosXCodbar(txtCodba?.text.toString())
+            }
+            codBarFragmentViewModel.cargarArticulosXCobar(lstArticulos)
+            codBarFragmentViewModel.closeLoadingDialog()
+        }
     }
 }

@@ -13,9 +13,13 @@ import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Helpers.UtilsMethod
 import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.R
-import com.example.website.consulta.ViewModel.ArticuloViewModel
 import com.example.website.consulta.ViewModel.NVentasViewModel
 import com.example.website.consulta.dummy.Tienda
+import kotlinx.android.synthetic.main.activity_factura.*
+import kotlinx.android.synthetic.main.activity_factura.horizontalScrollViewDetail
+import kotlinx.android.synthetic.main.activity_factura.horizontalScrollViewHead
+import kotlinx.android.synthetic.main.activity_factura.tblArticuloDetail
+import kotlinx.android.synthetic.main.activity_factura.tblArticuloHead
 import kotlinx.android.synthetic.main.activity_factura.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -32,7 +36,6 @@ class Nventas : AppCompatActivity() {
     private lateinit var btnBuscarRucDni: Button
     private lateinit var view: View
     private lateinit var nVentasViewModel: NVentasViewModel
-    private lateinit var tableLayoutArticuloFactura: TableLayout
     private lateinit var alertDialog: AlertDialog
     private lateinit var rdbTienda: RadioButton
     private lateinit var rdbMoneda: RadioButton
@@ -54,12 +57,9 @@ class Nventas : AppCompatActivity() {
     private fun startOptions() {
         tipoDocumento = intent.getSerializableExtra("TipoDocumento") as TIPO_DOCUMENTO
         txtTipoDoc?.setText(tipoDocumento.descripcion)
-
-        nVentasViewModel.swipeDismissTouchTableAdapter(tableLayoutArticuloFactura)
     }
 
     private fun initializeComponents() {
-        nVentasViewModel = NVentasViewModel(this)
         txtTipoDoc = findViewById(R.id.txtTipoDoc)
         txtNroDocIdenti = findViewById(R.id.txtNroDocIdenti)
         txtNombre = findViewById(R.id.txtNombre)
@@ -67,8 +67,8 @@ class Nventas : AppCompatActivity() {
         btnGrabar = findViewById(R.id.btnGrabar)
         btnItem = findViewById(R.id.btnItem)
         txtTienda = findViewById(R.id.txtTienda)
-        tableLayoutArticuloFactura = findViewById(R.id.tableLayoutArticulosFactura)
         btnBuscarRucDni = findViewById(R.id.btnBuscarRucDni)
+        initializeComponentsNVentasViewModel()
     }
 
     private fun initializeEvents() {
@@ -77,6 +77,15 @@ class Nventas : AppCompatActivity() {
         txtTienda!!.setOnClickListener(txtTienda_OnClickListener)
         txtMoneda!!.setOnClickListener(txtMoneda_OnClickListener)
         btnBuscarRucDni.setOnClickListener(btnBuscarRucDni_OnClickListener)
+    }
+
+    private fun initializeComponentsNVentasViewModel(){
+        nVentasViewModel = NVentasViewModel(this)
+        nVentasViewModel.horizontalScrollViewHead = horizontalScrollViewHead
+        nVentasViewModel.tblArticuloHead = tblArticuloHead
+        nVentasViewModel.horizontalScrollViewDetail = horizontalScrollViewDetail
+        nVentasViewModel.tblArticuloDetail = tblArticuloDetail
+        nVentasViewModel.initializeEvents()
     }
 
     /*private fun CargarSpinnerTipoDocumento() {
@@ -103,11 +112,11 @@ class Nventas : AppCompatActivity() {
     private val txtTienda_OnClickListener = View.OnClickListener {
         view = this.layoutInflater.inflate(R.layout.tiendas_alert_dialog, null, false)
         startAlerDialogRdb(view, "Tiendas")
-        CargarTiendas()
+        cargarTiendas()
     }
 
-    private fun CargarTiendas() {
-        val lstTienda: ArrayList<Tienda> = nVentasViewModel.ObtenerTiendas()
+    private fun cargarTiendas() {
+        val lstTienda: ArrayList<Tienda> = nVentasViewModel.obtenerTiendas()
         val radioGroup = view.findViewById<RadioGroup>(R.id._RadioGruoup)
         var radioButton: RadioButton
         //> if (radioButton.getParent() != null) {
@@ -144,7 +153,7 @@ class Nventas : AppCompatActivity() {
     }
 
     private fun CargarMoneda() {
-        val lstTienda: ArrayList<Moneda> = nVentasViewModel.ObtenerMoneda()
+        val lstTienda: ArrayList<Moneda> = nVentasViewModel.obtenerMoneda()
         val radioGroup = view.findViewById<RadioGroup>(R.id._RadioGruoup)
         var radioButton: RadioButton
         for (item in lstTienda) {
@@ -250,10 +259,10 @@ class Nventas : AppCompatActivity() {
                 val idArticulo = bundle?.getInt("idArticulo")
                 val cantidad = bundle?.getInt("cantidad")
                 val articulo: Articulo? = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo!!)
-                nVentasViewModel.CargarDataTableLayout(
-                    tableLayoutArticuloFactura,
-                    ArticulosFactura(articulo!!, cantidad!!)
+                nVentasViewModel.cargarDataTableLayout(
+                    articulosFactura(articulo!!, cantidad!!)
                 )
+                nVentasViewModel.swipeDismissTouchTableAdapter()
                 Toast.makeText(
                     baseContext,
                     "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(),
@@ -265,7 +274,7 @@ class Nventas : AppCompatActivity() {
         }
     }
 
-    private fun ArticulosFactura(articulo: Articulo, cantidad: Int): ArrayList<Articulo> {
+    private fun articulosFactura(articulo: Articulo, cantidad: Int): ArrayList<Articulo> {
         return ArrayList<Articulo>().also {
             articulo.totCan = cantidad
             it.add(articulo)
@@ -345,8 +354,8 @@ class Nventas : AppCompatActivity() {
         val lista = ArrayList<FacturaDetTo>()
         var facturaDet: FacturaDetTo
         var articulo: Articulo?
-        for (index in 1 until tableLayoutArticuloFactura.childCount) {
-            val row = tableLayoutArticuloFactura.getChildAt(index) as TableRow
+        for (index in 0 until tblArticuloDetail.childCount) {
+            val row = tblArticuloDetail.getChildAt(index) as TableRow
             val cell = row.getChildAt(0) as TextView
             val idArticulo = cell.text.toString().toInt()
             val cellCantidad = row.getChildAt(5) as TextView
@@ -428,7 +437,7 @@ class Nventas : AppCompatActivity() {
             Toast.makeText(this, "Seleccione la forma de pago", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (tableLayoutArticuloFactura.childCount <= 1){
+        if (tblArticuloDetail.childCount <= 0){
             Toast.makeText(this, "Agregue al menos un artículo", Toast.LENGTH_SHORT).show()
             return false
         }
@@ -443,8 +452,8 @@ class Nventas : AppCompatActivity() {
         rdbTienda.tag = ""
         txtMoneda.setText("")
         rdbMoneda.tag = ""
-        for (index in 1 until tableLayoutArticuloFactura.childCount){
-            val child: View = tableLayoutArticuloFactura.getChildAt(index)
+        for (index in 0 until tblArticuloDetail.childCount){
+            val child: View = tblArticuloDetail.getChildAt(index)
             if (child is TableRow) (child as ViewGroup).removeAllViews()
         }
     }

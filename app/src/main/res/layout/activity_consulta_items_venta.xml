@@ -1,99 +1,167 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context=".View.ConsultaItemsVenta">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".View.ConsultaItemsVenta">
 
 
         <EditText
-            android:id="@+id/txtCodbar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_editControls"
-            android:layout_marginStart="@dimen/margin_editControls"
-            android:ems="10"
-            android:focusable="true"
-            android:inputType="text"
-            android:textSize="@dimen/textSize"
-            android:hint="Ingrese el Cob.bar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.060000002"
-            android:layout_marginLeft="@dimen/margin_editControls"
-            android:background="@drawable/editext_radious_corner"
-            android:layout_marginRight="@dimen/margin_editControls" />
-
-        <EditText
-            android:id="@+id/txtAlternante"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_editControls"
-            android:layout_marginStart="@dimen/margin_editControls"
-            android:layout_marginTop="10dp"
-            android:ems="10"
-            android:focusable="true"
-            android:inputType="text"
-            android:textSize="@dimen/textSize"
-            android:hint="Ingrese el alternante"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/editext_radious_corner"
-            app:layout_constraintTop_toBottomOf="@+id/txtCodbar"
-            android:layout_marginRight="@dimen/margin_editControls" />
-
-        <Button
-            android:id="@+id/btnBuscar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/custom_button"
-            android:textColor="@drawable/button_white_text"
-            android:text="Buscar"
-            android:textSize="@dimen/textSizeUpperButton"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.93"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/txtAlternante" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            app:layout_constraintTop_toBottomOf="@+id/btnBuscar"
-            app:layout_constraintBottom_toTopOf="@+id/scrollViewLista"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:background="@drawable/separator"
-            />
-
-        <ScrollView
-            android:id="@+id/scrollViewLista"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnBuscar">
-
-            <HorizontalScrollView
+                android:id="@+id/txtCodbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:fillViewport="true">
+                android:layout_marginEnd="@dimen/margin_editControls"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:ems="10"
+                android:focusable="true"
+                android:inputType="text"
+                android:textSize="@dimen/textSize"
+                android:hint="Ingrese el Cob.bar"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.060000002"
+                android:layout_marginLeft="@dimen/margin_editControls"
+                android:background="@drawable/editext_radious_corner"
+                android:layout_marginRight="@dimen/margin_editControls" />
+
+        <EditText
+                android:id="@+id/txtAlternante"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_editControls"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:focusable="true"
+                android:inputType="text"
+                android:textSize="@dimen/textSize"
+                android:hint="Ingrese el alternante"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:background="@drawable/editext_radious_corner"
+                app:layout_constraintTop_toBottomOf="@+id/txtCodbar"
+                android:layout_marginRight="@dimen/margin_editControls" />
+        <EditText
+                android:id="@+id/txtCodProd"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_editControls"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:focusable="true"
+                android:inputType="text"
+                android:textSize="@dimen/textSize"
+                android:hint="codProd"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/txtMotor"
+                app:layout_constraintTop_toBottomOf="@+id/txtAlternante"
+                android:background="@drawable/editext_radious_corner"
+                android:layout_marginRight="@dimen/margin_editControls" />
+
+        <EditText
+                android:id="@+id/txtMotor"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin_editControls"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:layout_marginTop="10dp"
+                android:ems="10"
+                android:focusable="true"
+                android:inputType="text"
+                android:textSize="@dimen/textSize"
+                android:hint="motor"
+                app:layout_constraintStart_toEndOf="@+id/txtCodProd"
+                app:layout_constraintEnd_toStartOf="@+id/btnBuscarMotor"
+                app:layout_constraintTop_toBottomOf="@+id/txtAlternante"
+                android:background="@drawable/editext_radious_corner"
+                android:layout_marginRight="@dimen/margin_editControls" />
+
+        <Button
+                android:id="@+id/btnBuscarMotor"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/la_search_icon"
+                android:layout_marginEnd="@dimen/margin_editControls"
+                android:layout_marginRight="@dimen/margin_editControls"
+                android:layout_marginLeft="1dp"
+                android:layout_marginStart="1dp"
+                app:layout_constraintStart_toEndOf="@+id/txtMotor"
+                app:layout_constraintTop_toBottomOf="@+id/txtAlternante"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        <Button
+                android:id="@+id/btnBuscar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/custom_button"
+                android:textColor="@drawable/button_white_text"
+                android:text="Buscar"
+                android:textSize="@dimen/textSizeUpperButton"
+                app:layout_constraintHorizontal_bias="0.93"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtMotor"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/_viewc"/>
+
+        <View
+                android:id="@+id/_viewc"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnBuscar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/scrollViewDetail"
+                android:background="@drawable/separator"
+                android:layout_marginBottom="5dp"/>
+
+        <HorizontalScrollView
+                android:id="@+id/horizontalScrollViewHead"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/_viewc"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/scrollViewDetail">
+
+            <TableLayout
+                    android:id="@+id/tblArticuloHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="0dp" />
+        </HorizontalScrollView>
+
+        <ScrollView
+                android:id="@+id/scrollViewDetail"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewHead"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+            <HorizontalScrollView
+                    android:id="@+id/horizontalScrollViewDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fillViewport="true">
 
                 <TableLayout
-                    android:id="@+id/tlArticulos"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="0dp"
-                    android:shrinkColumns="1,2,3">
+                        android:id="@+id/tblArticuloDetail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="0dp"
+                        android:shrinkColumns="1,2,3">
 
                 </TableLayout>
             </HorizontalScrollView>

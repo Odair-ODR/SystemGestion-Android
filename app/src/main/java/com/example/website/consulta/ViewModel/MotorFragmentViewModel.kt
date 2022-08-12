@@ -7,58 +7,49 @@ import android.content.DialogInterface
 import android.os.AsyncTask
 import android.view.LayoutInflater
 import android.view.View
-import android.widget.EditText
-import android.widget.TableLayout
+import android.widget.*
 import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.Model.MotorFragmentObservable
 import com.example.website.consulta.R
 import com.example.website.consulta.View.TableAdapter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-class MotorFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayList<Motor>>() {
+class MotorFragmentViewModel(val context: Context) {
     private val motorFragmentObservable: MotorFragmentObservable = MotorFragmentObservable()
     private var tableAdapter: TableAdapter? = null
     private var progresDialog: Dialog? = null
     private var alertDialog: AlertDialog? = null
-    private var tableLayoutMotor: TableLayout? = null
+    private lateinit var tblMotorHead: TableLayout
+    private lateinit var tblMotorDetail: TableLayout
     private val headersMotor = arrayOf("Marca", "Motor", "Cili1")
-    private val headersArticulo = arrayOf("CpdNew", "Alternante", "CodBar", "UM", "Can", "Sal", "P.Venta")
+    private val headersArticulo =
+        arrayOf("CpdNew", "Alternante", "CodBar", "UM", "Can", "Sal", "P.Venta")
     private var codProd: String = ""
+    private var motor: String = ""
 
-    var tableLayoutArticulo: TableLayout? = null
-    var txtMotor: EditText? = null
+    lateinit var tblArticuloHead: TableLayout
+    lateinit var tblArticuloDetail: TableLayout
+    lateinit var horizontalScrollViewHead: HorizontalScrollView
+    lateinit var horizontalScrollViewDetail: HorizontalScrollView
 
-    private fun ObtenerMotores(codProd: String, motor: String): ArrayList<Motor> {
-        return motorFragmentObservable.ObtenerMotores(codProd, motor)
-    }
-
-    private fun CargarDataShowAlert(alertDialog: AlertDialog, tableLayout: TableLayout, headers: Array<String>, lstMotor: ArrayList<Motor>) {
-        tableAdapter = TableAdapter(context, tableLayout)
-        tableAdapter?.AddHeader(headers)
-        tableAdapter?.AddDataMotor(lstMotor, alertDialog, txtMotor!!)
-    }
-
-    private fun ObtenerArticulosXMotorCodProd(codProd: String, motor: String): ArrayList<Articulo> {
+    private fun obtenerArticulosXMotorCodProd(codProd: String, motor: String): ArrayList<Articulo> {
         return motorFragmentObservable.ObtenerArticulosXMotorCodProd(codProd, motor)
     }
 
-    fun CargarDataLayaoutArticulos(tableLayout: TableLayout, headers: Array<String>, lstArticulo: ArrayList<Articulo>) {
-        tableAdapter = TableAdapter(context, tableLayout)
-        tableAdapter?.AddHeader(headers)
-        tableAdapter?.AddDataArticuloXMotorCodProd(lstArticulo)
-    }
-
-    override fun onPreExecute() {
-        StartLoadingDialog()
-        StartAlerDialog()
-    }
-
-    private fun StartLoadingDialog() {
+    fun startLoadingDialog() {
         progresDialog = UtilsInterface.progressDialog(context)
     }
 
-    private fun StartAlerDialog() {
+    fun closeLoadingDialog() {
+        progresDialog?.dismiss()
+    }
+
+    fun startAlerDialogMotores() {
         val alertBuilder = AlertDialog.Builder(context)
         alertBuilder.setTitle("Vista de Motores")
         alertBuilder.setNegativeButton("Cancelar", object : DialogInterface.OnClickListener {
@@ -69,28 +60,61 @@ class MotorFragmentViewModel(val context: Context) : AsyncTask<Any, Any, ArrayLi
         val view: View = LayoutInflater.from(context).inflate(R.layout.motor_alert_dialog, null)
         alertBuilder.setView(view)
         alertDialog = alertBuilder.create()
-        alertDialog?.setOnDismissListener(AlertDialog_OnDismissListener)
-        tableLayoutMotor = view.findViewById(R.id.tableLayoutMotores)
+        alertDialog?.setOnDismissListener(AlertDialogOnDismissListener)
+        alertDialog?.show()
+        inicializarTableLayoutsMotor(view)
     }
 
-    override fun doInBackground(vararg params: Any?): ArrayList<Motor> {
-        codProd = params[0].toString()
-        val motor = params[1].toString()
-        return ObtenerMotores(codProd, motor)
+    private fun inicializarTableLayoutsMotor(view: View) {
+        tblMotorHead = view.findViewById(R.id.tblMotorHead)
+        tblMotorDetail = view.findViewById(R.id.tblMotorDetail)
     }
 
-    override fun onPostExecute(result: ArrayList<Motor>) {
-        try {
-            CargarDataShowAlert(alertDialog!!, tableLayoutMotor!!, headersMotor, result)
-            alertDialog?.show()
-        } catch (ex: Exception) {
-            ex.printStackTrace()
+    fun obtenerMotores(codProd: String, motor: String): ArrayList<Motor> {
+        this.codProd = codProd
+        this.motor = motor
+        return motorFragmentObservable.ObtenerMotores(codProd, motor)
+    }
+
+    fun cargarDataMotor(
+        lstMotor: ArrayList<Motor>
+    ) {
+        inicializarTableAdapter(tblMotorHead, tblMotorDetail)
+        tableAdapter?.addHead(headersMotor)
+        tableAdapter?.addDataMotor(lstMotor)
+        tableAdapter?.setOnRowClickListener(implementOnRowClickListener)
+    }
+
+    private fun inicializarTableAdapter(
+        tablelayoutHead: TableLayout,
+        tableLayoutDetail: TableLayout
+    ) {
+        tableAdapter = TableAdapter(context, tablelayoutHead, tableLayoutDetail)
+    }
+
+    private val implementOnRowClickListener = object : TableAdapter.OnClickCallBackRow {
+        override fun onClickRow(view: View?) {
+            val tablerow = view as TableRow
+            val textCell = tablerow.getChildAt(1) as TextView
+            motor = textCell.text.toString()
+            alertDialog?.dismiss()
         }
-        progresDialog?.dismiss()
     }
 
-    private var AlertDialog_OnDismissListener = DialogInterface.OnDismissListener {
-        val lstArticulo = ObtenerArticulosXMotorCodProd(codProd, txtMotor?.text.toString())
-        CargarDataLayaoutArticulos(tableLayoutArticulo!!, headersArticulo, lstArticulo)
+    private var AlertDialogOnDismissListener = DialogInterface.OnDismissListener {
+        GlobalScope.launch(Dispatchers.Main) {
+            startLoadingDialog()
+            val lstArticulo = withContext(Dispatchers.IO) {
+                obtenerArticulosXMotorCodProd(codProd, motor)
+            }
+            cargarDataLayaoutArticulos(lstArticulo)
+            closeLoadingDialog()
+        }
+    }
+
+    private fun cargarDataLayaoutArticulos(lstArticulo: ArrayList<Articulo>) {
+        inicializarTableAdapter(tblArticuloHead, tblArticuloDetail)
+        tableAdapter?.addHead(headersArticulo)
+        tableAdapter?.AddDataArticuloXMotorCodProd(lstArticulo)
     }
 }
