@@ -3,9 +3,7 @@ package com.example.website.consulta.ViewModel
 import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import com.example.website.consulta.Helpers.UtilsInterface
@@ -39,16 +37,14 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
     lateinit var horizontalScrollViewHead: HorizontalScrollView
     lateinit var horizontalScrollViewDetail: HorizontalScrollView
     lateinit var alertDialogMotor: AlertDialog
+    var lstArticulo: ArrayList<Articulo>? = null
+    lateinit var txtCantidad: EditText
+    lateinit var txtPretot: EditText
+    lateinit var tableRow: TableRow
 
     lateinit var parameters: Parameters
     private val columnas =
         arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
-
-    fun getArtitculoAt(position: Int, codbar: String, alternante: String): Articulo? {
-        val lstArticulo: List<Articulo>? =
-            articuloObservable.obtenerArticulosFactura(codbar, alternante).value
-        return lstArticulo?.get(position)
-    }
 
     fun startLoadingDialog() {
         progresDialog = UtilsInterface.progressDialog(context)
@@ -59,7 +55,7 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
     }
 
     fun obtenerArticulos(): ArrayList<Articulo>? {
-        return when {
+        lstArticulo = when {
             parameters.codbar.trim().isNotEmpty() -> {
                 obtenerArticulosXCodbarBackground(parameters.codbar.trim())
             }
@@ -74,6 +70,7 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
             }
             else -> null
         }
+        return lstArticulo
     }
 
     private fun obtenerArticulosXCodbarBackground(codbar: String): ArrayList<Articulo> {
@@ -94,6 +91,7 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
 
     fun cargarArticulos(lstArticulo: List<Articulo>) {
         instanciarTableAdapter(tblArticuloHead, tblArticuloDetail)
+        articuloTableAdapter?.borrarFilas()
         articuloTableAdapter?.addHeaderArticulo(columnas)
         articuloTableAdapter?.addDataArticuloVenta(lstArticulo)
         articuloTableAdapter?.setOnRowClickListener(tblArticuloOnClickRowListener)
@@ -108,16 +106,17 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
 
     private val tblArticuloOnClickRowListener = object : TableAdapter.OnClickCallBackRow {
         override fun onClickRow(view: View?) {
-            val tableRow = view as TableRow
-            mostrarDialogCantidad(tableRow)
+            tableRow = view as TableRow
+            mostrarDialogCantidad()
         }
     }
 
-    private fun PasarDatosIntent(tableRow: TableRow, txtCantidad: EditText) {
+    private fun pasarDatosIntent(tableRow: TableRow, txtCantidad: EditText, txtPretot: EditText) {
         val textCell = tableRow.getChildAt(0) as TextView
         val bundle: Bundle = Bundle().also {
             it.putInt("idArticulo", textCell.text.toString().toInt())
             it.putInt("cantidad", txtCantidad.text.toString().toInt())
+            it.putDouble("pretot", txtPretot.text.toString().toDouble())
         }
         val intent: Intent = Intent().also {
             it.putExtra("articulo", bundle)
@@ -125,50 +124,82 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         consultaItemsVenta.setResult(1, intent)
     }
 
-    private fun mostrarDialogCantidad(tableRow: TableRow) {
+    private fun mostrarDialogCantidad() {
         val view: View =
             LayoutInflater.from(context).inflate(R.layout.alert_dialog_cantidad_item, null)
-        val txtCantidad = view.findViewById<EditText>(R.id._txtCantidad)
+        initializeControlsAlertDialogCantidad(view)
+        startValorControls()
         val alertDialog =
-            UtilsInterface.alertDialog3(
+            UtilsInterface.alertDialog2(
                 context,
                 view,
                 consultaItemsVenta.window,
-                "Cantidad item",
-                onClickCallBack(tableRow, txtCantidad)
+                ""
             )
-        alertDialog.setOnDismissListener(alertDialogOnDismissListener)
+        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            .setOnClickListener(
+                btnAceptarOnClickListener(
+                    alertDialog
+                )
+            )
+        alertDialog.setCancelable(false)
+        alertDialog.setCanceledOnTouchOutside(false)
     }
 
-    private fun onClickCallBack(
-        tableRow: TableRow,
-        txtCantidad: EditText
-    ): UtilsInterface.OnClickCallBack {
-        val onClickCallBack = object : UtilsInterface.OnClickCallBack {
-            override fun onClick() {
-                PasarDatosIntent(tableRow, txtCantidad)
-                consultaItemsVenta.finish()
-            }
+    private fun initializeControlsAlertDialogCantidad(view: View) {
+        txtCantidad = view.findViewById(R.id._txtCantidad)
+        txtPretot = view.findViewById(R.id._txtPretot)
+    }
+
+    private fun startValorControls() {
+        val lblCantidad = tableRow.getChildAt(5) as TextView
+        val lblPreTot = tableRow.getChildAt(4) as TextView
+        txtCantidad.setText(lblCantidad.text.toString())
+        txtPretot.setText(lblPreTot.text.toString())
+    }
+
+    private fun btnAceptarOnClickListener(
+        alertDialog: AlertDialog
+    ) = object : View.OnClickListener {
+        override fun onClick(v: View?) {
+            if (!validarAceptar())
+                return
+            if (!validarStockArticulo())
+                return
+            pasarDatosIntent(tableRow, txtCantidad, txtPretot)
+            alertDialog.dismiss()
+            consultaItemsVenta.finish()
         }
-        return onClickCallBack
     }
 
-    //> tabmién funcona con UtilsInterface.alertDialog2
-    private fun alertDialog_OnClick(
-        tableRow: TableRow,
-        txtCantidad: EditText
-    ): DialogInterface.OnClickListener {
-        val dialogInterface = object : DialogInterface.OnClickListener {
-            override fun onClick(p0: DialogInterface?, p1: Int) {
-                PasarDatosIntent(tableRow, txtCantidad)
-                consultaItemsVenta.finish()
-            }
+    private fun validarStockArticulo(): Boolean {
+        val index = tblArticuloDetail.indexOfChild(tableRow)
+        val articulo = getArtitculoAt(index)
+        if (articulo!!.totSaldo < txtCantidad.text.toString().toInt()) {
+            Toast.makeText(
+                context,
+                "La cantidad ingresada es superior al saldo: " + articulo.totSaldo.toString(),
+                Toast.LENGTH_SHORT
+            ).show()
+            return false
         }
-        return dialogInterface
+        return true
     }
 
-    private val alertDialogOnDismissListener = DialogInterface.OnDismissListener {
-        Toast.makeText(context, "Cancelado", Toast.LENGTH_LONG).show()
+    private fun validarAceptar(): Boolean {
+        if (txtCantidad.text.toString().isEmpty() || txtCantidad.text.toString().toInt() <= 0) {
+            Toast.makeText(context, "Ingrese una cantidad", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        if (txtPretot.text.toString().isEmpty() || txtPretot.text.toString().toDouble() <= 0) {
+            Toast.makeText(context, "Ingrese el precio de venta", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    fun getArtitculoAt(position: Int): Articulo? {
+        return lstArticulo?.get(position)
     }
 
     fun initEvents() {
@@ -178,6 +209,11 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         horizontalScrollViewDetail.setOnScrollChangeListener(
             implementHorizontalScrollViewOnScrollChangeListener
         )
+    }
+
+    fun startControls() {
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
     }
 
     private var implementHorizontalScrollViewOnScrollChangeListener =

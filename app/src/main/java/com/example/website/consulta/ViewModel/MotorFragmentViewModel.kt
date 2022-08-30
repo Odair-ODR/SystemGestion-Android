@@ -37,6 +37,16 @@ class MotorFragmentViewModel(val context: Context) {
     lateinit var horizontalScrollViewHead: HorizontalScrollView
     lateinit var horizontalScrollViewDetail: HorizontalScrollView
 
+    fun initializeEvents() {
+        horizontalScrollViewHead.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
+        horizontalScrollViewDetail.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
+    }
+
+    fun startControls(){
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
+    }
+
     private fun obtenerArticulosXMotorCodProd(codProd: String, motor: String): ArrayList<Articulo> {
         return motorFragmentObservable.ObtenerArticulosXMotorCodProd(codProd, motor)
     }
@@ -116,5 +126,21 @@ class MotorFragmentViewModel(val context: Context) {
         inicializarTableAdapter(tblArticuloHead, tblArticuloDetail)
         tableAdapter?.addHead(headersArticulo)
         tableAdapter?.AddDataArticuloXMotorCodProd(lstArticulo)
+    }
+
+    private val implementHorizontalScrollChangedListener = object : View.OnScrollChangeListener {
+        override fun onScrollChange(
+            v: View?,
+            scrollX: Int,
+            scrollY: Int,
+            oldScrollX: Int,
+            oldScrollY: Int
+        ) {
+            if (v?.tag == "horizontalScrollViewHead") {
+                horizontalScrollViewDetail.scrollTo(scrollX, 0)
+            } else {
+                horizontalScrollViewHead.scrollTo(scrollX, 0)
+            }
+        }
     }
 }

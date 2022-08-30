@@ -65,6 +65,7 @@ class AlternanteFragment : Fragment() {
             view.findViewById(R.id.horizontalScrollViewDetail)
         alternanteFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
         alternanteFragmentViewModel.initEvents()
+        alternanteFragmentViewModel.startControls()
     }
 
     private var btnConsultar_OnClickListener = View.OnClickListener {

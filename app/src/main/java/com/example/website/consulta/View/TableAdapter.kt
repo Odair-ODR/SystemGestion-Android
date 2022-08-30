@@ -25,7 +25,7 @@ class TableAdapter(
     private var data: List<Articulo>? = null
     private lateinit var row: TableRow
     private var indexC: Int = 0
-    private var cells: MutableMap<View, Rect> = HashMap<View, Rect>()
+
     lateinit var headerCellsWidth: IntArray
 
     internal class ViewHolder {
@@ -36,6 +36,12 @@ class TableAdapter(
         var item5: TextView? = null
         var item6: TextView? = null
         var item7: TextView? = null
+        var item8: TextView? = null
+        var item9: TextView? = null
+        var item10: TextView? = null
+        var item11: TextView? = null
+        var item12: TextView? = null
+        var item13: TextView? = null
     }
 
     interface OnClickCallBackRow {
@@ -59,6 +65,11 @@ class TableAdapter(
     fun addDataArticuloVenta(data: List<Articulo>?) {
         this.data = data
         loadDataTableArticulo()
+    }
+
+    fun addDataArticuloVentaReg(data: List<Articulo>?) {
+        this.data = data
+        loadDataTableArticulo2()
     }
 
     private fun newRow(): TableRow {
@@ -160,10 +171,7 @@ class TableAdapter(
             viewHolder.item5?.setText(row.alternante)
             viewHolder.item6?.setText(row.descriArti)
             viewHolder.item7?.setText(row.precioVenta.toString())
-            viewHolder.item3?.setText(row.totCan.toString())
-            val view: View = viewHolder.item7 as View
-            val rect: Rect = getRawCoordinatesRect(view)
-            cells.put(view, rect)
+            viewHolder.item3?.setText(row.campar.toString())
 
             rowCellStyle(viewHolder)
 
@@ -173,6 +181,48 @@ class TableAdapter(
             tableRow.addView(viewHolder.item6, newTableRowParams(headerCellsWidth[3]))
             tableRow.addView(viewHolder.item7, newTableRowParams(headerCellsWidth[4]))
             tableRow.addView(viewHolder.item3, newTableRowParams(headerCellsWidth[5]))
+            tableLayoutDetail.addView(tableRow)
+        }
+    }
+
+    private fun loadDataTableArticulo2() {
+        var viewHolder: ViewHolder?
+        var tableRow: TableRow
+        for (row in data!!) {
+            tableRow = newRow()
+            viewHolder = ViewHolder()
+            viewHolder.item1 = newCell()
+            viewHolder.item1?.visibility = View.GONE
+            viewHolder.item2 = newCell()
+            viewHolder.item5 = newCell()
+            viewHolder.item6 = newCell()
+            viewHolder.item7 = newCell()
+            viewHolder.item3 = newCell()
+            viewHolder.item3?.visibility = View.GONE
+
+            viewHolder.item8 = newCell()
+            viewHolder.item9 = newCell()
+            viewHolder.item10 = newCell()
+            viewHolder.item11 = newCell()
+            viewHolder.item12 = newCell()
+            viewHolder.item13 = newCell()
+
+            viewHolder.item1?.setText(row.idArticulo.toString())
+            viewHolder.item2?.setText(row.cpdold)
+            viewHolder.item5?.setText(row.alternante)
+            viewHolder.item6?.setText(row.descriArti)
+            viewHolder.item7?.setText(row.precioVenta.toString())
+            viewHolder.item3?.setText(row.totCan.toString())
+
+            rowCellStyle(viewHolder)
+
+            tableRow.addView(viewHolder.item1, newTableRowParams(headerCellsWidth[0]))
+            tableRow.addView(viewHolder.item2, newTableRowParams(headerCellsWidth[1]))
+            tableRow.addView(viewHolder.item5, newTableRowParams(headerCellsWidth[2]))
+            tableRow.addView(viewHolder.item6, newTableRowParams(headerCellsWidth[3]))
+            tableRow.addView(viewHolder.item7, newTableRowParams(headerCellsWidth[4]))
+            tableRow.addView(viewHolder.item3, newTableRowParams(headerCellsWidth[5]))
+
             tableLayoutDetail.addView(tableRow)
         }
     }
@@ -195,6 +245,13 @@ class TableAdapter(
 
     private fun newTableRowParams(): TableRow.LayoutParams {
         val params = TableRow.LayoutParams()
+        params.setMargins(1, 2, 1, 2)
+        params.weight = 1F
+        return params
+    }
+
+    private fun newTableRowParams(width: Int): TableRow.LayoutParams {
+        val params = TableRow.LayoutParams(width, ViewGroup.LayoutParams.WRAP_CONTENT)
         params.setMargins(1, 2, 1, 2)
         params.weight = 1F
         return params
@@ -269,13 +326,6 @@ class TableAdapter(
         }
     }
 
-    private fun newTableRowParams(width: Int): TableRow.LayoutParams {
-        val params = TableRow.LayoutParams(width, ViewGroup.LayoutParams.MATCH_PARENT)
-        params.setMargins(1, 2, 1, 2)
-        params.weight = 1F
-        return params
-    }
-
     fun addDataMotor(data: ArrayList<Motor>) {
         borrarFilas()
         var viewHolder: ViewHolder
@@ -347,11 +397,7 @@ class TableAdapter(
         }
     }
 
-    private fun borrarFilas() {
-        val count: Int = tableLayoutDetail.getChildCount()
-        for (i in 0 until count) {
-            val child: View = tableLayoutDetail.getChildAt(i)
-            if (child is TableRow) (child as ViewGroup).removeAllViews()
-        }
+    fun borrarFilas() {
+        tableLayoutDetail.removeAllViews()
     }
 }

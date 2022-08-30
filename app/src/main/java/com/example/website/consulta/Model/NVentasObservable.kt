@@ -12,7 +12,6 @@ class NVentasObservable {
         return nVentasRepository.ObtenerTiendas()
     }
 
-
     fun ObtenerMoneda(): ArrayList<Moneda> {
         return nVentasRepository.ObtenerMoneda()
     }
@@ -31,5 +30,9 @@ class NVentasObservable {
 
     fun registrarPreFacturaCabDet(facturaTo: FacturaCabTo, lstFacturaDetTo: ArrayList<FacturaDetTo>): Boolean {
         return nVentasRepository.registrarPreFacturaCabDet(facturaTo, lstFacturaDetTo)
+    }
+
+    fun obtenerIGV(): Double{
+        return nVentasRepository.obtenerIGV()
     }
 }

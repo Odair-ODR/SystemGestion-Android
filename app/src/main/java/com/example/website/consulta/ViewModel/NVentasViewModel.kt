@@ -17,7 +17,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NVentasViewModel(val context: Context) : ViewModel() {
+class NVentasViewModel (val context: Context) : ViewModel() {
 
     private val nVentasObservable: NVentasObservable = NVentasObservable()
     private val articuloObservable: ArticuloObservable = ArticuloObservable()
@@ -35,10 +35,15 @@ class NVentasViewModel(val context: Context) : ViewModel() {
         horizontalScrollViewDetail.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
     }
 
+    fun startControls(){
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
+    }
+
     fun cargarDataTableLayout(lstArticulo: List<Articulo>) {
         inicializarTableAdapter(tblArticuloHead, tblArticuloDetail)
         articuloTableAdapter?.addHeaderArticulo(columnas)
-        articuloTableAdapter?.addDataArticuloVenta(lstArticulo)
+        articuloTableAdapter?.addDataArticuloVentaReg(lstArticulo)
     }
 
     private fun inicializarTableAdapter(
@@ -76,6 +81,10 @@ class NVentasViewModel(val context: Context) : ViewModel() {
         return nVentasObservable.obtenerEntidadToApi()
     }
 
+    fun obtenerIGV(): Double{
+        return nVentasObservable.obtenerIGV()
+    }
+
     fun registrarPreFacturaCabDet(
         facturaTo: FacturaCabTo,
         lstFacturaTo: ArrayList<FacturaDetTo>
@@ -94,7 +103,6 @@ class NVentasViewModel(val context: Context) : ViewModel() {
         )
         tblArticuloDetail.setOnTouchListener(touchListener)
     }
-
     private val swipeDismissTableLayoutTouchListenerOnDismissCallback =
         object : SwipeDismissTableLayoutTouchListener.OnDismissCallback {
             override fun onDismiss(tableLayout: TableLayout?, reverseSortedPositions: IntArray?) {

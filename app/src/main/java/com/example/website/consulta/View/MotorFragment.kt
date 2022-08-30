@@ -63,6 +63,8 @@ class MotorFragment : Fragment() {
         motorFragmentViewModel.horizontalScrollViewDetail =
             view.findViewById(R.id.horizontalScrollViewDetail)
         motorFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
+        motorFragmentViewModel.initializeEvents()
+        motorFragmentViewModel.startControls()
     }
 
     private var btnConsultar_OnClickListener = View.OnClickListener {

@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_factura.horizontalScrollViewHead
 import kotlinx.android.synthetic.main.activity_factura.tblArticuloDetail
 import kotlinx.android.synthetic.main.activity_factura.tblArticuloHead
 import kotlinx.android.synthetic.main.activity_factura.*
+import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -42,6 +43,12 @@ class Nventas : AppCompatActivity() {
     private lateinit var dni_ruc: String
     private lateinit var progresDialog: Dialog
     private lateinit var tipoDocumento: TIPO_DOCUMENTO
+
+    private val FACTURA = 24
+    private val BOLETA = 28
+    private val CONTADO = 1
+    private val CREDITO = 2
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,20 +79,22 @@ class Nventas : AppCompatActivity() {
     }
 
     private fun initializeEvents() {
-        btnGrabar!!.setOnClickListener(btnGrabar_OnClickListener)
+        btnGrabar!!.setOnClickListener(btnGrabarOnClickListener)
         btnItem!!.setOnClickListener(btnItem_OnClickListener)
         txtTienda!!.setOnClickListener(txtTienda_OnClickListener)
         txtMoneda!!.setOnClickListener(txtMoneda_OnClickListener)
-        btnBuscarRucDni.setOnClickListener(btnBuscarRucDni_OnClickListener)
+        btnBuscarRucDni.setOnClickListener(btnBuscarRucDniOnClickListener)
     }
 
-    private fun initializeComponentsNVentasViewModel(){
+    private fun initializeComponentsNVentasViewModel() {
         nVentasViewModel = NVentasViewModel(this)
         nVentasViewModel.horizontalScrollViewHead = horizontalScrollViewHead
         nVentasViewModel.tblArticuloHead = tblArticuloHead
         nVentasViewModel.horizontalScrollViewDetail = horizontalScrollViewDetail
         nVentasViewModel.tblArticuloDetail = tblArticuloDetail
         nVentasViewModel.initializeEvents()
+        nVentasViewModel.startControls()
+        nVentasViewModel.swipeDismissTouchTableAdapter()
     }
 
     /*private fun CargarSpinnerTipoDocumento() {
@@ -149,10 +158,10 @@ class Nventas : AppCompatActivity() {
     private val txtMoneda_OnClickListener = View.OnClickListener {
         view = this.layoutInflater.inflate(R.layout.tiendas_alert_dialog, null, false)
         startAlerDialogRdb(view, "Moneda")
-        CargarMoneda()
+        cargarMoneda()
     }
 
-    private fun CargarMoneda() {
+    private fun cargarMoneda() {
         val lstTienda: ArrayList<Moneda> = nVentasViewModel.obtenerMoneda()
         val radioGroup = view.findViewById<RadioGroup>(R.id._RadioGruoup)
         var radioButton: RadioButton
@@ -160,18 +169,18 @@ class Nventas : AppCompatActivity() {
             radioButton = RadioButton(view.context)
             radioButton.text = item.descMoneda
             radioButton.tag = item.idMoneda
-            radioButton.setOnClickListener(radioButtonMoneda_OnClickListener)
+            radioButton.setOnClickListener(radioButtonMonedaOnClickListener)
             radioGroup?.addView(radioButton)
         }
     }
 
-    private var radioButtonMoneda_OnClickListener = View.OnClickListener {
+    private var radioButtonMonedaOnClickListener = View.OnClickListener {
         rdbMoneda = it as RadioButton
         txtMoneda!!.setText(rdbMoneda.text)
         alertDialog.dismiss()
     }
 
-    private val btnBuscarRucDni_OnClickListener = View.OnClickListener {
+    private val btnBuscarRucDniOnClickListener = View.OnClickListener {
         try {
             showProgessBar();
             dni_ruc = txtNroDocIdenti?.text.toString()
@@ -258,11 +267,11 @@ class Nventas : AppCompatActivity() {
                 val bundle = data?.extras!!.getBundle("articulo")
                 val idArticulo = bundle?.getInt("idArticulo")
                 val cantidad = bundle?.getInt("cantidad")
+                val pretot = bundle?.getDouble("pretot")
                 val articulo: Articulo? = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo!!)
                 nVentasViewModel.cargarDataTableLayout(
-                    articulosFactura(articulo!!, cantidad!!)
+                    articulosFactura(articulo!!, cantidad!!, pretot!!)
                 )
-                nVentasViewModel.swipeDismissTouchTableAdapter()
                 Toast.makeText(
                     baseContext,
                     "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(),
@@ -274,18 +283,20 @@ class Nventas : AppCompatActivity() {
         }
     }
 
-    private fun articulosFactura(articulo: Articulo, cantidad: Int): ArrayList<Articulo> {
+    private fun articulosFactura(articulo: Articulo, cantidad: Int, pretot: Double): ArrayList<Articulo> {
         return ArrayList<Articulo>().also {
             articulo.totCan = cantidad
+            articulo.precioVenta = pretot
             it.add(articulo)
         }
     }
 
-    private val btnGrabar_OnClickListener = View.OnClickListener {
+    private val btnGrabarOnClickListener = View.OnClickListener {
         try {
             if (validarDatosGrabar()) {
                 val facturaToCab = obtenerDatosPreFacturaCab()
                 val facturaToDet = obtenerDatosPreFacturaDet()
+                actualizarImportesVenta(facturaToCab, facturaToDet)
                 if (nVentasViewModel.registrarPreFacturaCabDet(facturaToCab, facturaToDet)) {
                     Toast.makeText(
                         applicationContext,
@@ -306,7 +317,8 @@ class Nventas : AppCompatActivity() {
 
     private fun obtenerDatosPreFacturaCab(): FacturaCabTo {
         val idTipoOper = "0101"
-        val idTipoIdentidad = 6
+        val idTipoIdentidad =
+            if (tipoDocumento.id == FACTURA) 6 else if (tipoDocumento.id == BOLETA) 1 else 0
         val idUs = 105
         val facturaTo = FacturaCabTo()
         facturaTo.idTienda = rdbTienda.tag.toString().toInt()
@@ -314,22 +326,24 @@ class Nventas : AppCompatActivity() {
         facturaTo.tipoDoc = tipoDocumento.id
         facturaTo.serDoc = ""
         facturaTo.numDoc = 0
+        facturaTo.numFac = 0
         facturaTo.nroFactura = 1
         facturaTo.fectra = UtilsMethod.getSqlDateShort()
         facturaTo.nroDocIdenti = txtNroDocIdenti!!.text.toString()
         facturaTo.nombres = txtNombre!!.text.toString()
         facturaTo.direccion = txtDireccion!!.text.toString()
-        facturaTo.placa = "-"
+        facturaTo.placa = txtPlaca.text.toString()
         facturaTo.tipgui = 0
-        facturaTo.sergui = 0
+        facturaTo.sergui = ""
         facturaTo.numgui = 0
         facturaTo.fecgui = null
         facturaTo.tipgui2 = 0
         facturaTo.sergui2 = ""
         facturaTo.numgui2 = 0
         facturaTo.fecgui2 = null
-        facturaTo.conpag = 1
+        facturaTo.conpag = obtenerConPag()
         facturaTo.valven = 0.0
+        facturaTo.valigv = 0.0
         facturaTo.valbru = 0.0
         facturaTo.numlet = ""
         facturaTo.idMoneda = rdbMoneda.tag.toString().toInt()
@@ -338,19 +352,24 @@ class Nventas : AppCompatActivity() {
         facturaTo.fecper = null
         facturaTo.totper = 0.0
         facturaTo.tipCam = 0.0
-        facturaTo.taller = null
+        facturaTo.taller = 0
         facturaTo.idUs = idUs
         facturaTo.idTipOperacion = idTipoOper
         facturaTo.idTipoDocIdenti = idTipoIdentidad
         facturaTo.operaGratuita = 0
         facturaTo.oFechaInicio = null
-        facturaTo.oFechaFin = null
+        facturaTo.oFechaFin = obtenerFechaFin()
         facturaTo.oDescuento = 0
+        facturaTo.afectaIGV = "10"
+        facturaTo.al31TotAnticipo = 0.0
+        facturaTo.al31Anticipo = false
+        facturaTo.al31AplicAnticipo = false
         return facturaTo
     }
 
     private fun obtenerDatosPreFacturaDet(): ArrayList<FacturaDetTo> {
         val idUs = 105
+        val codigoUniversal = "25101503"
         val lista = ArrayList<FacturaDetTo>()
         var facturaDet: FacturaDetTo
         var articulo: Articulo?
@@ -360,6 +379,8 @@ class Nventas : AppCompatActivity() {
             val idArticulo = cell.text.toString().toInt()
             val cellCantidad = row.getChildAt(5) as TextView
             val cantidad = cellCantidad.text.toString().toInt()
+            val cellPretot = row.getChildAt(4) as TextView
+            val pretot = cellPretot.text.toString().toDouble()
             articulo = nVentasViewModel.obtenerArticuloXIdArticulo(idArticulo)
             if (articulo == null) {
                 Toast.makeText(baseContext, "Error al registrar", Toast.LENGTH_LONG).show()
@@ -369,8 +390,8 @@ class Nventas : AppCompatActivity() {
             facturaDet.al32numfac = 0
             facturaDet.al33numSec = 0
             facturaDet.al32fecTra = UtilsMethod.getSqlDateShort()
-            facturaDet.al32flag = " "
-
+            facturaDet.al32flag = if (articulo.totSaldo > 0) "*" else ""
+            facturaDet.codigoUniversal = codigoUniversal
             facturaDet.al32idarticulo = articulo.idArticulo
             facturaDet.al32Vehimarc = articulo.vehimarc
             facturaDet.al32Marvehi = articulo.marvehi
@@ -385,11 +406,10 @@ class Nventas : AppCompatActivity() {
             facturaDet.al32Codbar = articulo.codbar
             facturaDet.al32Cpdnew = articulo.cpdnew
             facturaDet.al32Cpdold = articulo.cpdold
-
             facturaDet.al32Totcan = cantidad
-            facturaDet.al32Preuni = 0.0
             facturaDet.al32peruan = 0.0
-            facturaDet.al32pretot = 0.0
+            facturaDet.al32pretot = pretot
+            facturaDet.al32Preuni = facturaDet.al32pretot / facturaDet.al32Totcan
             facturaDet.al32tipdcm = 0
             facturaDet.al32serdcm = ""
             facturaDet.al32numdcm = 0
@@ -401,9 +421,23 @@ class Nventas : AppCompatActivity() {
             facturaDet.al32fecabo = null
             facturaDet.idUs = idUs
             facturaDet.al32glosa = ""
+            facturaDet.al32Anticipo = 0
             lista.add(facturaDet)
         }
         return lista
+    }
+
+    private fun actualizarImportesVenta(
+        facturaCabTo: FacturaCabTo,
+        facturaDetTo: ArrayList<FacturaDetTo>
+    ) {
+        var valven = 0.0
+        facturaDetTo.forEach { valven += it.al32pretot }
+        facturaCabTo.also {
+            it.valigv = nVentasViewModel.obtenerIGV()
+            it.valven = valven / it.valigv
+            it.valbru = it.valven + it.valigv
+        }
     }
 
     private fun validarDatosGrabar(): Boolean {
@@ -437,11 +471,40 @@ class Nventas : AppCompatActivity() {
             Toast.makeText(this, "Seleccione la forma de pago", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (tblArticuloDetail.childCount <= 0){
+        if (tblArticuloDetail.childCount <= 0) {
             Toast.makeText(this, "Agregue al menos un artículo", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
+    }
+
+    private fun obtenerConPag(): Int {
+        for (i in 0 until rdgFormaPago.childCount) {
+            if (rdgFormaPago.getChildAt(1) !is RadioButton)
+                continue
+            val radioButton: RadioButton = rdgFormaPago.getChildAt(i) as RadioButton
+            if (radioButton.isChecked)
+                return radioButton.tag.toString().toInt()
+        }
+        throw Exception()
+    }
+
+    private fun obtenerFechaFin(): String? {
+        for (i in 0 until rdgFormaPago.childCount) {
+            if (rdgFormaPago.getChildAt(1) !is RadioButton)
+                continue
+            val radioButton: RadioButton = rdgFormaPago.getChildAt(i) as RadioButton
+            if (radioButton.isChecked) {
+                return when {
+                    radioButton.tag.toString().toInt() == CONTADO -> UtilsMethod.getSqlDateShort()
+                    radioButton.tag.toString()
+                        .toInt() == CREDITO -> LocalDate.parse(UtilsMethod.getSqlDateShort())
+                        .plusDays(30).toString()
+                    else -> null
+                }
+            }
+        }
+        throw Exception()
     }
 
     private fun limpiarGuardar() {
@@ -452,9 +515,7 @@ class Nventas : AppCompatActivity() {
         rdbTienda.tag = ""
         txtMoneda.setText("")
         rdbMoneda.tag = ""
-        for (index in 0 until tblArticuloDetail.childCount){
-            val child: View = tblArticuloDetail.getChildAt(index)
-            if (child is TableRow) (child as ViewGroup).removeAllViews()
-        }
+        txtPlaca.setText("")
+        tblArticuloDetail.removeAllViews()
     }
 }

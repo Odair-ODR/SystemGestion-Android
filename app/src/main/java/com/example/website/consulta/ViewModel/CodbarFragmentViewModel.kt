@@ -26,6 +26,11 @@ class CodbarFragmentViewModel(val context: Context) {
         initEventsScrollView()
     }
 
+    fun startControls(){
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
+    }
+
     fun startLoadingDialog() {
         progresDialog = UtilsInterface.progressDialog(context)
     }

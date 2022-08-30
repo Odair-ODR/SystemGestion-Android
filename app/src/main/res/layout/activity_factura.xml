@@ -146,10 +146,28 @@
                     android:focusable="false"
                     android:hint="Moneda"
                     android:textSize="@dimen/textSize"
-                    app:layout_constraintBottom_toTopOf="@+id/lygrupBox"
+                    app:layout_constraintBottom_toTopOf="@+id/txtPlaca"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtDireccion" />
+
+            <EditText
+                    android:id="@+id/txtPlaca"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/margin_editControls"
+                    android:layout_marginLeft="@dimen/margin_editControls"
+                    android:layout_marginEnd="@dimen/margin_editControls"
+                    android:layout_marginRight="@dimen/margin_editControls"
+                    android:background="@drawable/editext_radious_corner"
+                    android:layout_marginTop="8dp"
+                    android:hint="Placa"
+                    android:textSize="@dimen/textSize"
+                    android:inputType="text|textAutoComplete"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/txtMoneda"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/lygrupBox" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/lygrupBox"
@@ -159,7 +177,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/_linearLayout"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtMoneda">
+                    app:layout_constraintTop_toBottomOf="@+id/txtPlaca">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/clGroupBox"
@@ -191,6 +209,7 @@
                                 android:layout_marginTop="10dp"
                                 android:layout_marginEnd="@dimen/margin_editControls"
                                 android:text="Contado"
+                                android:tag="1"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toTopOf="parent" />
@@ -204,6 +223,7 @@
                                 android:layout_marginEnd="@dimen/margin_editControls"
                                 android:layout_marginBottom="8dp"
                                 android:text="Crédito"
+                                android:tag="2"
                                 app:layout_constraintBottom_toBottomOf="parent"
                                 app:layout_constraintEnd_toEndOf="parent"
                                 app:layout_constraintStart_toStartOf="parent"

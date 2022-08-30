@@ -51,6 +51,11 @@ class AlternanteFragmentViewModel(val context: Context) {
         )
     }
 
+    fun startControls(){
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
+    }
+
     private var horizontalScrollViewOnScrollChangeListener = object : View.OnScrollChangeListener {
         override fun onScrollChange(
             v: View?,

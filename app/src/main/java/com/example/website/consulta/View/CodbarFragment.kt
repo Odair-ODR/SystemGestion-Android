@@ -53,6 +53,7 @@ class CodbarFragment : Fragment() {
         codBarFragmentViewModel.horizontalScrollViewDetail = view.findViewById(R.id.horizontalScrollViewDetail)
         codBarFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
         codBarFragmentViewModel.initializeEvents()
+        codBarFragmentViewModel.startControls()
     }
 
     private var btnConsular_OnClickListerner = View.OnClickListener {

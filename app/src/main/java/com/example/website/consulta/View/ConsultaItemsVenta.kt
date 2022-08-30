@@ -80,6 +80,7 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
         articuloViewModel.horizontalScrollViewDetail = horizontalScrollViewDetail
         articuloViewModel.tblArticuloDetail = tblArticuloDetail
         articuloViewModel.initEvents()
+        articuloViewModel.startControls()
     }
 
     private fun cargarArticulosFactura() {
