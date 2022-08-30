@@ -17,32 +17,47 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NVentasViewModel(val context: Context) : ViewModel(){
+class NVentasViewModel (val context: Context) : ViewModel() {
 
     private val nVentasObservable: NVentasObservable = NVentasObservable()
     private val articuloObservable: ArticuloObservable = ArticuloObservable()
     private var articuloTableAdapter: TableAdapter? = null
-    private val columnas = arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
+    private val columnas =
+        arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
 
-    fun ObtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
-        return articuloObservable.obtenerArticuloXIdArticulo(idArticulo)
+    lateinit var tblArticuloHead: TableLayout
+    lateinit var tblArticuloDetail: TableLayout
+    lateinit var horizontalScrollViewHead: HorizontalScrollView
+    lateinit var horizontalScrollViewDetail: HorizontalScrollView
+
+    fun initializeEvents() {
+        horizontalScrollViewHead.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
+        horizontalScrollViewDetail.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
     }
 
-    fun CargarDataTableLayout(tableLayout: TableLayout, lstArticulo: List<Articulo>) {
-        ObtenerTableAdapter(context, tableLayout)
-        articuloTableAdapter?.AddHeaderArticulo(columnas)
-        articuloTableAdapter?.AddDataArticuloVenta(lstArticulo)
+    fun startControls(){
+        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
     }
 
-    private fun ObtenerTableAdapter(context: Context, tableLayout: TableLayout) {
-        articuloTableAdapter = TableAdapter(context, tableLayout)
+    fun cargarDataTableLayout(lstArticulo: List<Articulo>) {
+        inicializarTableAdapter(tblArticuloHead, tblArticuloDetail)
+        articuloTableAdapter?.addHeaderArticulo(columnas)
+        articuloTableAdapter?.addDataArticuloVentaReg(lstArticulo)
     }
 
-    fun ObtenerTiendas(): ArrayList<Tienda> {
+    private fun inicializarTableAdapter(
+        tableLayoutHead: TableLayout,
+        tableLayoutDetail: TableLayout
+    ) {
+        articuloTableAdapter = TableAdapter(context, tableLayoutHead, tableLayoutDetail)
+    }
+
+    fun obtenerTiendas(): ArrayList<Tienda> {
         return nVentasObservable.ObtnerTiendas()
     }
 
-    fun ObtenerMoneda(): ArrayList<Moneda> {
+    fun obtenerMoneda(): ArrayList<Moneda> {
         return nVentasObservable.ObtenerMoneda()
     }
 
@@ -66,26 +81,52 @@ class NVentasViewModel(val context: Context) : ViewModel(){
         return nVentasObservable.obtenerEntidadToApi()
     }
 
-    fun registrarPreFacturaCabDet(facturaTo: FacturaCabTo, lstFacturaTo: ArrayList<FacturaDetTo>): Boolean {
-     return nVentasObservable.registrarPreFacturaCabDet(facturaTo, lstFacturaTo)
+    fun obtenerIGV(): Double{
+        return nVentasObservable.obtenerIGV()
+    }
+
+    fun registrarPreFacturaCabDet(
+        facturaTo: FacturaCabTo,
+        lstFacturaTo: ArrayList<FacturaDetTo>
+    ): Boolean {
+        return nVentasObservable.registrarPreFacturaCabDet(facturaTo, lstFacturaTo)
     }
 
     fun obtenerArticuloXIdArticulo(idArticulo: Int): Articulo? {
         return articuloObservable.obtenerArticuloXIdArticulo(idArticulo)
     }
 
-    fun swipeDismissTouchTableAdapter(tableLayout: TableLayout){
-        val touchListener = SwipeDismissTableLayoutTouchListener(tableLayout, swipeDismissTableLayoutTouchListenerOnDismissCallback)
-        tableLayout.setOnTouchListener(touchListener)
+    fun swipeDismissTouchTableAdapter() {
+        val touchListener = SwipeDismissTableLayoutTouchListener(
+            tblArticuloDetail,
+            swipeDismissTableLayoutTouchListenerOnDismissCallback
+        )
+        tblArticuloDetail.setOnTouchListener(touchListener)
     }
-
-    private val swipeDismissTableLayoutTouchListenerOnDismissCallback = object : SwipeDismissTableLayoutTouchListener.OnDismissCallback{
-        override fun onDismiss(tableLayout: TableLayout?, reverseSortedPositions: IntArray?) {
-            if (reverseSortedPositions != null && tableLayout != null) {
-                for (position in reverseSortedPositions) {
-                    val child: View = tableLayout.getChildAt(position)
-                    if (child is TableRow) (child as ViewGroup).removeAllViews()
+    private val swipeDismissTableLayoutTouchListenerOnDismissCallback =
+        object : SwipeDismissTableLayoutTouchListener.OnDismissCallback {
+            override fun onDismiss(tableLayout: TableLayout?, reverseSortedPositions: IntArray?) {
+                if (reverseSortedPositions != null && tableLayout != null) {
+                    for (position in reverseSortedPositions) {
+                        val child: View = tableLayout.getChildAt(position)
+                        if (child is TableRow) (child as ViewGroup).removeAllViews()
+                    }
                 }
+            }
+        }
+
+    private val implementHorizontalScrollChangedListener = object : View.OnScrollChangeListener {
+        override fun onScrollChange(
+            v: View?,
+            scrollX: Int,
+            scrollY: Int,
+            oldScrollX: Int,
+            oldScrollY: Int
+        ) {
+            if (v?.tag == "horizontalScrollViewHead") {
+                horizontalScrollViewDetail.scrollTo(scrollX, 0)
+            } else {
+                horizontalScrollViewHead.scrollTo(scrollX, 0)
             }
         }
     }

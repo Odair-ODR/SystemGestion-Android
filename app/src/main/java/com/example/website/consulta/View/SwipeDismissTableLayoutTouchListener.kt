@@ -117,7 +117,7 @@ class SwipeDismissTableLayoutTouchListener(table: TableLayout, callback: OnDismi
                     mVelocityTracker = VelocityTracker.obtain()
                     mVelocityTracker?.addMovement(motionEvent)
                 }
-                if (i == 0) return false //> No permite si mueve la cabecera del tableLayout
+                //> if (i == 0) return false //> No permite si mueve la cabecera del tableLayout
                 view?.onTouchEvent(motionEvent)
                 return true
             }

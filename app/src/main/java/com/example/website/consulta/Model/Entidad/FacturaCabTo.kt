@@ -1,6 +1,10 @@
 package com.example.website.consulta.Model.Entidad
 
 class FacturaCabTo {
+    var al31AplicAnticipo: Boolean = false
+    var al31Anticipo: Boolean = false
+    var al31TotAnticipo: Double = 0.0
+    var afectaIGV: String = ""
     var numFac: Int = 0
     var idPreFactura: Int = 0
     var oDescuento: Int = 0
@@ -28,7 +32,7 @@ class FacturaCabTo {
     var tipgui2: Int = 0
     var fecgui: Any? = null
     var numgui: Int = 0
-    var sergui: Int = 0
+    var sergui: String = ""
     var tipgui: Int = 0
     var placa: String = "-"
     var direccion: String = ""
@@ -41,4 +45,8 @@ class FacturaCabTo {
     var tipoDoc: Int = 0
     var nroCaja:Int = 0
     var idTienda: Int = 0
+
+    init {
+        valbru = valven + valigv
+    }
 }

@@ -49,7 +49,9 @@ class ArticuloRepositoryImp : IArticuloRepository {
                     it.descriArti = resulSet.getString("descriarti")
                     it.superarti = resulSet.getString("superarti")
                     it.marproarti = resulSet.getString("marproarti")
+                    it.campar = resulSet.getInt("campar")
                     it.precioVenta = resulSet.getDouble("precioVenta")
+                    it.totSaldo = resulSet.getInt("totsaldo")
                 })
             }
             return lstArticulo
@@ -74,7 +76,9 @@ class ArticuloRepositoryImp : IArticuloRepository {
                     it.descriArti = resulSet.getString("descriarti")
                     it.superarti = resulSet.getString("superarti")
                     it.marproarti = resulSet.getString("marproarti")
+                    it.campar = resulSet.getInt("campar")
                     it.precioVenta = resulSet.getDouble("precioVenta")
+                    it.totSaldo = resulSet.getInt("totsaldo")
                 })
             }
             return lstArticulo
@@ -108,6 +112,7 @@ class ArticuloRepositoryImp : IArticuloRepository {
                     it.unimed = resulSet.getString("unimed")
                     it.campar = resulSet.getInt("campar")
                     it.precioVenta = resulSet.getDouble("precioVenta")
+                    it.totSaldo = resulSet.getInt("totsaldo")
                 }
             }
             return null

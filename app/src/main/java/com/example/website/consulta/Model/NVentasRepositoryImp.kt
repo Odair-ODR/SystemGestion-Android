@@ -146,11 +146,9 @@ class NVentasRepositoryImp : INVentasRepository {
     private fun registrarPreFacturaCab(con: Connection, facturaTo: FacturaCabTo): Boolean {
         val procedure =
             "call usp_AndroidInsertAdicionaPreFactura (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?," +
-                    "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
+                    "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)"
         val correlativo = obtenerCorrelativo(facturaTo, con) ?: return false
-        val igv = obtenerIGV()
         val st = con.prepareCall(procedure)
-        facturaTo.valigv = igv
         facturaTo.serDoc = correlativo.serie
         facturaTo.numDoc = correlativo.numero
         st.registerOutParameter("@idfactucab", Types.INTEGER)
@@ -193,6 +191,10 @@ class NVentasRepositoryImp : INVentasRepository {
         st.setObject("@o_fechaInicio", facturaTo.oFechaInicio)
         st.setObject("@o_fechaFin", facturaTo.oFechaFin)
         st.setObject("@op_descuento", facturaTo.oDescuento)
+        st.setObject("@afectaIGV", facturaTo.afectaIGV)
+        st.setObject("@al31totanticipo", facturaTo.al31TotAnticipo)
+        st.setObject("@al31Anticipo", facturaTo.al31Anticipo)
+        st.setObject("@al31AplicaAnticipo", facturaTo.al31AplicAnticipo)
         val result = st.executeUpdate()
         facturaTo.idPreFactura = st.getInt(1)
         return result > 0
@@ -207,7 +209,7 @@ class NVentasRepositoryImp : INVentasRepository {
                 "(?,?,?,?,?,?,?,?,?,?" +
                 ",?,?,?,?,?,?,?,?,?,?" +
                 ",?,?,?,?,?,?,?,?,?,?" +
-                ",?,?,?,?,?,?,?,?,?)"
+                ",?,?,?,?,?,?,?,?,?,?,?)"
         if (facturaDetTo.count() == 0)
             return false
         val st = con.prepareCall(procedure)
@@ -222,6 +224,7 @@ class NVentasRepositoryImp : INVentasRepository {
             st.setObject("@al33numSec", it.al33numSec)
             st.setObject("@al32fecTra", facturaTo.fectra)
             st.setObject("@AL32flag", it.al32flag)
+            st.setObject("@codigoUniversal", it.codigoUniversal)
             st.setObject("@al32idarticulo", it.al32idarticulo)
             st.setObject("@al32Vehimarc", it.al32Vehimarc)
             st.setObject("@al32Marvehi", it.al32Marvehi)
@@ -251,6 +254,7 @@ class NVentasRepositoryImp : INVentasRepository {
             st.setObject("@al32fecabo", it.al32fecabo)
             st.setObject("@idUs", it.idUs)
             st.setObject("@al32glosa", it.al32glosa)
+            st.setObject("@al32Anticipo", it.al32Anticipo)
             if (st.executeUpdate() <= 0)
                 return false
         }
@@ -278,7 +282,7 @@ class NVentasRepositoryImp : INVentasRepository {
         }
     }
 
-    private fun obtenerIGV(): Double {
+   override fun obtenerIGV(): Double {
         val con = ConnectionDB.Conexion()
         val procedure = "call usp_AndroidObtenerIGV ()"
         val st = con.prepareCall(procedure)

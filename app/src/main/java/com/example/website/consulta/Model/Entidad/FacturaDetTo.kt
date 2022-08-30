@@ -3,6 +3,8 @@ package com.example.website.consulta.Model.Entidad
 import java.util.Date
 
 class FacturaDetTo {
+    var al32Anticipo: Int = 0
+    var codigoUniversal: String = ""
     var al32flag: String = ""
     var idfactdet: Int = 0
     var al32codAlm: Int = 0

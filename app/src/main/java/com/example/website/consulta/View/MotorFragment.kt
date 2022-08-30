@@ -1,20 +1,21 @@
 package com.example.website.consulta.View
 
-import android.app.AlertDialog
-import android.content.DialogInterface
 import android.os.Bundle
-import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TableLayout
+import android.widget.Toast
 import androidx.fragment.app.Fragment
-import com.example.website.consulta.Model.Entidad.Motor
+import androidx.lifecycle.lifecycleScope
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.MotorFragmentViewModel
+import kotlinx.android.synthetic.main.fragment_motor.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.lang.Exception
 
 class MotorFragment : Fragment() {
 
@@ -23,7 +24,6 @@ class MotorFragment : Fragment() {
     private var txtMotor: EditText? = null
     private var txtCodProd: EditText? = null
     private var btnConsultar: Button? = null
-    private var tableLayout: TableLayout? = null
     private lateinit var motorFragmentViewModel: MotorFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,53 +34,56 @@ class MotorFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view: View = inflater.inflate(R.layout.fragment_motor, container, false)
-        InitializeComponents(view)
-        InitializeEvents()
+        initializeComponents(view)
+        initializeEvents()
         return view
     }
 
-    private fun InitializeComponents(view: View) {
+    private fun initializeComponents(view: View) {
         txtMotor = view.findViewById(R.id.txtMotor)
         txtCodProd = view.findViewById(R.id.txtCodProd)
         btnConsultar = view.findViewById(R.id.btnConsultarFra)
-        tableLayout = view.findViewById(R.id.tableLayoutArticulos)
+        initializeComponentsMotorFragmentViewModel(view)
     }
 
-    private fun InitializeEvents() {
+    private fun initializeEvents() {
         btnConsultar?.setOnClickListener(btnConsultar_OnClickListener)
     }
 
-    private var btnConsultar_OnClickListener = View.OnClickListener {
+    private fun initializeComponentsMotorFragmentViewModel(view: View) {
         motorFragmentViewModel = MotorFragmentViewModel(context!!)
-        motorFragmentViewModel.tableLayoutArticulo = tableLayout
-        motorFragmentViewModel.txtMotor = txtMotor
-        motorFragmentViewModel.execute(txtCodProd?.text.toString(), txtMotor?.text.toString())
+        motorFragmentViewModel.horizontalScrollViewHead =
+            view.findViewById(R.id.horizontalScrollViewHead)
+        motorFragmentViewModel.tblArticuloHead = view.findViewById(R.id.tblArticuloHead)
+        motorFragmentViewModel.horizontalScrollViewDetail =
+            view.findViewById(R.id.horizontalScrollViewDetail)
+        motorFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
+        motorFragmentViewModel.initializeEvents()
+        motorFragmentViewModel.startControls()
     }
 
-    fun showAlertDialog(adapter: ArrayAdapter<*>) {
-        val alertDialog = AlertDialog.Builder(ContextThemeWrapper(context, R.style.AlertDialogCustom))
-        alertDialog.setTitle("Vista de Motores")
-        alertDialog.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface, which: Int) {
-                dialog.dismiss()
-            }
-        })
-        alertDialog.setAdapter(adapter, object : DialogInterface.OnClickListener {
-            override fun onClick(dialog: DialogInterface, position: Int) {
-                val motor: Motor = adapter.getItem(position) as Motor
-                try {
-                    dialog.dismiss()
-                    txtMotor?.setText(motor.motor)
-                    //> ConsultarArticulo()
-                } catch (e: Exception) {
-                    e.printStackTrace()
+    private var btnConsultar_OnClickListener = View.OnClickListener {
+        try {
+            lifecycleScope.launch(Dispatchers.Main) {
+                motorFragmentViewModel.startLoadingDialog()
+                val lstMotor = withContext(Dispatchers.IO) {
+                    motorFragmentViewModel.obtenerMotores(
+                        txtCodProd?.text.toString(),
+                        txtMotor?.text.toString()
+                    )
                 }
+                motorFragmentViewModel.startAlerDialogMotores()
+                motorFragmentViewModel.cargarDataMotor(lstMotor)
+                motorFragmentViewModel.closeLoadingDialog()
             }
-        })
-        alertDialog.show()
+        } catch (ex: Exception) {
+            Toast.makeText(context, "error al consultar", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

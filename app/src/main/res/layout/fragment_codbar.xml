@@ -1,83 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".View.CodbarFragment">
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".View.CodbarFragment">
 
     <LinearLayout
-        android:id="@+id/linearLayout1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView1"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/txtCodBar"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:focusable="true"
-            android:hint="@string/hint_codbar"
-            android:padding="10dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="14dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="14dp"
-            android:textSize="18sp"
-            android:paddingEnd="10dp"
-            android:paddingStart="12dp" />
-
-        <EditText
-            android:id="@+id/txtMotor"
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft ="0dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginBottom="20dp"
-            android:focusable="true"
-            android:hint="@string/hint_motor"
-            android:padding="10dp"
-            android:paddingLeft="12dp"
-            android:paddingTop="14dp"
-            android:paddingRight="12dp"
-            android:paddingBottom="14dp"
-            android:textSize="18sp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginStart="0dp" />
-    </LinearLayout>
-
-    <ScrollView
-        android:id="@+id/scrollView1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/btnConsultarFra"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout1">
-
-        <HorizontalScrollView
+            android:id="@+id/linearLayout1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fillViewport="true">
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollViewHead"
+            android:orientation="horizontal">
+
+        <EditText
+                android:id="@+id/txtCodBar"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:focusable="true"
+                android:hint="@string/hint_codbar"
+                android:padding="10dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="14dp"
+                android:textSize="18sp"
+                android:paddingEnd="10dp"
+                android:paddingStart="12dp" />
+
+        <EditText
+                android:id="@+id/txtMotor"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:focusable="true"
+                android:hint="@string/hint_motor"
+                android:padding="10dp"
+                android:paddingLeft="12dp"
+                android:paddingTop="14dp"
+                android:paddingRight="12dp"
+                android:paddingBottom="14dp"
+                android:textSize="18sp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginStart="0dp" />
+    </LinearLayout>
+
+    <HorizontalScrollView
+            android:id="@+id/horizontalScrollViewHead"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fillViewport="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/scrollViewDetail">
+
+        <TableLayout
+                android:id="@+id/tblArticuloHead"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp" />
+    </HorizontalScrollView>
+
+    <ScrollView
+            android:id="@+id/scrollViewDetail"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewHead"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnConsultarFra">
+
+        <HorizontalScrollView
+                android:id="@+id/horizontalScrollViewDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fillViewport="true">
 
             <TableLayout
-                android:id="@+id/tableLayoutArticulos"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginTop="0dp" />
+                    android:id="@+id/tblArticuloDetail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="0dp" />
         </HorizontalScrollView>
     </ScrollView>
 
     <include
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        layout="@layout/merge_button_consultar" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/merge_button_consultar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

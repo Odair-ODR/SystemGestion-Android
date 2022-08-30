@@ -41,11 +41,14 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
             var articulo: Articulo
             while (rs.next()){
                 articulo = Articulo()
+                articulo.idArticulo = rs.getString("idArticulo").toInt()
                 articulo.codbar = rs.getString("codBar")
                 articulo.campar = rs.getString("campar").toInt()
                 articulo.unimed = rs.getString("unimed")
                 articulo.alternante = rs.getString("alternante")
                 articulo.cpdnew = rs.getString("cpdnew")
+                articulo.cpdold = rs.getString("cpdold")
+                articulo.descriArti = rs.getString("descriArti")
                 articulo.totSaldo = rs.getInt("totSaldo")
                 articulo.precioVenta = rs.getDouble("precioVenta")
                 lstArticulo.add(articulo)

@@ -12,4 +12,5 @@ interface INVentasRepository {
     fun llamarEntidadToXDniApi(dni: String)
     fun obtenerEntidadToApi(): MutableLiveData<EntidadTo?>
     fun registrarPreFacturaCabDet(facturaTo: FacturaCabTo, lstArticulo: ArrayList<FacturaDetTo>): Boolean
+    fun obtenerIGV(): Double
 }
