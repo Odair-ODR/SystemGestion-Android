@@ -24,10 +24,17 @@
         android:textSize="17dp" />
 
     <EditText
+<<<<<<< HEAD
             android:id="@+id/txtPassaword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/txtUser"
+=======
+            android:id="@+id/txtContraseña"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtUsuario"
+>>>>>>> 0dfdce1e7238eeb4aed1f9b2aa5a0c5e964828c2
             android:layout_marginLeft="50dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="50dp"
