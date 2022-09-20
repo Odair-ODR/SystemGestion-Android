@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.website.consulta">
+        package="com.example.website.consulta">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
-        android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
+            android:allowBackup="true"
+            android:icon="@mipmap/ic_launcher"
+            android:label="@string/app_name"
+            android:roundIcon="@mipmap/ic_launcher_round"
+            android:supportsRtl="true"
+            android:theme="@style/AppTheme.NoActionBar">
+        <activity
+                android:name=".View.CancelacionDocumentos"
+                android:exported="false" />
         <activity android:name=".View.ConsultaItemsVenta" />
         <activity android:name=".View.Modificarve" />
         <activity android:name=".View.Anularve" />
@@ -22,8 +25,9 @@
         <activity android:name=".View.Principal" />
         <activity android:name=".View.Inicio" />
         <activity
-            android:name=".View.splash"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+                android:name=".View.splash"
+                android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+                android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,4 +35,5 @@
             </intent-filter>
         </activity>
     </application>
+
 </manifest>

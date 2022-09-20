@@ -6,13 +6,9 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.appcompat.app.AppCompatActivity
 import android.view.View
 import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Spinner
-import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
-import com.example.website.consulta.ViewModel.NVentasViewModel
-import kotlinx.android.synthetic.main.activity_factura.*
 
 class ConsultaActivity : AppCompatActivity() {
     private var spFiltro: Spinner? = null

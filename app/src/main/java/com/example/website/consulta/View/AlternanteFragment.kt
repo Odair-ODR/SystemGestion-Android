@@ -5,16 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
-import com.example.website.consulta.Model.Entidad.Articulo
-import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.AlternanteFragmentViewModel
-import kotlinx.android.synthetic.main.fragment_alternante.*
+import com.example.website.consulta.databinding.FragmentAlternanteBinding
+import com.example.website.consulta.databinding.MergeButtonConsultarBinding
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -22,9 +18,11 @@ class AlternanteFragment : Fragment() {
 
     private var mParam1: String? = null
     private var mParam2: String? = null
-    private var txtAlternante: EditText? = null
-    private var btnConsultar: Button? = null
     private lateinit var alternanteFragmentViewModel: AlternanteFragmentViewModel
+
+    private var _binding:FragmentAlternanteBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var mergeBinding: MergeButtonConsultarBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,30 +38,27 @@ class AlternanteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        val view: View = inflater.inflate(R.layout.fragment_alternante, container, false)
-        initializeComponents(view)
+        _binding = FragmentAlternanteBinding.inflate(inflater, container, false)
+        mergeBinding = MergeButtonConsultarBinding.bind(binding.root)
+        initializeComponents()
         initializeEvents()
-        return view
+        return binding.root
     }
 
-    private fun initializeComponents(view: View) {
-        txtAlternante = view.findViewById(R.id.txtAlternante)
-        btnConsultar = view.findViewById(R.id.btnConsultarFra)
-        initializeComponentsMotorFragmentViewModel(view)
+    private fun initializeComponents() {
+        initializeComponentsMotorFragmentViewModel()
     }
 
     private fun initializeEvents() {
-        btnConsultar!!.setOnClickListener(btnConsultar_OnClickListener)
+        mergeBinding.btnConsultarFra.setOnClickListener(btnConsultar_OnClickListener)
     }
 
-    private fun initializeComponentsMotorFragmentViewModel(view: View) {
+    private fun initializeComponentsMotorFragmentViewModel() {
         alternanteFragmentViewModel = AlternanteFragmentViewModel(context!!)
-        alternanteFragmentViewModel.horizontalScrollViewHead =
-            view.findViewById(R.id.horizontalScrollViewHead)
-        alternanteFragmentViewModel.tblArticuloHead = view.findViewById(R.id.tblArticuloHead)
-        alternanteFragmentViewModel.horizontalScrollViewDetail =
-            view.findViewById(R.id.horizontalScrollViewDetail)
-        alternanteFragmentViewModel.tblArticuloDetail = view.findViewById(R.id.tblArticuloDetail)
+        alternanteFragmentViewModel.horizontalScrollViewHead = binding.horizontalScrollViewHead
+        alternanteFragmentViewModel.tblArticuloHead = binding.tblArticuloHead
+        alternanteFragmentViewModel.horizontalScrollViewDetail = binding.horizontalScrollViewDetail
+        alternanteFragmentViewModel.tblArticuloDetail = binding.tblArticuloDetail
         alternanteFragmentViewModel.initEvents()
         alternanteFragmentViewModel.startControls()
     }
@@ -73,7 +68,7 @@ class AlternanteFragment : Fragment() {
             lifecycleScope.launch(Dispatchers.Main) {
                 alternanteFragmentViewModel.startLoadingDialog()
                 val lstArticulos = withContext(Dispatchers.IO) {
-                    alternanteFragmentViewModel.obtenerArticulosXAlternante(txtAlternante?.text.toString())
+                    alternanteFragmentViewModel.obtenerArticulosXAlternante(binding.txtAlternante.text.toString())
                 }
                 alternanteFragmentViewModel.cargarDataArticulosXAlternante(lstArticulos)
                 alternanteFragmentViewModel.closeLoadingDialog()

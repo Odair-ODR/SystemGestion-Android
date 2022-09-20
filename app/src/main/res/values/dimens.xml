@@ -6,4 +6,5 @@
     <dimen name="margin_editControls">10dp</dimen>
     <dimen name="textSize">16sp</dimen>
     <dimen name="textSizeUpperButton">14sp</dimen>
+    <dimen name="margin_cardview">10dp</dimen>
 </resources>

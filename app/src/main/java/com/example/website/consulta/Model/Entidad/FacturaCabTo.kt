@@ -1,7 +1,7 @@
 package com.example.website.consulta.Model.Entidad
 
 class FacturaCabTo {
-    var al31AplicAnticipo: Boolean = false
+    var al31AplicAnticipo: Boolean? = false
     var al31Anticipo: Boolean = false
     var al31TotAnticipo: Double = 0.0
     var afectaIGV: String = ""
@@ -25,7 +25,7 @@ class FacturaCabTo {
     var valbru: Double = 0.0
     var valigv: Double = 0.0
     var valven: Double = 0.0
-    var conpag: Int = 0
+    var conpag: FORMA_DE_PAGO = FORMA_DE_PAGO.CONTADO
     var fecgui2: Any? = null
     var numgui2: Int = 0
     var sergui2: String = ""
@@ -42,11 +42,8 @@ class FacturaCabTo {
     var nroFactura: Int = 0
     var numDoc: Int = 0
     var serDoc: String = ""
-    var tipoDoc: Int = 0
+    var tipoDoc: TIPO_DOCUMENTO = TIPO_DOCUMENTO.FACTURA
     var nroCaja:Int = 0
     var idTienda: Int = 0
-
-    init {
-        valbru = valven + valigv
-    }
+    val tipoDocPrefactura: TIPO_DOCUMENTO = TIPO_DOCUMENTO.PRE_FACTURA
 }

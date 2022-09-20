@@ -26,7 +26,7 @@ class TableAdapter(
     private lateinit var row: TableRow
     private var indexC: Int = 0
 
-    lateinit var headerCellsWidth: IntArray
+    private lateinit var headerCellsWidth: IntArray
 
     internal class ViewHolder {
         var item1: TextView? = null

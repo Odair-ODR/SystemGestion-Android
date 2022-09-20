@@ -3,42 +3,42 @@ package com.example.website.consulta.View
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import android.view.View
-import android.widget.*
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.website.consulta.Model.Entidad.TIPO_DOCUMENTO
-import com.example.website.consulta.R
+import com.example.website.consulta.Model.Entidad.TIPO_PROCESO_VENTA
+import com.example.website.consulta.Model.Entidad.VentasProceso
+import com.example.website.consulta.Model.VentasProcesoProvider
+import com.example.website.consulta.View.Adapter.VentasProcesoAdapter
+import com.example.website.consulta.databinding.ActivityEmisionBinding
 
 class Emision : AppCompatActivity() {
-    var nuevo: Button? = null
-    var consulta: Button? = null
-    var anular: Button? = null
-    var modificar: Button? = null
+    private lateinit var binding: ActivityEmisionBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_emision)
-        nuevo = findViewById(R.id.Nueva_v)
-        consulta = findViewById(R.id.Consultar_v)
-        anular = findViewById(R.id.Anular_V)
-        modificar = findViewById(R.id.Modificar_v)
-        nuevo?.setOnClickListener(View.OnClickListener {
-            val n = Intent(this@Emision, Nventas::class.java)
-            n.putExtra("TipoDocumento", TIPO_DOCUMENTO.FACTURA)
-            startActivity(n)
-        })
-        consulta?.setOnClickListener(View.OnClickListener {
+        binding = ActivityEmisionBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initRecycleView()
+    }
+
+    private fun initRecycleView() {
+        binding.recycleVentasProces.layoutManager = GridLayoutManager(this, 2)
+        binding.recycleVentasProces.adapter =
+            VentasProcesoAdapter(VentasProcesoProvider.lstProcesosVentas) { ventasProceso ->
+                onItemSelected(
+                    ventasProceso
+                )
+            }
+    }
+
+    private fun onItemSelected(ventasProceso: VentasProceso) {
+        if (ventasProceso.tipoProcesoVenta is TIPO_DOCUMENTO) {
             val c = Intent(this@Emision, Nventas::class.java)
-            c.putExtra("TipoDocumento", TIPO_DOCUMENTO.BOLETA)
+            c.putExtra("TipoDocumento", ventasProceso.tipoProcesoVenta)
             startActivity(c)
-        })
-        anular?.setOnClickListener(View.OnClickListener {
-            val a = Intent(this@Emision, Nventas::class.java)
-            a.putExtra("TipoDocumento", TIPO_DOCUMENTO.NOTA_CREDITO)
-            startActivity(a)
-        })
-        modificar?.setOnClickListener(View.OnClickListener {
-            val m = Intent(this@Emision, Nventas::class.java)
-            m.putExtra("TipoDocumento", TIPO_DOCUMENTO.NOTA_VENTA)
-            startActivity(m)
-        })
+        } else if (ventasProceso.tipoProcesoVenta is TIPO_PROCESO_VENTA) {
+            val c = Intent(this@Emision, CancelacionDocumentos::class.java)
+            startActivity(c)
+        }
     }
 }

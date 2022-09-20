@@ -5,8 +5,8 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.website.consulta.Helpers.UtilsInterface
@@ -14,15 +14,9 @@ import com.example.website.consulta.Helpers.UtilsMethod
 import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.NVentasViewModel
+import com.example.website.consulta.databinding.ActivityFacturaBinding
 import com.example.website.consulta.dummy.Tienda
-import kotlinx.android.synthetic.main.activity_factura.*
-import kotlinx.android.synthetic.main.activity_factura.horizontalScrollViewDetail
-import kotlinx.android.synthetic.main.activity_factura.horizontalScrollViewHead
-import kotlinx.android.synthetic.main.activity_factura.tblArticuloDetail
-import kotlinx.android.synthetic.main.activity_factura.tblArticuloHead
-import kotlinx.android.synthetic.main.activity_factura.*
 import java.time.LocalDate
-import java.util.*
 import kotlin.collections.ArrayList
 
 class Nventas : AppCompatActivity() {
@@ -49,10 +43,12 @@ class Nventas : AppCompatActivity() {
     private val CONTADO = 1
     private val CREDITO = 2
 
+    private lateinit var binding: ActivityFacturaBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_factura)
+        binding = ActivityFacturaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         initializeComponents()
         initializeEvents()
         startOptions()
@@ -82,36 +78,20 @@ class Nventas : AppCompatActivity() {
         btnGrabar!!.setOnClickListener(btnGrabarOnClickListener)
         btnItem!!.setOnClickListener(btnItem_OnClickListener)
         txtTienda!!.setOnClickListener(txtTienda_OnClickListener)
-        txtMoneda!!.setOnClickListener(txtMoneda_OnClickListener)
+        binding.txtMoneda.setOnClickListener(txtMoneda_OnClickListener)
         btnBuscarRucDni.setOnClickListener(btnBuscarRucDniOnClickListener)
     }
 
     private fun initializeComponentsNVentasViewModel() {
         nVentasViewModel = NVentasViewModel(this)
-        nVentasViewModel.horizontalScrollViewHead = horizontalScrollViewHead
-        nVentasViewModel.tblArticuloHead = tblArticuloHead
-        nVentasViewModel.horizontalScrollViewDetail = horizontalScrollViewDetail
-        nVentasViewModel.tblArticuloDetail = tblArticuloDetail
+        nVentasViewModel.horizontalScrollViewHead = binding.horizontalScrollViewHead
+        nVentasViewModel.tblArticuloHead = binding.tblArticuloHead
+        nVentasViewModel.horizontalScrollViewDetail = binding.horizontalScrollViewDetail
+        nVentasViewModel.tblArticuloDetail = binding.tblArticuloDetail
         nVentasViewModel.initializeEvents()
         nVentasViewModel.startControls()
         nVentasViewModel.swipeDismissTouchTableAdapter()
     }
-
-    /*private fun CargarSpinnerTipoDocumento() {
-        val tipos = arrayOf("Factura", "Boleta", "Nota de Venta")
-        val adapter = ArrayAdapter(this, R.layout.spinner_item_editor, tipos)
-        cboTipo!!.adapter = adapter
-    }*/
-
-    /*private fun CargarTienda() {
-        try {
-            val tiendas = nVentasViewModel.ObtenerTiendas()
-            val adapter = ArrayAdapter(this, R.layout.spinner_item_editor, tiendas)
-            cboTienda!!.adapter = adapter
-        } catch (ex: Exception) {
-            ex.printStackTrace()
-        }
-    }*/
 
     private val btnItem_OnClickListener = View.OnClickListener {
         val inten = Intent(this@Nventas, ConsultaItemsVenta::class.java)
@@ -176,7 +156,7 @@ class Nventas : AppCompatActivity() {
 
     private var radioButtonMonedaOnClickListener = View.OnClickListener {
         rdbMoneda = it as RadioButton
-        txtMoneda!!.setText(rdbMoneda.text)
+        binding.txtMoneda.setText(rdbMoneda.text)
         alertDialog.dismiss()
     }
 
@@ -323,7 +303,7 @@ class Nventas : AppCompatActivity() {
         val facturaTo = FacturaCabTo()
         facturaTo.idTienda = rdbTienda.tag.toString().toInt()
         facturaTo.nroCaja = 1
-        facturaTo.tipoDoc = tipoDocumento.id
+        facturaTo.tipoDoc = tipoDocumento
         facturaTo.serDoc = ""
         facturaTo.numDoc = 0
         facturaTo.numFac = 0
@@ -332,7 +312,7 @@ class Nventas : AppCompatActivity() {
         facturaTo.nroDocIdenti = txtNroDocIdenti!!.text.toString()
         facturaTo.nombres = txtNombre!!.text.toString()
         facturaTo.direccion = txtDireccion!!.text.toString()
-        facturaTo.placa = txtPlaca.text.toString()
+        facturaTo.placa = binding.txtPlaca.text.toString()
         facturaTo.tipgui = 0
         facturaTo.sergui = ""
         facturaTo.numgui = 0
@@ -363,7 +343,7 @@ class Nventas : AppCompatActivity() {
         facturaTo.afectaIGV = "10"
         facturaTo.al31TotAnticipo = 0.0
         facturaTo.al31Anticipo = false
-        facturaTo.al31AplicAnticipo = false
+        facturaTo.al31AplicAnticipo = null
         return facturaTo
     }
 
@@ -373,8 +353,8 @@ class Nventas : AppCompatActivity() {
         val lista = ArrayList<FacturaDetTo>()
         var facturaDet: FacturaDetTo
         var articulo: Articulo?
-        for (index in 0 until tblArticuloDetail.childCount) {
-            val row = tblArticuloDetail.getChildAt(index) as TableRow
+        for (index in 0 until binding.tblArticuloDetail.childCount) {
+            val row = binding.tblArticuloDetail.getChildAt(index) as TableRow
             val cell = row.getChildAt(0) as TextView
             val idArticulo = cell.text.toString().toInt()
             val cellCantidad = row.getChildAt(5) as TextView
@@ -388,7 +368,7 @@ class Nventas : AppCompatActivity() {
             }
             facturaDet = FacturaDetTo()
             facturaDet.al32numfac = 0
-            facturaDet.al33numSec = 0
+            facturaDet.al33numSec = index + 1
             facturaDet.al32fecTra = UtilsMethod.getSqlDateShort()
             facturaDet.al32flag = if (articulo.totSaldo > 0) "*" else ""
             facturaDet.codigoUniversal = codigoUniversal
@@ -431,12 +411,12 @@ class Nventas : AppCompatActivity() {
         facturaCabTo: FacturaCabTo,
         facturaDetTo: ArrayList<FacturaDetTo>
     ) {
-        var valven = 0.0
-        facturaDetTo.forEach { valven += it.al32pretot }
+        var valbru = 0.0
+        facturaDetTo.forEach { valbru += it.al32pretot }
         facturaCabTo.also {
-            it.valigv = nVentasViewModel.obtenerIGV()
-            it.valven = valven / it.valigv
-            it.valbru = it.valven + it.valigv
+            it.valven = valbru / nVentasViewModel.obtenerIGV()
+            it.valbru = valbru
+            it.valigv = it.valbru - it.valven
         }
     }
 
@@ -454,14 +434,14 @@ class Nventas : AppCompatActivity() {
                 .show()
             return false
         }
-        if (txtMoneda.text.toString().length == 0 || rdbMoneda.tag.toString().length == 0) {
+        if (binding.txtMoneda.text.toString().length == 0 || rdbMoneda.tag.toString().length == 0) {
             Toast.makeText(this, "Ingrese la moneda", Toast.LENGTH_LONG).show()
             return false
         }
         var result = false
-        for (index in 0..rdgFormaPago.childCount) {
-            if (rdgFormaPago.getChildAt(index) is RadioButton) {
-                if ((rdgFormaPago.getChildAt(index) as RadioButton).isChecked) {
+        for (index in 0..binding.rdgFormaPago.childCount) {
+            if (binding.rdgFormaPago.getChildAt(index) is RadioButton) {
+                if ((binding.rdgFormaPago.getChildAt(index) as RadioButton).isChecked) {
                     result = true
                     break
                 }
@@ -471,29 +451,29 @@ class Nventas : AppCompatActivity() {
             Toast.makeText(this, "Seleccione la forma de pago", Toast.LENGTH_SHORT).show()
             return false
         }
-        if (tblArticuloDetail.childCount <= 0) {
+        if (binding.tblArticuloDetail.childCount <= 0) {
             Toast.makeText(this, "Agregue al menos un artículo", Toast.LENGTH_SHORT).show()
             return false
         }
         return true
     }
 
-    private fun obtenerConPag(): Int {
-        for (i in 0 until rdgFormaPago.childCount) {
-            if (rdgFormaPago.getChildAt(1) !is RadioButton)
+    private fun obtenerConPag(): FORMA_DE_PAGO {
+        for (i in 0 until binding.rdgFormaPago.childCount) {
+            if (binding.rdgFormaPago.getChildAt(1) !is RadioButton)
                 continue
-            val radioButton: RadioButton = rdgFormaPago.getChildAt(i) as RadioButton
+            val radioButton: RadioButton = binding.rdgFormaPago.getChildAt(i) as RadioButton
             if (radioButton.isChecked)
-                return radioButton.tag.toString().toInt()
+                return FORMA_DE_PAGO.fromInt(radioButton.tag.toString().toInt())
         }
         throw Exception()
     }
 
     private fun obtenerFechaFin(): String? {
-        for (i in 0 until rdgFormaPago.childCount) {
-            if (rdgFormaPago.getChildAt(1) !is RadioButton)
+        for (i in 0 until binding.rdgFormaPago.childCount) {
+            if (binding.rdgFormaPago.getChildAt(1) !is RadioButton)
                 continue
-            val radioButton: RadioButton = rdgFormaPago.getChildAt(i) as RadioButton
+            val radioButton: RadioButton = binding.rdgFormaPago.getChildAt(i) as RadioButton
             if (radioButton.isChecked) {
                 return when {
                     radioButton.tag.toString().toInt() == CONTADO -> UtilsMethod.getSqlDateShort()
@@ -513,9 +493,9 @@ class Nventas : AppCompatActivity() {
         txtDireccion?.setText("")
         txtTienda?.setText("")
         rdbTienda.tag = ""
-        txtMoneda.setText("")
+        binding.txtMoneda.setText("")
         rdbMoneda.tag = ""
-        txtPlaca.setText("")
-        tblArticuloDetail.removeAllViews()
+        binding.txtPlaca.setText("")
+        binding.tblArticuloDetail.removeAllViews()
     }
 }

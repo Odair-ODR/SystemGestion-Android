@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="20dp">
+
+    <androidx.cardview.widget.CardView
+            android:id="@+id/cardView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:elevation="40dp"
+            app:cardCornerRadius="5dp">
+
+        <ImageView
+                android:id="@+id/imgWarning"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_warning_vector" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+            android:id="@+id/lblMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardView1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:text="@string/lblmessageQuestionCanFact"
+            style="@style/TextView4"
+            android:layout_marginTop="20dp"/>
+
+    <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lblMessage">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serie: "
+                style="@style/TextView4"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:layout_marginTop="@dimen/margin_editControls" />
+
+        <EditText
+                android:id="@+id/txtSerie"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="001"
+                style="@style/EdiText1"
+                android:layout_marginTop="@dimen/margin_editControls"
+                android:layout_marginEnd="@dimen/margin_editControls" />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número: "
+                style="@style/TextView4"
+                android:layout_marginStart="@dimen/margin_editControls"
+                android:layout_marginTop="@dimen/margin_editControls" />
+
+        <EditText
+                android:id="@+id/txtNumero"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="19283"
+                style="@style/EdiText1"
+                android:layout_marginTop="@dimen/margin_editControls"
+                android:layout_marginEnd="@dimen/margin_editControls" />
+    </LinearLayout>
+
+    <Button
+            android:id="@+id/btnNo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+            app:layout_constraintEnd_toStartOf="@+id/btnSi"
+            android:layout_marginTop="15dp"
+            android:text="NO"
+            android:background="@color/colorGray"
+            android:textColor="@color/colorBlack" />
+
+    <Button
+            android:id="@+id/btnSi"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@+id/btnNo"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayout1"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="15dp"
+            android:text="SI"
+            android:background="@color/colorGreenBlack"
+            android:textColor="@color/colorWhite"
+            android:backgroundTint="@color/colorGreenBlack" />
+</androidx.constraintlayout.widget.ConstraintLayout>
