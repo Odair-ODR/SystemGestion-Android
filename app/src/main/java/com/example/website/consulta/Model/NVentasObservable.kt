@@ -32,7 +32,7 @@ class NVentasObservable {
         return nVentasRepository.registrarPreFacturaCabDet(facturaTo, lstFacturaDetTo)
     }
 
-    fun obtenerIGV(): Double{
+    fun obtenerIGV(): Double {
         return nVentasRepository.obtenerIGV()
     }
 }

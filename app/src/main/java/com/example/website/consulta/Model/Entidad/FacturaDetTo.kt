@@ -9,7 +9,7 @@ class FacturaDetTo {
     var idfactdet: Int = 0
     var al32codAlm: Int = 0
     var al32numCaj: Int = 0
-    var al32tipDoc: Int = 0
+    var al32tipDoc: TIPO_DOCUMENTO = TIPO_DOCUMENTO.FACTURA
     var al32serDoc: String = ""
     var al32numDoc: Int = 0
     var al32numfac: Int = 0

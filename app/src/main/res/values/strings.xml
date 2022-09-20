@@ -39,4 +39,11 @@
     <string name="hint_alternante">Alternante</string>
     <string name="hint_codprod">codprod</string>
     <!--***********-->
+    <string name="serieNumero">%1$s!-%2$d</string>
+    <string name="errorTitle">¡Error!</string>
+    <string name="successTitle">¡Correcto!</string>
+    <string name="lblmessageSuccessCanFact">Registrado correctamente</string>
+    <string name="lblmessageErrorCanFact">Error al registrar el documento</string>
+    <string name="lblmessageQuestionCanFact">¿Esta seguro de cancelar este documento?</string>
+    <string name="lblmessageWarningCorrelativoExist">Este número y seri ya se encuentra registrado</string>
 </resources>

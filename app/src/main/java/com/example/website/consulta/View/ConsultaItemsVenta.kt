@@ -1,37 +1,35 @@
 package com.example.website.consulta.View
 
-import android.app.Dialog
+
 import android.os.Bundle
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.website.consulta.Helpers.InitEventsControls
-import com.example.website.consulta.Helpers.UtilsInterface
-import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.ArticuloViewModel
 import com.example.website.consulta.ViewModel.MotorFragmentViewModel
-import kotlinx.android.synthetic.main.activity_consulta_items_venta.*
-import kotlinx.android.synthetic.main.fragment_motor.txtCodProd
+import com.example.website.consulta.databinding.ActivityConsultaItemsVentaBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
 
+    private lateinit var binding: ActivityConsultaItemsVentaBinding
     private lateinit var txtCodbar: EditText
     private lateinit var txtAlternante: EditText
     private lateinit var btnBuscar: Button
     private lateinit var btnBuscarMotor: Button
     private lateinit var txtMotor: EditText
-
     private lateinit var articuloViewModel: ArticuloViewModel
     private lateinit var motorFragmentViewModel: MotorFragmentViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_consulta_items_venta)
+        binding = ActivityConsultaItemsVentaBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         InitializeComponents()
         InitializeEvents()
@@ -75,10 +73,10 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
     private fun initializeComponentsConsultaItemsVenta() {
         articuloViewModel = ArticuloViewModel(this@ConsultaItemsVenta, this)
         articuloViewModel.articuloViewModel = articuloViewModel
-        articuloViewModel.horizontalScrollViewHead = horizontalScrollViewHead
-        articuloViewModel.tblArticuloHead = tblArticuloHead
-        articuloViewModel.horizontalScrollViewDetail = horizontalScrollViewDetail
-        articuloViewModel.tblArticuloDetail = tblArticuloDetail
+        articuloViewModel.horizontalScrollViewHead = binding.horizontalScrollViewHead
+        articuloViewModel.tblArticuloHead = binding.tblArticuloHead
+        articuloViewModel.horizontalScrollViewDetail = binding.horizontalScrollViewDetail
+        articuloViewModel.tblArticuloDetail = binding.tblArticuloDetail
         articuloViewModel.initEvents()
         articuloViewModel.startControls()
     }
@@ -111,13 +109,13 @@ class ConsultaItemsVenta : AppCompatActivity(), InitEventsControls {
             articuloViewModel.parameters = ArticuloViewModel.Parameters().also {
                 it.codbar = txtCodbar.text.toString()
                 it.alternante = txtAlternante.text.toString()
-                it.codProd = txtCodProd.text.toString()
+                it.codProd = binding.txtCodProd.text.toString()
             }
             lifecycleScope.launch(Dispatchers.Main) {
                 articuloViewModel.startLoadingDialog()
                 val lstMotor = withContext(Dispatchers.IO) {
                     articuloViewModel.obtenerMotores(
-                        txtCodProd.text.toString(),
+                        binding.txtCodProd.text.toString(),
                         txtMotor.text.toString()
                     )
                 }

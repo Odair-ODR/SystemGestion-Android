@@ -8,7 +8,7 @@
     tools:context=".View.splash">
 
     <EditText
-        android:id="@+id/txtUsuario"
+        android:id="@+id/txtUser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -24,22 +24,22 @@
         android:textSize="17dp" />
 
     <EditText
-        android:id="@+id/txtContraseña"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/txtUsuario"
-        android:layout_marginLeft="50dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginRight="50dp"
-        android:background="@drawable/border_radius"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
-        android:paddingLeft="10dp"
-        android:paddingTop="15dp"
-        android:paddingRight="10dp"
-        android:paddingBottom="15dp"
-        android:text="01310521"
-        android:textSize="17dp" />
+            android:id="@+id/txtPassaword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txtUser"
+            android:layout_marginLeft="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="50dp"
+            android:background="@drawable/border_radius"
+            android:hint="Contraseña"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:paddingTop="15dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="15dp"
+            android:text="01310521"
+            android:textSize="17dp" />
 
     <Button
         android:id="@+id/btnCancelar"
@@ -60,7 +60,7 @@
         android:id="@+id/btnIngresar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/txtContraseña"
+        android:layout_below="@id/txtPassaword"
         android:layout_marginLeft="50dp"
         android:layout_marginTop="234dp"
         android:layout_marginRight="50dp"

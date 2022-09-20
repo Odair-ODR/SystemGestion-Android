@@ -12,9 +12,7 @@ import android.view.View
 import android.view.Window
 import android.view.WindowManager
 import android.widget.TextView
-import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.R
-import com.example.website.consulta.ViewModel.ArticuloViewModel
 
 class UtilsInterface() {
     interface OnClickCallBack {
@@ -140,6 +138,26 @@ class UtilsInterface() {
             alertBuilder.setNegativeButton("Cancelar", alertDialog_OnClickListenerCancel)
             alertBuilder.setView(view)
             val alertDialog = alertBuilder.create()
+            return alertDialog
+        }
+
+        fun dialogResult(
+            context: Context,
+            view: View,
+            windowMain: Window
+        ): AlertDialog {
+            val alertBuilder = AlertDialog.Builder(context, R.style.AlertDialogCustom)
+            alertBuilder.setView(view)
+            val alertDialog = alertBuilder.create()
+            alertDialog.show()
+            val window = alertDialog.getWindow()
+            window!!.setBackgroundDrawableResource(R.drawable.dialog_bg)
+            val lp: WindowManager.LayoutParams = window.getAttributes()
+            val displayRectangle = Rect()
+            val windowScreen = windowMain
+            windowScreen.getDecorView().getWindowVisibleDisplayFrame(displayRectangle)
+            lp.width = (displayRectangle.width() * 0.8f).toInt()
+            window.attributes = lp
             return alertDialog
         }
     }

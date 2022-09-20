@@ -1,10 +1,9 @@
 package com.example.website.consulta.Model
 
-import androidx.databinding.BaseObservable
 import androidx.lifecycle.MutableLiveData
 import com.example.website.consulta.Model.Entidad.Articulo
 
-class ArticuloObservable: BaseObservable() {
+class ArticuloObservable{
     //> Conexión directa con el repositorio
     //> Conexión directa con ViewModel
     //> Estas clases va tener una conexión directa con el respositorio y con el viewModel
