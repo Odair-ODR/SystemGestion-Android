@@ -10,7 +10,7 @@
 /captures
 .externalNativeBuild
 .idea/vcs.xml
-
+.idea/misc.xml
 
 # Created by https://www.toptal.com/developers/gitignore/api/android,androidstudio
 # Edit at https://www.toptal.com/developers/gitignore?templates=android,androidstudio
