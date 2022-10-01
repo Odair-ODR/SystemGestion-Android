@@ -18,10 +18,10 @@
             android:inputType="text"
             android:textSize="@dimen/textSize"
             android:hint="Ingrese el Cob.bar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.060000002"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin_editControls"
             android:layout_marginLeft="@dimen/margin_editControls"
             android:background="@drawable/editext_radious_corner"
             android:layout_marginRight="@dimen/margin_editControls" />
@@ -105,8 +105,7 @@
             app:layout_constraintHorizontal_bias="0.93"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txtMotor"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/_viewc" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     <View
             android:id="@+id/_viewc"
@@ -115,8 +114,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/btnBuscar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/scrollViewDetail"
+            app:layout_constraintBottom_toTopOf="@+id/horizontalScrollViewHead"
             android:background="@drawable/separator"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="5dp" />
 
     <HorizontalScrollView
@@ -126,8 +126,7 @@
             android:fillViewport="true"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/_viewc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/scrollViewDetail">
+            app:layout_constraintEnd_toEndOf="parent">
 
         <TableLayout
                 android:id="@+id/tblArticuloHead"
@@ -139,11 +138,10 @@
     <ScrollView
             android:id="@+id/scrollViewDetail"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewHead"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintEnd_toEndOf="parent">
 
         <HorizontalScrollView
                 android:id="@+id/horizontalScrollViewDetail"

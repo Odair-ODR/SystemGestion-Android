@@ -15,7 +15,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:title="CANCELACIÓN DE FACTURAS Y BOLETAS"
-            app:titleTextAppearance="@style/Toolbar.TitleText"
+            app:titleTextAppearance="@style/Toolbar.TitleTextUpper"
             android:background="@color/colorPrimary" />
 
     <androidx.cardview.widget.CardView
@@ -31,7 +31,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/colorGreenWhite">
+                android:background="@color/colorWhite">
 
             <TextView
                     android:id="@+id/label1"

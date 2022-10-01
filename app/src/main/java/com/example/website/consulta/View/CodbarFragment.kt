@@ -6,16 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TableLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.CodbarFragmentViewModel
-import kotlinx.android.synthetic.main.activity_principal.*
-import kotlinx.android.synthetic.main.fragment_codbar.horizontalScrollViewDetail
-import kotlinx.android.synthetic.main.fragment_codbar.horizontalScrollViewHead
-import kotlinx.android.synthetic.main.fragment_codbar.tblArticuloDetail
-import kotlinx.android.synthetic.main.fragment_codbar.tblArticuloHead
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

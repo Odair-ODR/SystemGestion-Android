@@ -15,6 +15,7 @@ import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.NVentasViewModel
 import com.example.website.consulta.databinding.ActivityFacturaBinding
+import com.example.website.consulta.databinding.DialogResultSuccessBinding
 import com.example.website.consulta.dummy.Tienda
 import java.time.LocalDate
 import kotlin.collections.ArrayList
@@ -263,7 +264,11 @@ class Nventas : AppCompatActivity() {
         }
     }
 
-    private fun articulosFactura(articulo: Articulo, cantidad: Int, pretot: Double): ArrayList<Articulo> {
+    private fun articulosFactura(
+        articulo: Articulo,
+        cantidad: Int,
+        pretot: Double
+    ): ArrayList<Articulo> {
         return ArrayList<Articulo>().also {
             articulo.totCan = cantidad
             articulo.precioVenta = pretot
@@ -278,14 +283,9 @@ class Nventas : AppCompatActivity() {
                 val facturaToDet = obtenerDatosPreFacturaDet()
                 actualizarImportesVenta(facturaToCab, facturaToDet)
                 if (nVentasViewModel.registrarPreFacturaCabDet(facturaToCab, facturaToDet)) {
-                    Toast.makeText(
-                        applicationContext,
-                        "Registrado correctamente",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    successMessage()
                 } else {
-                    Toast.makeText(applicationContext, "Error al registrar", Toast.LENGTH_SHORT)
-                        .show()
+                    errorMessage()
                 }
                 limpiarGuardar()
             }
@@ -497,5 +497,25 @@ class Nventas : AppCompatActivity() {
         rdbMoneda.tag = ""
         binding.txtPlaca.setText("")
         binding.tblArticuloDetail.removeAllViews()
+    }
+
+    private fun successMessage() {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_success, null, false)
+        val bindingResult = DialogResultSuccessBinding.bind(view)
+        val dialogResult = UtilsInterface.dialogResult(this, view, window)
+        bindingResult.lblTitle.text = getString(R.string.successTitle)
+        bindingResult.lblMessage.text = getString(R.string.lblmessageSuccessRegister)
+        bindingResult.btnContinuar.setOnClickListener { dialogResult.dismiss() }
+        dialogResult.show()
+    }
+
+    private fun errorMessage() {
+        val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_error, null, false)
+        val bindingResult = DialogResultSuccessBinding.bind(view)
+        val dialogResult = UtilsInterface.dialogResult(this, view, window)
+        bindingResult.lblTitle.text = getString(R.string.errorTitle)
+        bindingResult.lblMessage.text = getString(R.string.lblmessageErrorRegister)
+        bindingResult.btnContinuar.setOnClickListener { dialogResult.dismiss() }
+        dialogResult.show()
     }
 }

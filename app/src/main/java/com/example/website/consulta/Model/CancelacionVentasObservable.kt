@@ -46,6 +46,11 @@ class CancelacionVentasObservable {
                 verificarCancelacionFacturacion.error()
                 return false
             }
+            if (!impControlDocuento.actualizarNroDocumentoCaja(preFacturaCab, bdConnection)) {
+                bdConnection.rollback()
+                verificarCancelacionFacturacion.error()
+                return false
+            }
             bdConnection.commit()
             verificarCancelacionFacturacion.success()
             return true

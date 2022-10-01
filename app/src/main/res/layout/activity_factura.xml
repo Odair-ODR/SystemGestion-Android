@@ -255,7 +255,6 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/lygrupBox"
-                    app:layout_constraintBottom_toTopOf="@+id/_view"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp">
 
@@ -291,7 +290,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
                     android:background="@drawable/separator"
-                    app:layout_constraintBottom_toTopOf="@+id/scrollView1"
+                    app:layout_constraintBottom_toTopOf="@+id/horizontalScrollViewHead"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/_linearLayout" />

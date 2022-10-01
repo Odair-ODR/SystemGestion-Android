@@ -56,10 +56,12 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
 
     private fun btnFacturarOnClickListener(preFactura: FacturaCabTo, position: Int) {
         val correlativoTo = viewModelControlDocumento.obtenerCorrelativoDocumento(preFactura)
-        preFactura.numFac = correlativoTo!!.numero
+        preFactura.serDoc = correlativoTo!!.serie
+        preFactura.numFac = correlativoTo.numero
         val view = LayoutInflater.from(this).inflate(R.layout.dialog_result_facturar, null, false)
         val bindingDialogResult = DialogResultFacturarBinding.bind(view)
         dialogResult = UtilsInterface.dialogResult(this, view, window)
+        dialogResult.setCancelable(false)
         bindingDialogResult.txtSerie.setText(correlativoTo.serie)
         bindingDialogResult.txtNumero.setText(correlativoTo.numero.toString())
         bindingDialogResult.btnSi.setOnClickListener { btnSiOnClickListener(preFactura, position) }
@@ -108,12 +110,5 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
         bindingDialogResult.lblMessage.text = getString(R.string.lblmessageErrorCanFact)
         bindingDialogResult.btnContinuar.setOnClickListener { dialogResultErr.dismiss() }
         dialogResultErr.show()
-    }
-
-    private fun removePrefacturaTbl(index: Int) {
-        for (i in 0 until binding.tableRecyclerView.childCount) {
-            val tableRow = binding.tableRecyclerView.getChildAt(i)
-
-        }
     }
 }

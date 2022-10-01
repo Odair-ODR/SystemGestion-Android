@@ -5,11 +5,11 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.example.website.consulta.Helpers.UtilsMethod.Companion.getDateFormat
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
-import com.example.website.consulta.databinding.RowArticuloBinding
+import com.example.website.consulta.databinding.RowPrefacturaBinding
 
 
 class CancelacionDocumentoViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    private val binding = RowArticuloBinding.bind(view)
+    private val binding = RowPrefacturaBinding.bind(view)
 
     fun render(preFactura: FacturaCabTo, onClickListener: (FacturaCabTo, Int) -> Unit) {
         binding.lblTienda.text = preFactura.idTienda.toString()

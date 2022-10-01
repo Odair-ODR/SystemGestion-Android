@@ -15,15 +15,10 @@
                 android:name=".View.CancelacionDocumentos"
                 android:exported="false" />
         <activity android:name=".View.ConsultaItemsVenta" />
-        <activity android:name=".View.Modificarve" />
-        <activity android:name=".View.Anularve" />
-        <activity android:name=".View.Consultarve" />
         <activity android:name=".View.Nventas" />
         <activity android:name=".View.Emision" />
         <activity android:name=".View.ConsultaActivity" />
         <activity android:name=".View.MenuActivity" />
-        <activity android:name=".View.Principal" />
-        <activity android:name=".View.Inicio" />
         <activity
                 android:name=".View.splash"
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar"

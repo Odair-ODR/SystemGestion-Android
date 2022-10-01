@@ -1,10 +1,7 @@
 ﻿package com.example.website.consulta.View.Adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.TableLayout
-import android.widget.TableRow
 import androidx.recyclerview.widget.RecyclerView
 
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
@@ -21,7 +18,7 @@ class CancelacionDocumentoAdapter(
         viewType: Int
     ): CancelacionDocumentoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        return CancelacionDocumentoViewHolder(inflater.inflate(R.layout.row_articulo, parent, false))
+        return CancelacionDocumentoViewHolder(inflater.inflate(R.layout.row_prefactura, parent, false))
     }
 
     override fun onBindViewHolder(holder: CancelacionDocumentoViewHolder, position: Int) {
