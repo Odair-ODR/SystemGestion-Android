@@ -46,4 +46,6 @@
     <string name="lblmessageErrorCanFact">Error al registrar el documento</string>
     <string name="lblmessageQuestionCanFact">¿Esta seguro de cancelar este documento?</string>
     <string name="lblmessageWarningCorrelativoExist">Este número y seri ya se encuentra registrado</string>
+    <string name="lblmessageSuccessRegister">Registrado correctamente</string>
+    <string name="lblmessageErrorRegister">Error al registrar</string>
 </resources>

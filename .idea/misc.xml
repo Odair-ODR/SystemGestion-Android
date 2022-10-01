@@ -7,16 +7,57 @@
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/dialog_bg.xml" value="0.3495" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/editext_radious_corner.xml" value="0.3635" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/group_box_1.xml" value="0.3605" />
+<<<<<<< HEAD
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta.xml" value="0.30526315789473685" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta_items_venta.xml" value="0.30526315789473685" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_factura.xml" value="0.30526315789473685" />
+=======
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_dangerous_vector.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_docs_foreground.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_error_vector.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_facturar.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_succes_vector.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_vector_search.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/ic_warning_vector.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/shadow.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/drawable/shadow_border.xml" value="0.3635" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_anularve.xml" value="0.22894736842105262" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_cancelacion_documentos.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consulta_items_venta.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_consultarve.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_emision.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_factura.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_inicio.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_menu.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_modificarve.xml" value="0.22894736842105262" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_principal.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/activity_splash.xml" value="0.30526315789473685" />
+>>>>>>> 414d08e8516e1a62dcc2cad9c770cef650b57634
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/alert_dialog_cantidad_item.xml" value="0.30526315789473685" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_alternante.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_blank.xml" value="0.22894736842105262" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_codbar.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_first.xml" value="0.22894736842105262" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_motor.xml" value="0.30526315789473685" />
+<<<<<<< HEAD
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/loading_dialog.xml" value="0.30526315789473685" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/merge_button_consultar.xml" value="0.30526315789473685" />
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/motor_alert_dialog.xml" value="0.30526315789473685" />
+=======
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/fragment_second.xml" value="0.22894736842105262" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/item_prefactura.xml" value="0.18947368421052632" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/item_process_ventas.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/loading_dialog.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/merge_button_consultar.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/motor_alert_dialog.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/row.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/row_articulo.xml" value="0.33" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/row_list_motor.xml" value="0.22894736842105262" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/row_motores.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/row_prefactura.xml" value="0.30526315789473685" />
+        <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/spinner_item_editor.xml" value="0.22894736842105262" />
+>>>>>>> 414d08e8516e1a62dcc2cad9c770cef650b57634
         <entry key="..\:/PROYECTOS/ProyectoAndroid/PROYECTO_ANDROID/app/src/main/res/layout/tiendas_alert_dialog.xml" value="0.30526315789473685" />
       </map>
     </option>
