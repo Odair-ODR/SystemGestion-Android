@@ -97,6 +97,8 @@ proguard/
 *.ipr
 *~
 *.swp
+/*/app/release
+/*/app/debug
 
 # Keystore files
 

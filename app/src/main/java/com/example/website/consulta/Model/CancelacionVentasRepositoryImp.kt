@@ -27,6 +27,8 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
                     it.nroDocIdenti = resulSet.getString("al31numruc")
                     it.conpag = FORMA_DE_PAGO.fromInt(resulSet.getInt("al31conpag"))
                     it.idMoneda = resulSet.getInt("al31moneda")
+                    it.valven = resulSet.getDouble("al31valven")
+                    it.valigv = resulSet.getDouble("al31valigv")
                     it.valbru = resulSet.getDouble("al31valbru")
                     it.idTienda = resulSet.getInt("al31codalm")
                     it.fectra = resulSet.getString("al31fectra")
@@ -35,6 +37,17 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
                     it.direccion = resulSet.getString("al31dircli")
                     it.taller = resulSet.getString("al31Taller")
                     it.idTipoDocIdenti = resulSet.getInt("IDTIPIDENTIDAD")
+                    it.codVen = resulSet.getString("al31codven")
+                    it.placa = resulSet.getString("al31placa")
+                    it.sergui = resulSet.getString("al31sergui1")
+                    it.numgui = resulSet.getInt("al31numgui1")
+                    it.fecgui = resulSet.getString("al31fecgui1")
+                    it.numlet = resulSet.getString("al31numlet")
+                    it.credito_d = resulSet.getString("credito_d")
+                    it.tipoDocIdentidadTo = TipoDocIdentidadTo().also { tip ->
+                        tip.idTipIdentidad = resulSet.getInt("IDTIPIDENTIDAD")
+                        tip.descTipIdentidad = resulSet.getString("desc_tip_doc")
+                    }
                 })
             }
             return lstPrefactura
@@ -121,6 +134,10 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
                     it.al32fecTra = resulSet.getString("al32fecTra")
                     it.AL32flag = resulSet.getString("AL32flag")
                     it.al32idarticulo = resulSet.getInt("al32idarticulo")
+                    it.al32Codbar = resulSet.getString("al32Codbar")
+                    it.al32DescriArti = resulSet.getString("al32DescriArti")
+                    it.al32Unimed = resulSet.getString("al32Unimed")
+                    it.al32flag = resulSet.getString("AL32flag")
                     it.al32Totcan = resulSet.getInt("al32Totcan")
                     it.al32Preuni = resulSet.getDouble("al32Preuni")
                     it.al32pretot = resulSet.getDouble("al32pretot")

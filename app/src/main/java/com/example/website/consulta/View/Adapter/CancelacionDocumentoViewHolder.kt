@@ -3,7 +3,7 @@
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import com.example.website.consulta.Helpers.UtilsMethod.Companion.getDateFormat
+import com.example.website.consulta.Helpers.UtilsMethod.Companion.getDateFromSqlFormat
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
 import com.example.website.consulta.databinding.RowPrefacturaBinding
 
@@ -17,7 +17,7 @@ class CancelacionDocumentoViewHolder(view: View) : RecyclerView.ViewHolder(view)
             String.format("%1\$2s %2\$2s", preFactura.serDoc, preFactura.numDoc.toString())
         binding.lblCliente.text = preFactura.nombres
         //> binding.lblNroDocIdentidad.text = preFactura.nroDocIdenti
-        binding.lblFectra.text = preFactura.fectra.getDateFormat()
+        binding.lblFectra.text = preFactura.fectra.getDateFromSqlFormat()
         binding.lblTotal.text = preFactura.valbru.toString()
         binding.btnFacturar.setOnClickListener(btnFacturarOnClickListener(preFactura,  onClickListener))
     }

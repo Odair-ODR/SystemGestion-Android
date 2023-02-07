@@ -5,4 +5,5 @@ class Motor {
     var modelo: String? = null
     var motor: String? = null
     var cili1: String? = null
+    var tipoCambioTo: TipoCambioTo? = null
 }

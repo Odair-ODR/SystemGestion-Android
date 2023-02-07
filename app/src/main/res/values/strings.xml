@@ -48,4 +48,5 @@
     <string name="lblmessageWarningCorrelativoExist">Este número y seri ya se encuentra registrado</string>
     <string name="lblmessageSuccessRegister">Registrado correctamente</string>
     <string name="lblmessageErrorRegister">Error al registrar</string>
+    <string name="facturaTitle">Factura</string>
 </resources>

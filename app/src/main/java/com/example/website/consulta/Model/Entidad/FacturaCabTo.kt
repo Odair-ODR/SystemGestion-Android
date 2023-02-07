@@ -1,5 +1,8 @@
 package com.example.website.consulta.Model.Entidad
 
+import java.io.Serializable
+import java.lang.StringBuilder
+
 class FacturaCabTo {
     var al31AplicAnticipo: Boolean? = false
     var al31Anticipo: Boolean = false
@@ -46,4 +49,27 @@ class FacturaCabTo {
     var nroCaja:Int = 0
     var idTienda: Int = 0
     val tipoDocPrefactura: TIPO_DOCUMENTO = TIPO_DOCUMENTO.PRE_FACTURA
+    var tipoDocIdentidadTo: TipoDocIdentidadTo? = null
+    var codVen = ""
+    var credito_d = ""
+    var observacion = ""
+
+    private val prefijoNombrePdf: String = when(tipoDocPrefactura) {
+        TIPO_DOCUMENTO.FACTURA -> "F"
+        TIPO_DOCUMENTO.BOLETA -> "B"
+        TIPO_DOCUMENTO.NOTA_CREDITO -> "NC"
+        TIPO_DOCUMENTO.PRE_FACTURA -> "F"
+        else -> ""
+    }
+
+    val nombreArchivoPdf: String
+        get() {
+            val nombreArchivoPdf: String = StringBuilder()
+                .append(prefijoNombrePdf)
+                .append(serDoc)
+                .append("-")
+                .append(numDoc)
+                .append(".pdf").toString()
+            return nombreArchivoPdf
+        }
 }

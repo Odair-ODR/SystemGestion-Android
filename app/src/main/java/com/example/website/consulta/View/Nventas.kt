@@ -331,7 +331,7 @@ class Nventas : AppCompatActivity() {
         facturaTo.numper = 0
         facturaTo.fecper = null
         facturaTo.totper = 0.0
-        facturaTo.tipCam = 0.0
+        facturaTo.tipCam = obtenerTipoCambio(facturaTo.idMoneda)
         facturaTo.taller = 0
         facturaTo.idUs = idUs
         facturaTo.idTipOperacion = idTipoOper
@@ -485,6 +485,15 @@ class Nventas : AppCompatActivity() {
             }
         }
         throw Exception()
+    }
+
+    private fun obtenerTipoCambio(idMoneda: Int): Double {
+        val listaTipoCambio = nVentasViewModel.obtenerTiposDeCambio()
+        for (item in listaTipoCambio) {
+            if(item.idMoneda == idMoneda)
+                return item.tipoCambio
+        }
+        return 0.0
     }
 
     private fun limpiarGuardar() {

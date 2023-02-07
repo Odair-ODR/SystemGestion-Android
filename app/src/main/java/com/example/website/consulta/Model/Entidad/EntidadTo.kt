@@ -102,13 +102,12 @@ class EntidadTo(entidadToJson: JsonObject?, documentoIdentidad: TIPO_DOCUMENTO_I
         val dateFormat = SimpleDateFormat("dd MMMM yyyy")
         try {
             val date: String = if (!element.isJsonNull) element.asString else stringEmpty
-            if(date.length > 0){
+            return if(date.isNotEmpty()){
                 val parsedDateFormat = format.parse(date)
                 val cal = Calendar.getInstance()
                 cal.time = parsedDateFormat
-                return dateFormat.format(cal.time)
-            }
-            else return stringEmpty
+                dateFormat.format(cal.time)
+            } else stringEmpty
         } catch (e: ParseException) {
             e.printStackTrace()
             return stringEmpty

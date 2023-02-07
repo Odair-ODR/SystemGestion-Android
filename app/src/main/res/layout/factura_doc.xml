@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="2115px"
+        android:layout_height="1500px">
+
+    <LinearLayout
+            android:id="@+id/linearLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="270dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/logo_factura" />
+
+        <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                    android:id="@+id/lblRuc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R.U.C. 20601766486"
+                    android:fontFamily="arial"
+                    android:textSize="8sp"
+                    android:textAlignment="center"
+                    android:background="@drawable/border_solid"
+                    android:paddingStart="3dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="3dp"
+                    android:paddingBottom="4dp"
+                    android:layout_marginTop="4dp" />
+
+            <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="FACTURA ELECTRONICA"
+                    android:textSize="6sp"
+                    android:textAlignment="center"
+                    android:background="@drawable/border_solid_3"
+                    android:paddingStart="3dp"
+                    android:paddingTop="7dp"
+                    android:paddingEnd="3dp"
+                    android:paddingBottom="7dp"
+                    android:fontFamily="arial"/>
+
+            <TextView
+                    android:id="@+id/lblNroFactura"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="F001-00000914"
+                    android:textSize="8sp"
+                    android:textAlignment="center"
+                    android:background="@drawable/border_solid"
+                    android:paddingStart="3dp"
+                    android:paddingTop="4dp"
+                    android:paddingEnd="3dp"
+                    android:paddingBottom="4dp"
+                    android:fontFamily="arial"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_solid_2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/linearLayout2"
+            app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp">
+
+            <TextView
+                    android:id="@+id/lblFecha"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Fecha: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/lblCliente"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cliente: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/lblFecha"
+                    app:layout_constraintBottom_toBottomOf="@+id/lblCliente2"/>
+
+            <TextView
+                    android:id="@+id/lblDireccion"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Dirección: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/lblDireccion2"
+                    app:layout_constraintBottom_toBottomOf="@+id/lblDireccion2"/>
+
+            <TextView
+                    android:id="@+id/lblDocumento"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Documento: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/lblDocumento2"
+                    app:layout_constraintBottom_toBottomOf="@+id/lblDocumento2"/>
+
+            <TextView
+                    android:id="@+id/lblNumero"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:text="Número: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/lblNumero2"
+                    app:layout_constraintBottom_toBottomOf="@+id/lblNumero2" />
+
+            <TextView
+                    android:id="@+id/lblFecha2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="30/11/2022"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblFecha"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/lblCodVen" />
+
+            <TextView
+                    android:id="@+id/lblCliente2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="CONSTRUCCIONES Y SERVICIOS GENERALES HEYAL JUNIOR SRL"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblCliente"
+                    app:layout_constraintTop_toBottomOf="@+id/lblFecha2" />
+
+            <TextView
+                    android:id="@+id/lblDireccion2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="PJ. LA LIBERTAD NRO. 436 BR SAN SEBASTIAN CAJAMARCA CAJAMARCA CAJAMARCA"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblDireccion"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCliente2" />
+
+            <TextView
+                    android:id="@+id/lblDocumento2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="REG. UNICO DE CONTRIUBUYENTES"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblDocumento"
+                    app:layout_constraintTop_toBottomOf="@+id/lblDireccion2" />
+
+            <TextView
+                    android:id="@+id/lblNumero2"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:text="20600048946"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblNumero"
+                    app:layout_constraintTop_toBottomOf="@+id/lblDocumento2" />
+
+            <TextView
+                    android:id="@+id/lblCodVen"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="Cod.Ven: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblFecha2"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/lblCondicion"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="Condición: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblCliente2"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCodVen" />
+
+            <TextView
+                    android:id="@+id/lblPlaca"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="Placa: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblDireccion2"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCondicion" />
+
+            <TextView
+                    android:id="@+id/lblGuia"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:text="Guía: "
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@id/lblDireccion2"
+                    app:layout_constraintTop_toBottomOf="@+id/lblPlaca" />
+
+            <TextView
+                    android:id="@+id/lblCodVen2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="105"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@+id/lblCodVen"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                    android:id="@+id/lblCondicion2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contado"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@+id/lblCondicion"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCodVen2" />
+
+            <TextView
+                    android:id="@+id/lblPlaca2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="-"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@+id/lblPlaca"
+                    app:layout_constraintTop_toBottomOf="@+id/lblCondicion2" />
+
+            <TextView
+                    android:id="@+id/lblGuia2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0700"
+                    android:textSize="5dp"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintStart_toEndOf="@+id/lblGuia"
+                    app:layout_constraintTop_toBottomOf="@+id/lblPlaca2" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
