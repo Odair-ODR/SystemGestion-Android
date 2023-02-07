@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.MotorFragmentViewModel
-import kotlinx.android.synthetic.main.fragment_motor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext

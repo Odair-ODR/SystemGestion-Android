@@ -1,16 +1,28 @@
 package com.example.website.consulta.View
 
+import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.*
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import com.example.website.consulta.Helpers.UtilsMethod
 import com.example.website.consulta.Model.ConnectionDB
 import com.example.website.consulta.databinding.ActivitySplashBinding
 import java.sql.SQLException
+import java.util.jar.Manifest
 
 class splash : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
+    private val STORAGE_PERMISION_CODE = 1
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -20,16 +32,20 @@ class splash : AppCompatActivity() {
         )
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.btnIngresar.setOnClickListener(View.OnClickListener { IniciarSesion() })
-        binding.btnCancelar.setOnClickListener(View.OnClickListener {
-            binding.txtUser.setText("")
-            binding.txtPassaword.setText("")
-        })
+        verificarPermisosApp()
+        initializeEvents()
+        verficarAccesoInternet()
     }
 
-    private fun IniciarSesion() {
+    private fun initializeEvents(){
+        binding.btnIngresar.setOnClickListener(View.OnClickListener { iniciarSesion() })
+        binding.btnCancelar.setOnClickListener(View.OnClickListener { cancelar() })
+    }
+
+    private fun iniciarSesion() {
         try {
+            if(!verficarAccesoInternet())
+                return
             val procedure = "{call selectvalidarUsuario (?,?)}"
             val st = ConnectionDB.Conexion().prepareCall(procedure)
             st.setString(1, binding.txtUser.text.toString())
@@ -61,6 +77,41 @@ class splash : AppCompatActivity() {
                 "error de conexión a la base de datos",
                 Toast.LENGTH_SHORT
             ).show()
+        }
+    }
+
+    private fun cancelar(){
+        binding.txtUser.setText("")
+        binding.txtPassaword.setText("")
+    }
+
+    private fun verficarAccesoInternet(): Boolean{
+        if(!UtilsMethod.esInternetAccesible(this)){
+            Toast.makeText(this, "No tienes acceso a internet", Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
+
+    private fun verificarPermisosApp() {
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            solicitarPermisosNecesarios()
+        }
+    }
+
+    private fun solicitarPermisosNecesarios(){
+        val permisos = arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE, android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ActivityCompat.requestPermissions(this@splash, permisos, STORAGE_PERMISION_CODE)
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if(requestCode == STORAGE_PERMISION_CODE){
+            if(grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                Toast.makeText(this, "Permisos concedidos", Toast.LENGTH_SHORT).show()
+            } else{
+                Toast.makeText(this, "Permisos denegados", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }

@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.website.consulta.Model.ArticuloObservable
 import com.example.website.consulta.Model.Entidad.*
+import com.example.website.consulta.Model.MultipleObservable
 import com.example.website.consulta.Model.NVentasObservable
 import com.example.website.consulta.View.SwipeDismissTableLayoutTouchListener
 import com.example.website.consulta.View.TableAdapter
@@ -21,6 +22,7 @@ class NVentasViewModel (val context: Context) : ViewModel() {
 
     private val nVentasObservable: NVentasObservable = NVentasObservable()
     private val articuloObservable: ArticuloObservable = ArticuloObservable()
+    private val multipleObservable = MultipleObservable()
     private var articuloTableAdapter: TableAdapter? = null
     private val columnas =
         arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
@@ -109,7 +111,10 @@ class NVentasViewModel (val context: Context) : ViewModel() {
                 if (reverseSortedPositions != null && tableLayout != null) {
                     for (position in reverseSortedPositions) {
                         val child: View = tableLayout.getChildAt(position)
-                        if (child is TableRow) (child as ViewGroup).removeAllViews()
+                        if (child is TableRow) {
+                            (child as ViewGroup).removeAllViews()
+                            tableLayout.removeView(child)
+                        }
                     }
                 }
             }
@@ -129,5 +134,9 @@ class NVentasViewModel (val context: Context) : ViewModel() {
                 horizontalScrollViewHead.scrollTo(scrollX, 0)
             }
         }
+    }
+
+    fun obtenerTiposDeCambio(): List<TipoCambioTo>{
+        return multipleObservable.obtenerTiposDeCambio()
     }
 }

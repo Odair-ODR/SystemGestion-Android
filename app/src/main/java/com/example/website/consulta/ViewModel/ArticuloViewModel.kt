@@ -16,12 +16,10 @@ import android.widget.*
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.Model.MotorFragmentObservable
 import com.example.website.consulta.R
-import kotlinx.android.synthetic.main.fragment_motor.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.*
 import kotlin.collections.ArrayList
 
 class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaItemsVenta) {
@@ -164,26 +162,10 @@ class ArticuloViewModel(val context: Context, val consultaItemsVenta: ConsultaIt
         override fun onClick(v: View?) {
             if (!validarAceptar())
                 return
-            if (!validarStockArticulo())
-                return
             pasarDatosIntent(tableRow, txtCantidad, txtPretot)
             alertDialog.dismiss()
             consultaItemsVenta.finish()
         }
-    }
-
-    private fun validarStockArticulo(): Boolean {
-        val index = tblArticuloDetail.indexOfChild(tableRow)
-        val articulo = getArtitculoAt(index)
-        if (articulo!!.totSaldo < txtCantidad.text.toString().toInt()) {
-            Toast.makeText(
-                context,
-                "La cantidad ingresada es superior al saldo: " + articulo.totSaldo.toString(),
-                Toast.LENGTH_SHORT
-            ).show()
-            return false
-        }
-        return true
     }
 
     private fun validarAceptar(): Boolean {
