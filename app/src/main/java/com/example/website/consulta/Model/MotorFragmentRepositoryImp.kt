@@ -7,9 +7,9 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
 
     override fun ObtenerMotores(codProd: String, motor: String): ArrayList<MotorTo> {
         val lstMotor: ArrayList<MotorTo> = ArrayList()
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "{call usp_AndroidSelectObtenerMotoresporMantMotores(?,?)}"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             pc.setString(1, codProd)
             pc.setString(2, motor)
@@ -26,14 +26,17 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
         catch (ex: Exception){
             ex.printStackTrace()
         }
+        finally {
+            connection.close()
+        }
         return lstMotor
     }
 
     override fun ObtenerArticulosXMotorCodProd(codProd: String, motor: String): ArrayList<Articulo> {
         val lstArticulo: ArrayList<Articulo> = ArrayList()
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "{call usp_AndroidObtenerArticulosporProdMotor (?,?)}"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             pc.setString(1, codProd)
             pc.setString(2, motor)
@@ -56,6 +59,8 @@ class MotorFragmentRepositoryImp: IMotorFragmentRepository {
         }
         catch (ex: Exception){
             ex.printStackTrace()
+        } finally {
+            connection.close()
         }
         return lstArticulo
     }

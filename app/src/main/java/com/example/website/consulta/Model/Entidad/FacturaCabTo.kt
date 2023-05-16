@@ -51,8 +51,8 @@ class FacturaCabTo {
     val tipoDocPrefactura: TIPO_DOCUMENTO = TIPO_DOCUMENTO.PRE_FACTURA
     var tipoDocIdentidadTo: TipoDocIdentidadTo? = null
     var codVen = ""
-    var credito_d = ""
-    var observacion = ""
+    var credito_d: String? = ""
+    var observacion:String? = ""
 
     private val prefijoNombrePdf: String = when(tipoDocPrefactura) {
         TIPO_DOCUMENTO.FACTURA -> "F"

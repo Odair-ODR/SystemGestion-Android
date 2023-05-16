@@ -1,6 +1,7 @@
 ﻿package com.example.website.consulta.Model
 
 import com.example.website.consulta.Model.Entidad.*
+import okio.ByteString
 import java.lang.Exception
 
 class MultipleRepository {
@@ -13,14 +14,16 @@ class MultipleRepository {
         try {
             while (resulSet.next()) {
                 lstCuentasBancarias.add(CuentasBancariasTo().also {
-                    it.nombreBanco = resulSet.getString("idfactucab")
-                    it.nroCuetaCorriente = resulSet.getString("")
-                    it.nroCuentaCCI = resulSet.getString("")
+                    it.nombreBanco = resulSet.getString("Nombre")
+                    it.nroCuetaCorriente = resulSet.getString("Ccta")
+                    it.nroCuentaCCI = resulSet.getString("Cci")
                 })
             }
             return lstCuentasBancarias
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            dbConnection.close()
         }
     }
 
@@ -43,6 +46,25 @@ class MultipleRepository {
             return lstTipoCambio
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            dbConnection.close()
+        }
+    }
+
+    fun obtenerLogoEmpresa() : ByteArray? {
+        val sentencia = "SELECT TOP(1) LOGO FROM EMPRESA"
+        val bdConnection = ConnectionDB.Conexion()
+        try {
+            val st = bdConnection.createStatement()
+            val rs = st.executeQuery(sentencia)
+            if (rs.next()) {
+                return rs.getBytes("LOGO")
+            }
+            return null
+        } catch (ex: Exception){
+          throw ex
+        } finally {
+            bdConnection.close()
         }
     }
 }

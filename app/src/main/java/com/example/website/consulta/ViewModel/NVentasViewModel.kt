@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.website.consulta.Model.ArticuloObservable
@@ -17,8 +18,10 @@ import com.example.website.consulta.dummy.Tienda
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigDecimal
+import java.math.RoundingMode
 
-class NVentasViewModel (val context: Context) : ViewModel() {
+class NVentasViewModel() : ViewModel() {
 
     private val nVentasObservable: NVentasObservable = NVentasObservable()
     private val articuloObservable: ArticuloObservable = ArticuloObservable()
@@ -27,23 +30,26 @@ class NVentasViewModel (val context: Context) : ViewModel() {
     private val columnas =
         arrayOf("idArticulo", "Cpdold", "Alternante", "Descripción", "P.Venta", "Cant")
 
-    lateinit var tblArticuloHead: TableLayout
-    lateinit var tblArticuloDetail: TableLayout
-    lateinit var horizontalScrollViewHead: HorizontalScrollView
-    lateinit var horizontalScrollViewDetail: HorizontalScrollView
+    private lateinit var tableReferences: TableReferences
 
-    fun initializeEvents() {
-        horizontalScrollViewHead.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
-        horizontalScrollViewDetail.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
+    fun initializeTableReferences(tableReferences: TableReferences) {
+        this.tableReferences = tableReferences
     }
 
-    fun startControls(){
-        horizontalScrollViewHead.tag = "horizontalScrollViewHead"
-        horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
+    fun initializeEvents() {
+        tableReferences.horizontalScrollViewHead.setOnScrollChangeListener(implementHorizontalScrollChangedListener)
+        tableReferences.horizontalScrollViewDetail.setOnScrollChangeListener(
+            implementHorizontalScrollChangedListener
+        )
+    }
+
+    fun startControls() {
+        tableReferences.horizontalScrollViewHead.tag = "horizontalScrollViewHead"
+        tableReferences.horizontalScrollViewDetail.tag = "horizontalScrollViewDetail"
     }
 
     fun cargarDataTableLayout(lstArticulo: List<Articulo>) {
-        inicializarTableAdapter(tblArticuloHead, tblArticuloDetail)
+        inicializarTableAdapter(tableReferences.tblArticuloHead, tableReferences.tblArticuloDetail)
         articuloTableAdapter?.addHeaderArticulo(columnas)
         articuloTableAdapter?.addDataArticuloVentaReg(lstArticulo)
     }
@@ -52,7 +58,7 @@ class NVentasViewModel (val context: Context) : ViewModel() {
         tableLayoutHead: TableLayout,
         tableLayoutDetail: TableLayout
     ) {
-        articuloTableAdapter = TableAdapter(context, tableLayoutHead, tableLayoutDetail)
+        articuloTableAdapter = TableAdapter(tableReferences.tblArticuloDetail.context, tableLayoutHead, tableLayoutDetail)
     }
 
     fun obtenerTiendas(): ArrayList<Tienda> {
@@ -83,7 +89,7 @@ class NVentasViewModel (val context: Context) : ViewModel() {
         return nVentasObservable.obtenerEntidadToApi()
     }
 
-    fun obtenerIGV(): Double{
+    fun obtenerIGV(): Double {
         return nVentasObservable.obtenerIGV()
     }
 
@@ -100,11 +106,12 @@ class NVentasViewModel (val context: Context) : ViewModel() {
 
     fun swipeDismissTouchTableAdapter() {
         val touchListener = SwipeDismissTableLayoutTouchListener(
-            tblArticuloDetail,
+            tableReferences.tblArticuloDetail,
             swipeDismissTableLayoutTouchListenerOnDismissCallback
         )
-        tblArticuloDetail.setOnTouchListener(touchListener)
+        tableReferences.tblArticuloDetail.setOnTouchListener(touchListener)
     }
+
     private val swipeDismissTableLayoutTouchListenerOnDismissCallback =
         object : SwipeDismissTableLayoutTouchListener.OnDismissCallback {
             override fun onDismiss(tableLayout: TableLayout?, reverseSortedPositions: IntArray?) {
@@ -116,6 +123,7 @@ class NVentasViewModel (val context: Context) : ViewModel() {
                             tableLayout.removeView(child)
                         }
                     }
+                    calcularTotalTabla(tableReferences.tblArticuloDetail)
                 }
             }
         }
@@ -129,14 +137,32 @@ class NVentasViewModel (val context: Context) : ViewModel() {
             oldScrollY: Int
         ) {
             if (v?.tag == "horizontalScrollViewHead") {
-                horizontalScrollViewDetail.scrollTo(scrollX, 0)
+                tableReferences.horizontalScrollViewDetail.scrollTo(scrollX, 0)
             } else {
-                horizontalScrollViewHead.scrollTo(scrollX, 0)
+                tableReferences.horizontalScrollViewHead.scrollTo(scrollX, 0)
             }
         }
     }
 
-    fun obtenerTiposDeCambio(): List<TipoCambioTo>{
+    fun obtenerTiposDeCambio(): List<TipoCambioTo> {
         return multipleObservable.obtenerTiposDeCambio()
+    }
+
+    private val _totalVentaTabla = MutableLiveData<DoubleArray>()
+    val totalVentaTabla: LiveData<DoubleArray> = _totalVentaTabla
+    fun calcularTotalTabla(tabla: TableLayout) {
+        var total = 0.0
+
+        for (i in 0 until tabla.childCount) {
+            val fila = tabla.getChildAt(i) as TableRow
+            val tvPrecioVenta = fila.getChildAt(4) as TextView
+            val precioVenta = java.lang.Double.parseDouble(tvPrecioVenta.text.toString())
+            total += precioVenta
+        }
+        val valVen = BigDecimal(total / obtenerIGV()).setScale(2, RoundingMode.HALF_UP).toDouble()
+        val valBru = BigDecimal(total).setScale(2, RoundingMode.HALF_UP).toDouble()
+        val valIGV = BigDecimal(valBru - valVen).setScale(2, RoundingMode.HALF_UP).toDouble()
+        val totalesVenta = doubleArrayOf(valVen, valIGV, valBru)
+        _totalVentaTabla.value = totalesVenta
     }
 }

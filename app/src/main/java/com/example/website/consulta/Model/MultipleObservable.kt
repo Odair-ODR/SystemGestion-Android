@@ -14,4 +14,8 @@ class MultipleObservable {
     fun obtenerTiposDeCambio(): List<TipoCambioTo>{
         return multipleRepository.obtenerTiposDeCambio()
     }
+
+    fun obtenerLogoEmpresa(): ByteArray? {
+        return multipleRepository.obtenerLogoEmpresa()
+    }
 }

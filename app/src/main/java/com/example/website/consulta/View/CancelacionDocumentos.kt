@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Helpers.UtilsMethod
+import com.example.website.consulta.Model.Entidad.FORMATO_COMPROBANTE_PDF
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
 import com.example.website.consulta.Model.Entidad.FacturaDetTo
 import com.example.website.consulta.Model.IVerificarCancelacionFacturacion
@@ -40,7 +41,6 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
     private lateinit var tableAdapter: CancelacionDocumentoAdapter
     private lateinit var lstPreFacturaDet: List<FacturaDetTo>
     private lateinit var preFactura: FacturaCabTo
-    private lateinit var generarComprobantePDF: GenerarComprobanteFacturaPDF
     private var pageWidth: Int = 0
     private var pageHeight: Int = 0
     private var top: Float = 0f
@@ -58,7 +58,6 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
     private fun InitializeComponents() {
         viewModelCancelacionDocumento = CancelacionDocumentoViewModel(binding.root)
         viewModelControlDocumento = ControlDocumentoViewModel()
-        generarComprobantePDF = GenerarComprobanteFacturaPDF(this)
     }
 
     private fun cargarPrefacturaTableLayout() {
@@ -89,20 +88,24 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
         bindingDialogResult.btnSi.setOnClickListener { btnSiOnClickListener(preFactura, position) }
         bindingDialogResult.btnNo.setOnClickListener { btnNoOnClickListener(dialogResult) }
         dialogResult.show()
-        //> lanzarPdfView()
+        /*val lstPreFacturaDet: List<FacturaDetTo> = viewModelCancelacionDocumento.obtenerPreFacturaDet(preFactura.idPreFactura)
+        generarComprobantePDF.generarPDF(preFactura, lstPreFacturaDet)
+        lanzarPdfView(preFactura)*/
     }
 
     private fun btnSiOnClickListener(preFactura: FacturaCabTo, position: Int) {
         val lstPreFacturaDet: List<FacturaDetTo> = viewModelCancelacionDocumento.obtenerPreFacturaDet(preFactura.idPreFactura)
-        val resultSave = viewModelCancelacionDocumento.grabarCancelacionDocumentosFacturacion(
+        /*val resultSave = viewModelCancelacionDocumento.grabarCancelacionDocumentosFacturacion(
             preFactura,
             lstPreFacturaDet,
             this
-        )
+        )*/
+        val resultSave = true
         if (resultSave) {
             deletePrefactura(position)
-            generarComprobantePDF.generarPDF(preFactura, lstPreFacturaDet)
-            lanzarPdfView(preFactura)
+            val comprobantePdf = obtenerFormatoComprobante()
+            comprobantePdf.generarPDF(preFactura, lstPreFacturaDet)
+            this.preFactura = preFactura
         }
     }
 
@@ -123,7 +126,7 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
         dialogResultSucc.setCancelable(false)
         bindingDialogResult.lblTitle.text = getString(R.string.successTitle)
         bindingDialogResult.lblMessage.text = getString(R.string.lblmessageSuccessCanFact)
-        bindingDialogResult.btnContinuar.setOnClickListener { dialogResultSucc.dismiss() }
+        bindingDialogResult.btnContinuar.setOnClickListener { btnContinuarOnClick(dialogResultSucc) }
         dialogResultSucc.show()
     }
 
@@ -139,10 +142,23 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
         dialogResultErr.show()
     }
 
+    private fun btnContinuarOnClick(dialogResult: AlertDialog) {
+        dialogResult.dismiss()
+        lanzarPdfView(preFactura)
+    }
+
     private fun lanzarPdfView(preFactura: FacturaCabTo) {
         val gson = Gson()
         val intent = Intent(this, PdfView::class.java)
         intent.putExtra("PreFactura", gson.toJson(preFactura))
         startActivity(intent)
+    }
+
+    private fun obtenerFormatoComprobante(): IComprobante {
+        val tipoComprobante = FORMATO_COMPROBANTE_PDF.TICKET
+        return when (tipoComprobante) {
+            FORMATO_COMPROBANTE_PDF.A4 -> GenerarComprobanteFacturaPDF(this)
+            FORMATO_COMPROBANTE_PDF.TICKET -> ComprobanteTicket(this)
+        }
     }
 }

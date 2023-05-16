@@ -196,6 +196,7 @@
                             android:id="@+id/rdgFormaPago"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="horizontal"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
@@ -203,7 +204,7 @@
 
                         <RadioButton
                                 android:id="@+id/rdbContado"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_editControls"
                                 android:layout_marginTop="10dp"
@@ -216,10 +217,10 @@
 
                         <RadioButton
                                 android:id="@+id/rdbCredito"
-                                android:layout_width="match_parent"
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/margin_editControls"
-                                android:layout_marginTop="0dp"
+                                android:layout_marginTop="10dp"
                                 android:layout_marginEnd="@dimen/margin_editControls"
                                 android:layout_marginBottom="8dp"
                                 android:text="Crédito"
@@ -319,7 +320,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/horizontalScrollViewHead"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/linearLayoutTotales"
                     android:fillViewport="true">
 
                 <HorizontalScrollView
@@ -336,6 +337,72 @@
                             android:shrinkColumns="1,2,3" />
                 </HorizontalScrollView>
             </ScrollView>
+            <LinearLayout
+                    android:id="@+id/linearLayoutTotales"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scrollView1"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:orientation="horizontal"
+                    android:gravity="end"
+                    android:background="@color/colorGreenW">
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        style="@style/TextView1"
+                        android:text="Monto Neto"
+                        android:gravity="end"/>
+                <TextView
+                        android:id="@+id/tvImporteTotalVenta"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:layout_marginStart="@dimen/margin_editControls"
+                        android:background="@drawable/editext_radious_corner"
+                        android:textAlignment="textEnd"
+                        android:text="0.00"
+                        android:textStyle="bold"
+                        android:inputType="numberDecimal|numberSigned|number"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        style="@style/TextView1"
+                        android:text="IGV"
+                        android:gravity="end"/>
+                <TextView
+                        android:id="@+id/tvImporteTotalIGV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="5"
+                        android:layout_marginStart="@dimen/margin_editControls"
+                        android:background="@drawable/editext_radious_corner"
+                        android:textAlignment="textEnd"
+                        android:text="0.00"
+                        android:textStyle="bold"
+                        android:inputType="numberDecimal|numberSigned|number"/>
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="2"
+                        style="@style/TextView1"
+                        android:text="Total"
+                        android:gravity="end"/>
+                <TextView
+                        android:id="@+id/tvImporteTotal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="6"
+                        android:layout_marginStart="@dimen/margin_editControls"
+                        android:background="@drawable/editext_radious_corner"
+                        android:textAlignment="textEnd"
+                        android:text="0.00"
+                        android:textStyle="bold"
+                        android:inputType="numberDecimal|numberSigned|number"/>
+            </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,6 +11,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.example.website.consulta.Helpers.UtilsInterface
 import com.example.website.consulta.Helpers.UtilsMethod
+import com.example.website.consulta.Helpers.UtilsSistema
 import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.R
 import com.example.website.consulta.ViewModel.NVentasViewModel
@@ -54,8 +55,7 @@ class Nventas : AppCompatActivity() {
         initializeEvents()
         startOptions()
         observerObtenerEntidadToApi()
-        //> CargarSpinnerTipoDocumento()
-
+        startObservers()
     }
 
     private fun startOptions() {
@@ -84,14 +84,20 @@ class Nventas : AppCompatActivity() {
     }
 
     private fun initializeComponentsNVentasViewModel() {
-        nVentasViewModel = NVentasViewModel(this)
-        nVentasViewModel.horizontalScrollViewHead = binding.horizontalScrollViewHead
-        nVentasViewModel.tblArticuloHead = binding.tblArticuloHead
-        nVentasViewModel.horizontalScrollViewDetail = binding.horizontalScrollViewDetail
-        nVentasViewModel.tblArticuloDetail = binding.tblArticuloDetail
+        nVentasViewModel = NVentasViewModel()
+        nVentasViewModel.initializeTableReferences(TableReferences(binding.tblArticuloHead, binding.tblArticuloDetail,
+            binding.horizontalScrollViewHead, binding.horizontalScrollViewDetail))
         nVentasViewModel.initializeEvents()
         nVentasViewModel.startControls()
         nVentasViewModel.swipeDismissTouchTableAdapter()
+    }
+
+    private fun startObservers() {
+        nVentasViewModel.totalVentaTabla.observe(this) { totalesVenta ->
+            binding.tvImporteTotalVenta.text = totalesVenta[0].toString()
+            binding.tvImporteTotalIGV.text = totalesVenta[1].toString()
+            binding.tvImporteTotal.text = totalesVenta[2].toString()
+        }
     }
 
     private val btnItem_OnClickListener = View.OnClickListener {
@@ -258,6 +264,7 @@ class Nventas : AppCompatActivity() {
                     "Mensaje recibido : " + idArticulo.toString() + "-" + articulo.idArticulo.toString(),
                     Toast.LENGTH_SHORT
                 ).show()
+                nVentasViewModel.calcularTotalTabla(binding.tblArticuloDetail)
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
@@ -299,7 +306,7 @@ class Nventas : AppCompatActivity() {
         val idTipoOper = "0101"
         val idTipoIdentidad =
             if (tipoDocumento.id == FACTURA) 6 else if (tipoDocumento.id == BOLETA) 1 else 0
-        val idUs = 105
+
         val facturaTo = FacturaCabTo()
         facturaTo.idTienda = rdbTienda.tag.toString().toInt()
         facturaTo.nroCaja = 1
@@ -333,7 +340,7 @@ class Nventas : AppCompatActivity() {
         facturaTo.totper = 0.0
         facturaTo.tipCam = obtenerTipoCambio(facturaTo.idMoneda)
         facturaTo.taller = 0
-        facturaTo.idUs = idUs
+        facturaTo.idUs = UtilsSistema.usuario.idUsuario
         facturaTo.idTipOperacion = idTipoOper
         facturaTo.idTipoDocIdenti = idTipoIdentidad
         facturaTo.operaGratuita = 0
@@ -348,7 +355,6 @@ class Nventas : AppCompatActivity() {
     }
 
     private fun obtenerDatosPreFacturaDet(): ArrayList<FacturaDetTo> {
-        val idUs = 105
         val codigoUniversal = "25101503"
         val lista = ArrayList<FacturaDetTo>()
         var facturaDet: FacturaDetTo
@@ -399,7 +405,7 @@ class Nventas : AppCompatActivity() {
             facturaDet.al32notabo = 0
             facturaDet.al32secabo = 0
             facturaDet.al32fecabo = null
-            facturaDet.idUs = idUs
+            facturaDet.idUs = UtilsSistema.usuario.idUsuario
             facturaDet.al32glosa = ""
             facturaDet.al32Anticipo = 0
             lista.add(facturaDet)

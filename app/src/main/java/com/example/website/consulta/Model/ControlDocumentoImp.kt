@@ -9,9 +9,9 @@ class ControlDocumentoImp : IControlDocumento {
     override fun obtenerCorrelativoDocumento(
         facturaCabTo: FacturaCabTo
     ): CorrelativoTo? {
+        val con = ConnectionDB.Conexion()
         try {
             val procedure = "call usp_AndroidSelectObtenerControlDocumentos (?,?,?)"
-            val con = ConnectionDB.Conexion()
             val st = con.prepareCall(procedure)
             st.setInt(1, facturaCabTo.idTienda)
             st.setInt(2, facturaCabTo.tipoDoc.id)
@@ -27,6 +27,9 @@ class ControlDocumentoImp : IControlDocumento {
             return null
         } catch (ex: Exception) {
             throw ex
+        }
+        finally {
+            con.close()
         }
     }
 
@@ -56,13 +59,12 @@ class ControlDocumentoImp : IControlDocumento {
 
     override fun actualizarNroDocumentoCaja(facturaTo: FacturaCabTo, cn: Connection): Boolean {
         try {
-            val procedure = "call AndroidUpdateActualizaNroControlDocumentosCaja (?,?,?,?,?,?)"
+            val procedure = "call AndroidUpdateActualizaNroControlDocumentosCaja (?,?,?,?,?)"
             val st = cn.prepareCall(procedure)
             st.setInt("@idtienda", facturaTo.idTienda)
             st.setInt("@caja", facturaTo.nroCaja)
             st.setInt("@iddocumento", facturaTo.tipoDoc.id)
             st.setString("@serie", facturaTo.serDoc)
-            st.setInt("@idUs", facturaTo.idUs)
             st.registerOutParameter("@nro", Types.INTEGER)
             return st.executeUpdate() > 0
         } catch (ex: Exception) {

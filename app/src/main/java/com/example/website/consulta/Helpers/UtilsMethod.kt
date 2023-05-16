@@ -1,8 +1,11 @@
 package com.example.website.consulta.Helpers
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
+import com.google.android.gms.common.util.Hex
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
@@ -92,6 +95,15 @@ class UtilsMethod {
                 i++
                 k--
             }
+        }
+
+        fun getBitmapImgFromSqlDB(logoBinary: String): Bitmap {
+            val logo = Hex.stringToBytes(logoBinary)
+            return BitmapFactory.decodeByteArray(logo, 0, logo.size)
+        }
+
+        fun getBitmapImgFromSqlDB(logoByte: ByteArray): Bitmap {
+            return BitmapFactory.decodeByteArray(logoByte, 0, logoByte.size)
         }
     }
 }

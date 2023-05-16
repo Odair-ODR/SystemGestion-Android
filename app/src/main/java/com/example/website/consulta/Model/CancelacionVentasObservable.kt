@@ -59,6 +59,7 @@ class CancelacionVentasObservable {
             throw ex
         } finally {
             bdConnection.autoCommit = true
+            bdConnection.close()
         }
     }
 

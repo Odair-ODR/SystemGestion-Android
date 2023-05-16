@@ -7,9 +7,9 @@ class AlternanteFragmentRepositoryImp : IAlternanteFragmentRepository {
 
     override fun ObtenerArticulosXAlternante(alternante: String): ArrayList<Articulo> {
         val lstArticulo: ArrayList<Articulo> = ArrayList()
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "{call AdroidSelectObtenerArticulosporAlternante (?)}"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             pc.setString(1, alternante)
             val rs = pc.executeQuery()
@@ -26,6 +26,8 @@ class AlternanteFragmentRepositoryImp : IAlternanteFragmentRepository {
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
+        } finally {
+            connection.close()
         }
         return lstArticulo
     }

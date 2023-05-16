@@ -43,3 +43,19 @@ enum class DialogResult(id: Int, descripcion: String) {
     NO(0, "NO"),
     SI(1, "SI")
 }
+
+enum class FORMATO_COMPROBANTE_PDF(val id: Int, val descripcion: String) {
+    A4(1, "A4"),
+    TICKET(2, "TICKET");
+    companion object {
+        fun fromInt(id: Int) = TIPO_PROCESO_VENTA.values().first { it.id == id }
+    }
+}
+
+enum class PERMISSION_TYPE(val id: Int, val descripcion: String) {
+    READ_WRITE_EXTERNAL_STORAGE(1, ""),
+    BLUETOOTH(2, "");
+    companion object {
+        fun fromInt(id: Int) = TIPO_PROCESO_VENTA.values().first { it.id == id }
+    }
+}

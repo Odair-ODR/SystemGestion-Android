@@ -3,21 +3,20 @@
 import android.content.Context
 import android.graphics.*
 import android.graphics.pdf.PdfDocument
-import android.os.Environment
 import android.text.Layout
 import android.text.StaticLayout
 import android.text.TextPaint
+import com.example.website.consulta.Helpers.Constants
 import com.example.website.consulta.Helpers.UtilsMethod
 import com.example.website.consulta.Helpers.UtilsMethod.Companion.getDateFromSqlFormat
 import com.example.website.consulta.Model.Entidad.*
 import com.example.website.consulta.Model.MultipleObservable
-import com.example.website.consulta.R
 import java.io.File
 import java.io.FileOutputStream
-import java.lang.StringBuilder
 import java.math.RoundingMode
 
-class GenerarComprobanteFacturaPDF(val context: Context) {
+
+class GenerarComprobanteFacturaPDF(val context: Context) : IComprobante {
     private lateinit var lstPreFacturaDet: List<FacturaDetTo>
     private lateinit var preFactura: FacturaCabTo
     private var pageWidth: Int = 0
@@ -27,12 +26,14 @@ class GenerarComprobanteFacturaPDF(val context: Context) {
     private var right: Float = 0f
     private var lstCuentasBancarias: List<CuentasBancariasTo>
     private var multipleObs: MultipleObservable = MultipleObservable()
+    private var logoBinary:ByteArray? = null
 
     init {
         lstCuentasBancarias = multipleObs.listaCuentasBancarias()
+        logoBinary = multipleObs.obtenerLogoEmpresa()
     }
 
-    fun generarPDF(preFactura: FacturaCabTo, lstPreFacturaDet: List<FacturaDetTo>) {
+    override fun generarPDF(preFactura: FacturaCabTo, lstPreFacturaDet: List<FacturaDetTo>) {
         try{
             this.lstPreFacturaDet = lstPreFacturaDet
             this.preFactura = preFactura
@@ -50,37 +51,44 @@ class GenerarComprobanteFacturaPDF(val context: Context) {
             createBody(paint, canvas)
             createFooter(paint, canvas)
             pdfDocument.finishPage(page)
-            val file = File(Environment.getExternalStorageDirectory(), preFactura.nombreArchivoPdf)
-            pdfDocument.writeTo(FileOutputStream(file))
+
+            val myDir = File(context.getExternalFilesDir(null), Constants.nameFolerInovice)
+            if (!myDir.exists()) {
+                myDir.mkdir()
+            }
+            val filePdf = File(context.getExternalFilesDir(Constants.directoryInvoices), preFactura.nombreArchivoPdf)
+            pdfDocument.writeTo(FileOutputStream(filePdf))
+            //> pdfDocument.close()
         }
         catch (ex: Exception){
             ex.printStackTrace()
         }
     }
 
-    private fun createHead(paint: Paint, canvas: Canvas) {
+    override fun createHead(paint: Paint, canvas: Canvas) {
         agregarLogo(canvas, paint)
         agregarTitulos(paint, canvas)
         agregarDatosGeneralesCabecera(paint, canvas)
     }
 
-    private fun createBody(paint: Paint, canvas: Canvas) {
+    override fun createBody(paint: Paint, canvas: Canvas) {
         agregarDetalleComprobante(paint, canvas)
     }
 
-    private fun createFooter(paint: Paint, canvas: Canvas) {
+    override fun createFooter(paint: Paint, canvas: Canvas) {
         agregarTotales(paint, canvas)
         agregarCuentasBanco(paint, canvas)
     }
 
     private fun agregarLogo(canvas: Canvas, paint: Paint) {
-        val bitmap: Bitmap = BitmapFactory.decodeResource(context.resources, R.drawable.logo_factura)
-        val bitmapScale: Bitmap = Bitmap.createScaledBitmap(bitmap, 430, 90, true)
-        canvas.drawBitmap(bitmapScale, left, top, paint)
+        if (logoBinary?.isNotEmpty() == true) {
+            val bitmap = UtilsMethod.getBitmapImgFromSqlDB(logoBinary!!)
+            val bitmapScale: Bitmap = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
+            canvas.drawBitmap(bitmapScale, left, top, paint)
+        }
     }
 
     private fun agregarTitulos(paint: Paint, canvas: Canvas) {
-        val titlePaint = Paint()
         //> start -> Rectangulo
         val normal = Typeface.create("Arial", Typeface.NORMAL)
         paint.setTypeface(normal)
@@ -227,7 +235,7 @@ class GenerarComprobanteFacturaPDF(val context: Context) {
         canvas.drawText("CANTI", x5, y, paint)
         canvas.drawText("UNITARIO", x6, y, paint)
         canvas.drawText("TOTAL", x7, y, paint)
-        agregarItemsComprobante(paint, canvas, lstPreFacturaDet ,bottom2)
+        agregarItemsComprobante(paint, canvas, lstPreFacturaDet, bottom2)
     }
 
     private fun agregarItemsComprobante(paint: Paint, canvas: Canvas, lstPreFacturaDet: List<FacturaDetTo>, bottom2: Float) {
@@ -282,7 +290,8 @@ class GenerarComprobanteFacturaPDF(val context: Context) {
         val cuotasCredito = if(preFactura.conpag == FORMA_DE_PAGO.CREDITO) "Cuotas credito : " + preFactura.credito_d else ""
         canvas.drawText(cuotasCredito, x3, y3 + n, paint)
         canvas.drawText("Observación:", x3, y4 + n, paint)
-        canvas.drawText(preFactura.observacion, left + 74f, y4 + n, paint)
+        val observacion: String = if(preFactura.observacion != null) preFactura.observacion!! else ""
+        canvas.drawText(observacion, left + 74f, y4 + n, paint)
         canvas.drawText("Código Hash:", x3, y5 + n, paint)
         canvas.drawText("qSQTa9ilfjA4SEEjCqRCNkmMxOc=", left + 74f, y5 + n, paint)
 
@@ -321,7 +330,7 @@ class GenerarComprobanteFacturaPDF(val context: Context) {
         val textValbru = UtilsMethod.getDecimalthousandFormatted(impValbru.toString())
         val textAnticipo = UtilsMethod.getDecimalthousandFormatted(impAnticipo.toString())
         val textDescuento = UtilsMethod.getDecimalthousandFormatted(impDescuento.toString())
-        paint.color = Color.WHITE
+        paint.color = Color.BLACK
         paint.style = Paint.Style.FILL
         canvas.drawText("Sub Total:", x5 + 3, y7 + n, paint)
         canvas.drawText("Anticipos:", x5 + 3, y11 + n, paint)

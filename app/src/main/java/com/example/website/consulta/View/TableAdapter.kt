@@ -7,6 +7,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.example.website.consulta.Model.Entidad.Articulo
 import com.example.website.consulta.Model.Entidad.Motor
 import com.example.website.consulta.R

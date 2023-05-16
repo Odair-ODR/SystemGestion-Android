@@ -54,6 +54,9 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
         } catch (ex: Exception) {
             throw ex
         }
+        finally {
+            dbConnection.close()
+        }
     }
 
     override fun verificaFacturaBoletaporNro(preFactura: FacturaCabTo, connection: Connection): Boolean {
@@ -73,12 +76,11 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
     }
 
     override fun actualizaPreFacturaCabFacturacion(preFactura: FacturaCabTo, connection: Connection): Boolean {
-        val procedure = "call AndroidUpdateActualizaPreFacturaporFacturacion(?,?,?)"
+        val procedure = "call AndroidUpdateActualizaPreFacturaporFacturacion(?,?)"
         try {
             val prepareCall = connection.prepareCall(procedure)
             prepareCall.setInt("@idfactucab", preFactura.idPreFactura)
             prepareCall.setInt("@al31numfac", preFactura.numFac)
-            prepareCall.setInt("@idUs", preFactura.idUs)
             return prepareCall.executeUpdate() > 0
         } catch (ex: Exception) {
             throw ex
@@ -86,12 +88,11 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
     }
 
     override fun actualizaPreFacturaDetFacturacion(preFactura: FacturaCabTo, connection: Connection): Boolean {
-        val procedure = "call AndroidUpdateActualizaPreFacturaDetalleporFacturacion(?,?,?)"
+        val procedure = "call AndroidUpdateActualizaPreFacturaDetalleporFacturacion(?,?)"
         try {
             val prepareCall = connection.prepareCall(procedure)
             prepareCall.setInt("@idfactdet", preFactura.idPreFactura)
             prepareCall.setInt("@al32numfac", preFactura.numFac)
-            prepareCall.setInt("@idUs", preFactura.idUs)
             return prepareCall.executeUpdate() > 0
         } catch (ex: Exception) {
             throw ex
@@ -99,13 +100,12 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
     }
 
     override fun actualizaAlmacendeFacturaCompras(preFacturaDet: FacturaDetTo, connection: Connection): Boolean {
-        val procedure = "call dsp_AndroidActualizarAlmacenFacturacion(?,?,?,?)"
+        val procedure = "call dsp_AndroidActualizarAlmacenFacturacion(?,?,?)"
         try {
             val prepareCall = connection.prepareCall(procedure)
             if (preFacturaDet.al32codAlm == 91) preFacturaDet.al32codAlm = 9
             prepareCall.setInt("@IdArticulo", preFacturaDet.al32idarticulo)
             prepareCall.setInt("@IdTienda", preFacturaDet.al32codAlm)
-            prepareCall.setInt("@idUs", preFacturaDet.idUs)
             prepareCall.setInt("@Saldo", preFacturaDet.al32Totcan)
             return prepareCall.executeUpdate() > 0
         } catch (ex: Exception) {
@@ -146,6 +146,8 @@ class CancelacionVentasRepositoryImp: ICancelacionDocumentoRepository {
             return lstPrefactura
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            dbConnection.close()
         }
     }
 }

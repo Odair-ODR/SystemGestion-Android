@@ -6,9 +6,9 @@ class CodbarFragmentRepositoryImp : ICodbarFragmentRepository {
 
     override fun ObtenerArticuloXCodbar(codbar: String): ArrayList<Articulo> {
         val lstArticulo: ArrayList<Articulo> = ArrayList()
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "{call usp_AndroidSelectObtenerArticulosporCodBar (?)}"
-            val connection = ConnectionDB.Conexion()
             val callStatement = connection.prepareCall(procedure).also {
                 it.setString(1, codbar)
             }
@@ -26,6 +26,8 @@ class CodbarFragmentRepositoryImp : ICodbarFragmentRepository {
             }
         } catch (ex: Exception) {
             ex.printStackTrace()
+        } finally {
+            connection.close()
         }
         return lstArticulo
     }

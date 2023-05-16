@@ -19,9 +19,9 @@ class NVentasRepositoryImp : INVentasRepository {
     private var entidadToLive = MutableLiveData<EntidadTo?>()
 
     override fun ObtenerTiendas(): ArrayList<Tienda> {
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "call ObtenerTiendasHabilitadas"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             val st: ResultSet = pc.executeQuery()
             val tiendas: ArrayList<Tienda> = ArrayList()
@@ -35,13 +35,15 @@ class NVentasRepositoryImp : INVentasRepository {
             return tiendas
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            connection.close()
         }
     }
 
     override fun ObtenerTipoDocumento(): ArrayList<String> {
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "call ObtenerTiendasHabilitadas()"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             val st: ResultSet = pc.executeQuery()
             val tiendas: ArrayList<String> = ArrayList()
@@ -53,13 +55,15 @@ class NVentasRepositoryImp : INVentasRepository {
             return tiendas
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            connection.close()
         }
     }
 
     override fun ObtenerMoneda(): ArrayList<Moneda> {
+        val connection = ConnectionDB.Conexion()
         try {
             val procedure = "call selectObtenerMonedaPedido"
-            val connection = ConnectionDB.Conexion()
             val pc = connection.prepareCall(procedure)
             val st: ResultSet = pc.executeQuery()
             val tiendas: ArrayList<Moneda> = ArrayList()
@@ -73,6 +77,8 @@ class NVentasRepositoryImp : INVentasRepository {
             return tiendas
         } catch (ex: Exception) {
             throw ex
+        } finally {
+            connection.close()
         }
     }
 
@@ -144,6 +150,7 @@ class NVentasRepositoryImp : INVentasRepository {
             throw ex
         } finally {
             con.autoCommit = true
+            con.close()
         }
     }
 
@@ -296,13 +303,12 @@ class NVentasRepositoryImp : INVentasRepository {
         facturaTo: FacturaCabTo
     ): Boolean {
         try {
-            val procedure = "call AndroidUpdateActualizaNroControlDocumentosCaja (?,?,?,?,?,?)"
+            val procedure = "call AndroidUpdateActualizaNroControlDocumentosCaja (?,?,?,?,?)"
             val st = con.prepareCall(procedure)
             st.setInt("@idtienda", facturaTo.idTienda)
             st.setInt("@caja", facturaTo.nroCaja)
             st.setInt("@iddocumento", facturaTo.tipoDocPrefactura.id)
             st.setString("@serie", facturaTo.serDoc)
-            st.setInt("@idUs", facturaTo.idUs)
             st.registerOutParameter("@nro", Types.INTEGER)
             return st.executeUpdate() > 0
         } catch (ex: Exception) {
@@ -312,12 +318,19 @@ class NVentasRepositoryImp : INVentasRepository {
 
     override fun obtenerIGV(): Double {
         val con = ConnectionDB.Conexion()
-        val procedure = "call usp_AndroidObtenerIGV()"
-        val st = con.prepareCall(procedure)
-        val rs = st.executeQuery()
-        return if (rs.next()) {
-            rs.getDouble("descuento")
-        } else return 0.0
+        try {
+            val procedure = "call usp_AndroidObtenerIGV()"
+            val st = con.prepareCall(procedure)
+            val rs = st.executeQuery()
+            return if (rs.next()) {
+                rs.getDouble("descuento")
+            } else return 0.0
+        } catch (ex: Exception){
+            throw ex
+        }
+        finally {
+            con.close()
+        }
     }
 
     private fun insertarCuotasCredito(facturaTo: FacturaCabTo, con: Connection): Boolean{

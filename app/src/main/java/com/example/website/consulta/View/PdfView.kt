@@ -8,6 +8,7 @@ import android.os.Environment
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.website.consulta.Helpers.Constants
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
 import com.example.website.consulta.Model.Entidad.TIPO_DOCUMENTO
 import com.example.website.consulta.R
@@ -40,14 +41,14 @@ class PdfView:  AppCompatActivity() {
     }
 
     private fun startViewPdf() {
-        val file = File(Environment.getExternalStorageDirectory(), preFactura.nombreArchivoPdf)
+        val file = File(this.getExternalFilesDir(Constants.directoryInvoices), preFactura.nombreArchivoPdf)
         binding.pdfView.fromFile(file)
         binding.pdfView.isZoomEnabled
         binding.pdfView.show()
     }
 
     private val compartirArchivoOnClick = View.OnClickListener {
-        val file = File(Environment.getExternalStorageDirectory(), preFactura.nombreArchivoPdf)
+        val file = File(this.getExternalFilesDir(Constants.directoryInvoices), preFactura.nombreArchivoPdf)
         if (file.exists()) {
             val uri = Uri.parse(file.path)
             val shareIntent = Intent().apply {

@@ -9,10 +9,6 @@ class ArticuloObservable{
     //> Estas clases va tener una conexión directa con el respositorio y con el viewModel
     private var articuloRespository: IArticuloRepository = ArticuloRepositoryImp()
 
-    fun obtenerArticulosFactura(codbar: String, alternante: String): MutableLiveData<List<Articulo>>{
-        return articuloRespository.ObtenerArticulosFactuera(codbar, alternante)
-    }
-
     fun ObtenerArticulosXCobar(marvehi: Int, ini: Int, fin: Int): ArrayList<Articulo>{
         return articuloRespository.ObtenerArticulosXCobar(marvehi, ini, fin)
     }
