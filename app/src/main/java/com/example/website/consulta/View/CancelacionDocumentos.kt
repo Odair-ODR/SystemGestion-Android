@@ -95,12 +95,11 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
 
     private fun btnSiOnClickListener(preFactura: FacturaCabTo, position: Int) {
         val lstPreFacturaDet: List<FacturaDetTo> = viewModelCancelacionDocumento.obtenerPreFacturaDet(preFactura.idPreFactura)
-        /*val resultSave = viewModelCancelacionDocumento.grabarCancelacionDocumentosFacturacion(
+        val resultSave = viewModelCancelacionDocumento.grabarCancelacionDocumentosFacturacion(
             preFactura,
             lstPreFacturaDet,
             this
-        )*/
-        val resultSave = true
+        )
         if (resultSave) {
             deletePrefactura(position)
             val comprobantePdf = obtenerFormatoComprobante()
@@ -144,7 +143,7 @@ class CancelacionDocumentos : AppCompatActivity(), IVerificarCancelacionFacturac
 
     private fun btnContinuarOnClick(dialogResult: AlertDialog) {
         dialogResult.dismiss()
-        lanzarPdfView(preFactura)
+        //> lanzarPdfView(preFactura)
     }
 
     private fun lanzarPdfView(preFactura: FacturaCabTo) {

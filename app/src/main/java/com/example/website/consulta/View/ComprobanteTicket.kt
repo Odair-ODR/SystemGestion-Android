@@ -78,6 +78,7 @@ class ComprobanteTicket(val context: Context) : IComprobante {
             preFactura.nombreArchivoPdf
         )
         //> pdfDocument.writeTo(FileOutputStream(filePdf))
+        //> pdfDocument.close()
 
         // Obtener el adaptador Bluetooth
         val bluetoothAdapter = BluetoothAdapter.getDefaultAdapter()
@@ -502,6 +503,8 @@ class ComprobanteTicket(val context: Context) : IComprobante {
             ticketPrint.generateTicket()
             ticketPrint.print()
         }catch (ex: Exception){
+            Toast.makeText(context, "Error al comunicarse con la impresora. \n " +
+                    "Asegurese de emparejar bien con la impresora térmica", Toast.LENGTH_LONG).show()
             print(ex.message)
         }
     }

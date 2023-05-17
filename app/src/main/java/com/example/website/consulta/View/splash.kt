@@ -1,5 +1,6 @@
 package com.example.website.consulta.View
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -101,6 +102,15 @@ class splash : AppCompatActivity() {
             Toast.makeText(this, "No tienes acceso a internet", Toast.LENGTH_SHORT).show()
             return false
         }
+        if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            solicitarPermisosNecesarios(PERMISSION_TYPE.READ_WRITE_EXTERNAL_STORAGE)
+        }
+
+        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled) {
+            Toast.makeText(this, "Debe encender el bluetooth para una correcta funcionalidad de la aplicación", Toast.LENGTH_SHORT).show()
+            return false
+        }
         return true
     }
 
@@ -108,8 +118,28 @@ class splash : AppCompatActivity() {
         if(ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
             solicitarPermisosNecesarios(PERMISSION_TYPE.READ_WRITE_EXTERNAL_STORAGE)
         }
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
-            solicitarPermisosNecesarios(PERMISSION_TYPE.BLUETOOTH)
+
+        val bluetoothAdapter: BluetoothAdapter? = BluetoothAdapter.getDefaultAdapter()
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled) {
+            // El Bluetooth está apagado
+            val dialogBuilder = AlertDialog.Builder(this)
+            dialogBuilder.setTitle("Encender Bluetooth")
+            dialogBuilder.setMessage("Para utilizar esta función, es necesario encender el Bluetooth. ¿Deseas encenderlo ahora?")
+            dialogBuilder.setPositiveButton("Aceptar") { _, _ ->
+                bluetoothAdapter?.enable()
+                if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                    solicitarPermisosNecesarios(PERMISSION_TYPE.BLUETOOTH)
+                }
+            }
+            dialogBuilder.setNegativeButton("Cancelar") { _, _ ->
+                // El usuario ha cancelado la solicitud de encender el Bluetooth
+                // Aquí puedes realizar cualquier acción adicional si el usuario cancela
+            }
+            dialogBuilder.create().show()
+        } else {
+            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH) != PackageManager.PERMISSION_GRANTED) {
+                solicitarPermisosNecesarios(PERMISSION_TYPE.BLUETOOTH)
+            }
         }
     }
 

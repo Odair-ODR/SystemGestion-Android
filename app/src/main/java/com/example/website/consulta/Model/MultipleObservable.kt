@@ -1,6 +1,7 @@
 ﻿package com.example.website.consulta.Model
 
 import com.example.website.consulta.Model.Entidad.CuentasBancariasTo
+import com.example.website.consulta.Model.Entidad.EmpresaTo
 import com.example.website.consulta.Model.Entidad.FacturaCabTo
 import com.example.website.consulta.Model.Entidad.TipoCambioTo
 
@@ -17,5 +18,9 @@ class MultipleObservable {
 
     fun obtenerLogoEmpresa(): ByteArray? {
         return multipleRepository.obtenerLogoEmpresa()
+    }
+
+    fun obtenerEmpresaSistema(): EmpresaTo? {
+        return multipleRepository.obtenerEmpresaSistema()
     }
 }

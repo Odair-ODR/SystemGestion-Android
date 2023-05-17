@@ -58,7 +58,7 @@ class GenerarComprobanteFacturaPDF(val context: Context) : IComprobante {
             }
             val filePdf = File(context.getExternalFilesDir(Constants.directoryInvoices), preFactura.nombreArchivoPdf)
             pdfDocument.writeTo(FileOutputStream(filePdf))
-            //> pdfDocument.close()
+            pdfDocument.close()
         }
         catch (ex: Exception){
             ex.printStackTrace()

@@ -30,12 +30,13 @@ data class TicketPrint(val context: Context, val ticket: ITicket) : PrintingCall
     }
 
     private fun headerPage() {
-        printable.add(RawPrintable.Builder(byteArrayOf(27, 100, 4)).build())
+        //> printable.add(RawPrintable.Builder(byteArrayOf(27, 100, 4)).build())
         val empresa = ticket.getEmpresa()
         val arrDataEmpresa = arrayOf(
             empresa.nombre,
             empresa.descripcion,
             empresa.direccion,
+            empresa.ruc,
             empresa.telefono,
             empresa.correo
         )
@@ -115,7 +116,6 @@ data class TicketPrint(val context: Context, val ticket: ITicket) : PrintingCall
 
         val cliente = arrayOf(
             ticket.getCliente().nombre,
-            ticket.getCliente().direccion,
             ticket.getCliente().nroDocumento
         )
         for (item in cliente) {
@@ -236,6 +236,17 @@ data class TicketPrint(val context: Context, val ticket: ITicket) : PrintingCall
     }
 
     private fun totales() {
+
+        printable.add(
+            TextPrintable.Builder()
+                .setText("")
+                .setLineSpacing(DefaultPrinter.Companion.LINE_SPACING_60)
+                .setAlignment(DefaultPrinter.Companion.ALIGNMENT_RIGHT)
+                .setEmphasizedMode(DefaultPrinter.Companion.EMPHASIZED_MODE_NORMAL)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
         val desTotal = arrayOf("Sub Total: ", "I.G.V.: ", "Total: ")
         val totales = arrayOf(ticket.getTotales().subTotal, ticket.getTotales().igv, ticket.getTotales().total)
         var formattedTableDetail = ""
@@ -254,6 +265,26 @@ data class TicketPrint(val context: Context, val ticket: ITicket) : PrintingCall
                     .build()
             )
         }
+
+        printable.add(
+            TextPrintable.Builder()
+                .setText("")
+                .setLineSpacing(DefaultPrinter.Companion.LINE_SPACING_60)
+                .setAlignment(DefaultPrinter.Companion.ALIGNMENT_RIGHT)
+                .setEmphasizedMode(DefaultPrinter.Companion.EMPHASIZED_MODE_NORMAL)
+                .setNewLinesAfter(1)
+                .build()
+        )
+
+        printable.add(
+            TextPrintable.Builder()
+                .setText("")
+                .setLineSpacing(DefaultPrinter.Companion.LINE_SPACING_60)
+                .setAlignment(DefaultPrinter.Companion.ALIGNMENT_RIGHT)
+                .setEmphasizedMode(DefaultPrinter.Companion.EMPHASIZED_MODE_NORMAL)
+                .setNewLinesAfter(1)
+                .build()
+        )
     }
 
     fun print() {

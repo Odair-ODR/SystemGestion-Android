@@ -67,4 +67,25 @@ class MultipleRepository {
             bdConnection.close()
         }
     }
+
+    fun obtenerEmpresaSistema() : EmpresaTo? {
+        val sentencia = "SELECT * FROM EMPRESA"
+        val bdConnection = ConnectionDB.Conexion()
+        try {
+            val st = bdConnection.createStatement()
+            val rs = st.executeQuery(sentencia)
+            if (rs.next()) {
+                return EmpresaTo().also {
+                    it.nombre = rs.getString("nombre")
+                    it.direccion = rs.getString("direccion")
+                    it.ruc = rs.getString("ruc")
+                }
+            }
+            return null
+        } catch (ex: Exception){
+            throw ex
+        } finally {
+            bdConnection.close()
+        }
+    }
 }
